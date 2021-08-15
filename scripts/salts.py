@@ -336,27 +336,11 @@ class Salt(object):
         (-5.4859e-4 - 1.2053e-4*x - 5.5020e-3*x**2 + 1.1547e-2*x**3 - 6.8864e-3*x**4)*tempK
         return rho
 
-#    def _check_chloride_interpolations(self):
-#        'Checks different density interpolations, do not use'
-#        xmol = [1.6, 8.7, 24.7, 53.8]           # mol% of UCl3 in NaCl+UCl3
-#        xmol = np.arange(1.6,53.8,0.2)
-#        temps= np.arange(900,1300,5)               # T[K]
-#        f1=open('~/tmp/datafile', 'w')
-#        for x in xmol:
-#            for t in temps:
-#                xfrc = x/100.0                  # mol% -> mol fraction
-#                rho1 = self.chloride_density_interpolation(xfrc,t)
-#                rho2 = self.chloride_density_equation_BoLiShengDai(xfrc,t)
-#                rhodiff = 2.0*(rho2-rho1)/(rho1+rho2)
-#                print("%4.1f %6.0f  %6.5f %6.5f %6.3f"%(x,t,rho1,rho2,rhodiff*100.0), file=f1)
-#            print(file=f1)
-#        f1.close()
-
     def nice_name(self)->str:
         'Return salt name with spaces around + sign'
         return self.formula.replace('+',' + ')
 
-    def serpent_mat(self, tempK:float=900.0, mat_tempK:float=900.0,
+    def serpent_mat(self, tempK:float=900.0, mat_tempK:float=900.0, name:str='fuelsalt',
                     lib="09c", vol:int=None, rgb:str="240 30 30"):
         '''Returns Serpent deck for the salt material
         tempK is the temperature for density calculation,
@@ -373,7 +357,7 @@ class Salt(object):
                 if w.Z == 92:
                     print("DEBUG SALT: %d -> %8.3f" % (w.A, 100.0*w.wf/u) )
         mat  = "% Fuel salt: " + self.nice_name() + ", U enrichment " + str(self.enr)
-        mat += "\nmat fuelsalt %12.8f rgb %s tmp %8.3f\n" % (-1.0*self.densityK(tempK),rgb,mat_tempK)
+        mat += "\nmat %s %12.8f rgb %s tmp %8.3f\n" % (name, -1.0*self.densityK(tempK),rgb,mat_tempK)
         if vol != None:
             mat += 'burn 1 vol %s\n' % (str(vol))
         for w in self.wflist:
@@ -381,30 +365,6 @@ class Salt(object):
             mat += "    %  "+ self.ELEMENTS[w.Z].symbol +"-"+ str(w.A) +"\n"
         return mat
 
-    def serpent_matr(self, tempK:float=900.0, mat_tempK:float=900.0,
-                    lib="09c", vol:int=None, rgb:str="240 30 30"):
-        '''Returns Serpent deck for the salt material
-        tempK is the temperature for density calculation,
-        mat_tempK is the material temperature.
-        This is useful for Doppler feedback calculations.'''
-        if not self.wflist:         # Generate list of isotopic weight fractions
-            self._isotopic_fractions()
-        if my_debug:                # Check uranium enrichment
-            u= 0.0
-            for w in self.wflist:
-                if w.Z == 92:
-                    u += w.wf
-            for w in self.wflist:
-                if w.Z == 92:
-                    print("DEBUG SALT: %d -> %8.3f" % (w.A, 100.0*w.wf/u) )
-        mat  = "% Refueling Salt Tank: " + self.nice_name() + ", U enrichment " + str(self.enr)
-        mat += "\nmat fuelsalt_rep %12.8f rgb %s tmp %f\n" % (-1.0*self.densityK(tempK),rgb,mat_tempK)
-        if vol != None:
-            mat += 'burn 1 vol %s\n' % (str(vol))
-        for w in self.wflist:
-            mat += "%3d%03d.%s  %14.12f" % (w.Z, w.A, lib, -1.0*w.wf)
-            mat += "    %  "+ self.ELEMENTS[w.Z].symbol +"-"+ str(w.A) +"\n"
-        return mat
 
 # This executes if someone tries to run the module
 if __name__ == '__main__':
