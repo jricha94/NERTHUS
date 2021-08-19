@@ -80,13 +80,15 @@ class serpDeck(object):
         # Make fuel salt
         self.e                  = enr                           # Fuel salt enrichment
         self.salt_name          = fuel_salt                     # Fuel salt name
-        self.fuel_salt          = Salt(self.salt_formula, self.e)       # Fuel salt object (see salts.py)
+        self.fuel_salt          = Salt(self.salt_formula, self.e) # Fuel salt object (see salts.py)
 
 
         if self.refuel: # only needed if reactor is refueling
             self.e_ref              = enr_ref                   # Refuel salt enrichment
             self.salt_name_ref      = refuel_salt               # Refuel salt name
-            self.refuel_salt        = Salt(refuel_salt, self.e_ref)         # Refuel salt object
+            self.refuel_salt        = Salt(refuel_salt, self.e_ref) # Refuel salt object
+
+            self.refuel_rate:float  = #####################
 
     def _make_ellipsoid(self, pos:list=None, axes:list=None, name:str=None) -> str:
         '''creates A B C D E F G H I J values for ellipsoid surface in SERPENT'''
@@ -126,7 +128,7 @@ class serpDeck(object):
         '''Method for calculating change in distance due to thermal expansion
         of graphite. If thermal expansion is excluded, the geometry is modeled at 900k '''
         if self.thermal_expansion == True:
-            if type(point) is list: 
+            if type(point) is list:
                 x0, y0 = point[0], point[1]
                 xf = x0 * (1.0 + GRAPHITE_CTE * (self.mod_tempK - 293.0))
                 yf = y0 * (1.0 + GRAPHITE_CTE * (self.mod_tempK - 293.0))
@@ -209,7 +211,7 @@ class serpDeck(object):
             -pot_top_outer pot_top_inner pot_top_plane pot_top_tube_out pot_top_ctrl_out:
             (pot_top_tube_in -pot_top_tube_out -pot_top_tube_top pot_top_inner pot_wall_top):
             (pot_top_ctrl_in -pot_top_ctrl_out -pot_top_tube_top pot_top_inner pot_wall_top)
-            
+
             % --- PIECE THAT CONNECTS THE TOP TO THE WALL
 
             % - SURFACE FOR CONNECTOR
@@ -312,7 +314,7 @@ class serpDeck(object):
             {hat_dome_trans}
             surf hat_corner_cyl cyl 0 0 {hat_corner_cyl:.8f}
             surf hat_corner_plane pz {hat_corner_plane:.8f}
-            surf hat_corner torz 0 0 {hat_corner_plane:.8f} {hat_corner_cyl:.8f} {hat_corner_rad:.8f} {hat_corner_rad:.8f} 
+            surf hat_corner torz 0 0 {hat_corner_plane:.8f} {hat_corner_cyl:.8f} {hat_corner_rad:.8f} {hat_corner_rad:.8f}
 
             % - CELLS
             cell hat 0 graphite
@@ -350,12 +352,12 @@ class serpDeck(object):
             {plug_dome[1]}
             surf plug_corner_cyl cyl 0 0 {plug_corner_cyl:.8f}
             surf plug_corner_plane pz {plug_corner_plane:.8f}
-            surf plug_corner torz 0 0 {plug_corner_plane:.8f} {plug_corner_cyl:.8f} {plug_corner_rad:.8f} {plug_corner_rad:.8f}            
+            surf plug_corner torz 0 0 {plug_corner_plane:.8f} {plug_corner_cyl:.8f} {plug_corner_rad:.8f} {plug_corner_rad:.8f}
 
             % - CELL
             cell plug 0 graphite
             (plug_bot -plug_corner_plane (-plug_dome: plug_mid_plane) -plug_out):
-            -plug_corner: (plug_corner_plane -plug_top -plug_corner_cyl)    
+            -plug_corner: (plug_corner_plane -plug_top -plug_corner_cyl)
             ''')
         surfs_and_cells_cards += plug
 
@@ -389,10 +391,10 @@ class serpDeck(object):
             (plug_out -pot_wall_inner plug_mid_plane -plug_corner_plane):
             (plug_dome pot_bot_inner -pot_wall_inner -plug_mid_plane pot_wall_bot):
             (plug_corner -plug_top -pot_wall_inner plug_corner_plane plug_corner_cyl):
-            (plug_top shield_inner -pot_wall_inner -shield_bot)    
+            (plug_top shield_inner -pot_wall_inner -shield_bot)
             ''')
         surfs_and_cells_cards += fuelsalt
-        
+
         # Logs and Guide rods
 
         log_top = self._GLE(189)
@@ -435,7 +437,7 @@ class serpDeck(object):
             # Expand points from themal expansion then translate them to new location
             for p in slab_points:
                 slab_points[p] = self._translate(self._GLE(slab_points[p]), trans)
-            
+
             plane_names = []
             # List of points which share a common plane, so they are not made twice
             common_plane = [4, 6, 8]
@@ -467,14 +469,14 @@ class serpDeck(object):
 
                 ''')
             slab += gr_cell
-            
+
             cell = dedent(f'''
                 #(-{plane_names[0]} -{plane_names[6]} -{plane_names[9]} -{plane_names[10]} -log_top log_bot:
                  {plane_names[0]} -{plane_names[1]} -{plane_names[2]} -{plane_names[3]} -log_top log_bot:
                  {plane_names[0]} -{plane_names[4]} -{plane_names[2]} -{plane_names[5]} -log_top log_bot:
                  {plane_names[6]} -{plane_names[7]} -{plane_names[8]} -{plane_names[9]} -log_top log_bot:
                  {plane_names[10]} -{plane_names[11]} -{plane_names[12]} -{plane_names[0]} -log_top log_bot)''')
-            
+
             return slab, cell
 
         def make_yoke(trans:list=None, rot:float=None, name:str=None):
@@ -512,7 +514,7 @@ class serpDeck(object):
                     plane_name = name + '_plane' + str(i)
                     plane_names.append(plane_name)
                     yoke += self._make_plane(yoke_points[i], yoke_points[i+1], plane_name)
-            
+
             # Make cell for yoke
             cell = dedent(f'''\n
                 % - CELLS FOR {name.upper()}
@@ -522,14 +524,14 @@ class serpDeck(object):
                 -log_top log_bot
                 ''')
             yoke += cell
-    
+
             cell = dedent(f'''
                 #(-{plane_names[0]} -{plane_names[1]} -{plane_names[2]}
                 -{plane_names[3]} -{plane_names[4]} -{plane_names[5]}
                 -log_top log_bot)''')
 
             return yoke, cell
-        
+
         # Make the log, yokes first
         yoke1_trans = self._GLE([0, -0.24])
         yoke2_trans = self._rotate(yoke1_trans, -120)
@@ -544,7 +546,7 @@ class serpDeck(object):
         slab2, slab_fs2 = make_slab(self._GLE([-6.36,1.8185]), 'slab2')
         slab3, slab_fs3 = make_slab(self._GLE([-10.74,4.3428]), 'slab3')
         slab4, slab_fs4 = make_slab(self._GLE([-15.125, 6.87]), 'slab4')
-        
+
 
         log += slab1 + slab2 + slab3 + slab4
 
@@ -587,7 +589,7 @@ class serpDeck(object):
             % - SURFACES
             surf ctrl_hex hexxc 0 0 {ctrl_half_width:.8f}
             ''')
-        
+
         gr_cell = dedent(f'''
             % - CELLS
             cell ctrl_log 7 graphite
@@ -656,7 +658,7 @@ class serpDeck(object):
 
         ctrl_rod0_rad = 4.7 # Center control rod radius
         ctrl_rod_rad = 5.4  # Other control rods radius
-        ctrl_arm_rad = 3.0  # Stainless steel arm radius 
+        ctrl_arm_rad = 3.0  # Stainless steel arm radius
 
         for chan in self.control_rods:
             if chan == 0:
@@ -773,7 +775,7 @@ class serpDeck(object):
             % - FUELSALT
             cell ref_hex_fs 3 fuelsalt #(-ref_hex -log_top log_bot)
             ''')
-        
+
 
         lattice_pitch = self._GLE(38.1104)
 
@@ -805,7 +807,7 @@ class serpDeck(object):
 
         # Fill core with Lattice
         core = dedent(f'''
-            % - CORE 
+            % - CORE
             cell core 0 fill lattice -shield_inner -hat_bot plug_top
             ''')
 
@@ -881,24 +883,53 @@ class serpDeck(object):
         return material_cards
 
     def _make_data_cards(self) -> str:
-        data_cards = dedent('''
+        data_cards = dedent(f'''
             % ===== Data Cards ===== %
-            set pop 100 100
-            set bc 1
+            set power 557000000 % Watts
+            set pop {self.histories} {self.ngen} {self.nskip} % {self.histories} neutrons, {self.ngne} active cycles, {self.nskip} inactive cycles
+            set arr 2
+            set printm 1
             ''')
 
-        
+        if self.nuc_libs == 'ENDF7':
+            data_cards += dedent('''
+                % Data Libraries
+                set acelib "sss_endfb7u.sssdir"
+                set declib "sss_endfb7.dec"
+                set nfylib "sss_endfb7.nfy"
+                ''')
+        else:
+            print('Use ENDF7, or edit the source code to include other libraries')
 
         if self.do_plots:
-            plot_card = dedent('''
+            data_cards += dedent('''
                 % --- PLOTS
-                plot 1 6000 6000 0 -290 290 -290 290
-                %plot 2 6000 6000 0 -290 290 -290 290
-                %plot 3 6000 6000 0 -290 290 -290 290
-
+                plot 1 3000 3000 0 -290 290 -290 290
+                plot 2 3000 3000 0 -290 290 -290 290
+                plot 3 3000 3000 0 -290 290 -290 290
                 ''')
 
-            data_cards += plot_card
+        if self.refuel:
+            data_cards += dedent(f'''
+                % --- REPROCESSING CARDS
+
+                % - OFFGAS TANK
+                mat offgas -0.001 burn 1 vol 1e9 tmp {self.fs_mat_tempK}
+                 2004.{self.lib} 1
+
+                % - OVERFLOW TANK
+                mat overflow -0.001 burn 1 vol 1e9 tmp {self.fs_mat_tempK}
+                2004.{self.lib} 1
+
+                % --- MASS FLOW DEFINITIONS
+
+                set pcc 0 % predictor-corrector turned off for depletion
+
+                mflow U_in
+                all {self.}
+
+
+                ''')
 
         return data_cards
 
@@ -914,7 +945,7 @@ class serpDeck(object):
             with open(self.deck_path + '/' + self.deck_name, 'w') as outfile:
                 outfile.write(self._get_deck())
         except IOError as e:
-            print('[ERROR] Unable to write file: ', 
+            print('[ERROR] Unable to write file: ',
                 self.deck_path + '/' + self.deck_name)
             print(e)
 
@@ -932,4 +963,4 @@ if __name__ == '__main__':
 
     test.mod_tempK = 300
     test._save_deck()
-    os.system('sss2 -plot -omp 20 nerthus/nerthus')
+    #os.system('sss2 -plot -omp 20 nerthus/nerthus')
