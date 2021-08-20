@@ -26,7 +26,7 @@ class burn(object):
         self.enr_path:str = os.getcwd() + '/enr_search'
         self.enr_min:float = 0.01
         self.enr_max:float = .2
-        self.iter_max:int  = 20
+        self.enr_max:int  = 20
         self.rho_tgt:float = 100.0
         self.rho_eps:float = 100.0
         self.RhoData = namedtuple("rhoData", 'enr rho rho_err')
@@ -58,13 +58,13 @@ class burn(object):
             nert0 = serpDeck(fuel_salt = self.fuel_salt, enr = enr0)
             nert0.queue = self.queue
             nert0.ompcores = self.ompcores
-            nert0.deck_path = self.iter_path + '/nert0'
+            nert0.deck_path = self.enr_path + '/nert0'
             nert0.deck_name = 'nert0_deck'
 
             nert1 = serpDeck(fuel_salt = self.fuel_salt, enr = enr1)
             nert1.queue = self.queue
             nert1.ompcores = self.ompcores
-            nert1.deck_path = self.iter_path + '/nert1'
+            nert1.deck_path = self.enr_path + '/nert1'
             nert1.deck_name = 'nert1_deck'
 
             # Run edge cases
@@ -101,14 +101,14 @@ class burn(object):
         self.rholist.append(self.RhoData(enr0, rho0, rho0err))
         self.rholist.append(self.RhoData(enr1, rho1, rho1err))
 
-        n_iter:int = 0
+        n_enr:int = 0
         side:int = 0
         enri:float = None
         rhoi:float = None
         rhoierr:float = None
         os.chdir(self.enr_path)
-        while n_iter < self.iter_max:
-            n_iter += 1
+        while n_enr < self.enr_max:
+            n_enr += 1
             d_rho = rho0 - rho1
             if d_rho == 0.0:
                 print('ERROR: divide by 0')
@@ -118,7 +118,7 @@ class burn(object):
 
             if abs(enr1-enr0) < self.enr_eps*abs(enr1+enr0):
                 break  # Enrichments close, done!
-            os.chdir(self.iter_path)
+            os.chdir(self.enr_path)
             nert = serpDeck(fuel_salt = self.fuel_salt, enr = enri)
             nert.queue = self.queue
             nert.ompcores = self.ompcores
@@ -157,10 +157,10 @@ class burn(object):
 
         return True
 
-    def save_iters(self, save_file:str='converge_data.txt'):
-        'save history of the iterative search'
+    def save_enrs(self, save_file:str='converge_data.txt'):
+        'save history of the enrative search'
         if not self.rholist:
-            print("Warning: No iterations to save!")
+            print("Warning: No enrations to save!")
             return
         result = f'# enr, rho, sig_rho for {self.fuel_salt}\n'
         for r in self.rholist:
