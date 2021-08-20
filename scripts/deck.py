@@ -83,12 +83,11 @@ class serpDeck(object):
         self.fuel_salt          = Salt(self.salt_formula, self.e) # Fuel salt object (see salts.py)
 
 
-        if self.refuel: # only needed if reactor is refueling
-            self.e_ref              = enr_ref                   # Refuel salt enrichment
-            self.salt_name_ref      = refuel_salt               # Refuel salt name
-            self.refuel_salt        = Salt(refuel_salt, self.e_ref) # Refuel salt object
+        self.e_ref              = enr_ref                       # Refuel salt enrichment
+        self.salt_name_ref      = refuel_salt                   # Refuel salt name
+        self.refuel_salt        = Salt(self.salt_formula_r, self.e_ref) # Refuel salt object
 
-            self.refuel_rate:float  = #####################
+        self.refuel_rate:float  = 1e-9
 
     def _make_ellipsoid(self, pos:list=None, axes:list=None, name:str=None) -> str:
         '''creates A B C D E F G H I J values for ellipsoid surface in SERPENT'''
@@ -382,7 +381,8 @@ class serpDeck(object):
             rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
             (hat_out -pot_wall_inner hat_bot -hat_mid_plane):
             (hat_corner -hat_corner_plane hat_bot hat_corner_cyl -pot_wall_inner):
-            (shield_inner -pot_wall_inner -hat_bot shield_top)
+            (shield_inner -pot_wall_inner -hat_bot shield_top):
+            (pot_wall_top -pot_top_plane -pot_top_outer pot_top_inner -pot_wall_inner)
 
             % FILL BOTTOM OF REACTOR
             cell fs3 0 fuelsalt
@@ -602,6 +602,8 @@ class serpDeck(object):
             (log_top -ctrl_hex rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
             (-log_bot -ctrl_hex):
             (log_bot -log_top ctrl_hex):
+            (log_top ctrl_hex):
+            (-log_bot ctrl_hex):
             #(''')
 
         # Values for control rod
@@ -827,12 +829,12 @@ class serpDeck(object):
             % sus316 stainless steel for outer walls
             mat sus316_stainless_steel -7.9 rgb 222 58 74
              6000.{self.lib} -0.0008   % Natural Carbon
-             7000.{self.lib} -0.001    % Natural Nitrogen
+             7014.{self.lib} -0.001    % Natural Nitrogen
             14000.{self.lib} -0.0075   % Natural Silicon
-            15000.{self.lib} -0.00045  % Natural Phosphorous
+            15031.{self.lib} -0.00045  % Natural Phosphorous
             16000.{self.lib} -0.0003   % Natural Sulfur
             24000.{self.lib} -0.17     % Natural Chromium
-            25000.{self.lib} -0.02     % Natural Manganese
+            25055.{self.lib} -0.02     % Natural Manganese
             26000.{self.lib} -0.65495  % Natural Iron
             28000.{self.lib} -0.12     % Natural Nickle
             42000.{self.lib} -0.025    % Natural Molybdenum
@@ -843,7 +845,8 @@ class serpDeck(object):
         B4C_natural = dedent(f'''
             % Boron Carbide with naturally enriched boron
             mat B4C_natural -2.52 rgb 43 77 227
-             5000.{self.lib} 0.8  % Natural Boron
+             5010.{self.lib} 0.16 % Boron 10
+             5011.{self.lib} 0.64 % Boron 11
              6000.{self.lib} 0.2  % Natural Carbon
             ''')
         material_cards += B4C_natural
@@ -852,7 +855,8 @@ class serpDeck(object):
         B4C_shield = dedent(f'''
             % 10% Boron Carbide 90% graphite, used for shield
             mat B4C_shield -{0.9 * self._GDE() + 0.8 * 2.52} rgb 99 73 214
-             5000.{self.lib} 0.08   % Natural Boron
+             5010.{self.lib} 0.16   % Boron 10
+             5011.{self.lib} 0.64   % Boron 11
              6000.{self.lib} 0.92   % Natural Carbon
             ''')
         material_cards += B4C_shield
@@ -875,10 +879,14 @@ class serpDeck(object):
             ''')
         material_cards += graphite
 
-        fuelsalt = '\n' + self.fuel_salt.serpent_mat(self.fs_dens_tempK, self.fs_mat_tempK,
+        fuelsalt = '\n' + self.fuel_salt.serpent_mat(self.fs_dens_tempK, self.fs_mat_tempK, \
                                             'fuelsalt', self.fs_lib, self.fs_vol, '54 227 167')
-
         material_cards += fuelsalt
+
+        if self.refuel:
+            refuel_salt = '\n' + self.refuel_salt.serpent_mat(self.fs_dens_tempK, self.fs_mat_tempK, \
+                                          'refuelsalt', self.fs_lib, self.fs_vol, '54 227 167')
+            material_cards += refuel_salt
 
         return material_cards
 
@@ -886,7 +894,7 @@ class serpDeck(object):
         data_cards = dedent(f'''
             % ===== Data Cards ===== %
             set power 557000000 % Watts
-            set pop {self.histories} {self.ngen} {self.nskip} % {self.histories} neutrons, {self.ngne} active cycles, {self.nskip} inactive cycles
+            set pop {self.histories} {self.ngen} {self.nskip} % {self.histories} neutrons, {self.ngen} active cycles, {self.nskip} inactive cycles
             set arr 2
             set printm 1
             ''')
@@ -906,7 +914,8 @@ class serpDeck(object):
                 % --- PLOTS
                 plot 1 3000 3000 0 -290 290 -290 290
                 plot 2 3000 3000 0 -290 290 -290 290
-                plot 3 3000 3000 0 -290 290 -290 290
+                plot 2 3000 3000 0 -290 290 -290 290
+
                 ''')
 
         if self.refuel:
@@ -926,9 +935,39 @@ class serpDeck(object):
                 set pcc 0 % predictor-corrector turned off for depletion
 
                 mflow U_in
-                all {self.}
+                all {self.refuel_rate}
 
+                mflow offgasratecore
+                Ne 1e-2
+                Ar 1e-2
+                He 1e-2
+                Kr 1e-2
+                Xe 1e-2
+                Rn 1e-2
 
+                % Account for increase in volume with refueling
+                mflow over
+                all {self.refuel_rate}
+
+                rep source_rep
+                rc refuelsalt fuelsalt U_in 0
+                rc fuelsalt offgas offgasratecore 1
+                rc fuelsalt overflow over 1
+
+                % 4 years of burnup
+                dep
+                pro source_rep
+                daystep
+                0.0208 0.0208 0.9584 2 4 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+                30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
+                30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
+
+                set inventory
+                1
+                86
+                fp
+                lanthanides
+                actinides
                 ''')
 
         return data_cards
@@ -939,7 +978,7 @@ class serpDeck(object):
         deck += self._make_data_cards()
         return deck
 
-    def _save_deck(self) -> None:
+    def save_deck(self) -> None:
         try:
             os.makedirs(self.deck_path, exist_ok=True)
             with open(self.deck_path + '/' + self.deck_name, 'w') as outfile:
@@ -949,18 +988,124 @@ class serpDeck(object):
                 self.deck_path + '/' + self.deck_name)
             print(e)
 
+    def save_qsub_file(self) -> None:
+        'Writes run file for TORQUE.'
+        qsub_content = dedent(f'''
+            #!/bin/bash
+            #PBS -V
+            #PBS -N ThorCon_like_lat
+            #PBS -q {self.queue}
+            #PBS -l nodes=1:ppn={self.ompcores}
+            hostname
+            rm -f done.dat
+            cd ${{PBS_O_WORKDIR}}
+            module load mpi
+            module load serpent
+            sss2 -omp {self.ompcores} {self.deck_name} > myout.out
+            awk 'BEGIN{{ORS="\\t"}} /ANA_KEFF/ || /CONVERSION/ {{print $7" "$8;}}' {self.deck_name}_res.m > done.out
+            rm {self.deck_name}.out
+            ''')
+        try:                # Write the deck
+            f = open(self.deck_path + f'/{self.qsub_name}', 'w')
+            f.write(qsub_content)
+            f.close()
+        except IOError as e:
+            print("Unable to write to qsub file")
+            print(e)
+
+    def run_deck(self) -> None:
+        'Runs the deck using qsub_path script'
+        if self.queue == 'local':    # Run the deck locally
+            os.chdir(self.deck_path)
+            os.system(f'sss2 -omp {self.ompcores} {self.deck_name} > done.out')
+            #os.system(f'rm {self.deck_name}.out')
+            os.chdir('/..')
+        else:               # Submit the job on the cluster
+            os.system('cd ' + self.deck_path + f' && qsub {self.qsub_name}')
+
+    def full_build_run(self) -> None:
+        self.save_deck()
+        self.save_qsub_file()
+        self.run_deck()
+
+    def get_results(self) -> bool:
+        # Check if SERPENT is done
+        if os.path.exists(self.deck_path+'/done.out') and \
+            os.path.getsize(self.deck_path+'/done.out') > 30:
+            pass
+        else:                   # Calculation not done yet
+            return False
+        # Get results
+        if not self.refuel: # No refueling
+            results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_res.m")
+            # Get k-eff value and error
+            k = results.resdata['anaKeff'][0]
+            k_err = results.resdata['anaKeff'][1] * k
+            self.k  = [k, k_err]
+            # Get neutron generation time and error
+            ngt = results.resdata["adjNauchiGenTime"][0]
+            ngt_err = results.resdata["adjNauchiGenTime"][1] * ngt
+            self.ngt   = [ngt, ngt_err]
+            # Get betas and error
+            betas = results.resdata["adjNauchiBetaEff"]
+            self.betas = []
+            for i in range(len(betas)//2):
+                if i == 0:
+                    beta_tot = betas[i]
+                    beta_tot_err = betas[i+1] * beta_tot
+                    self.beta_tot = [beta_tot, beta_tot_err]
+                else:
+                    beta = betas[i*2]
+                    beta_err = betas[i*2+1] * beta
+                    self.betas.append([beta, beta_err])
+            return True
+        if self.refuel:
+            results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_res.m")
+            burn_results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_dep.m")
+            # daysteps for burnup calc
+            self.days = burn_results.days
+            # K values
+            self.k = [[k[0], k[1]*k[0]] for k in results.resdata['anaKeff']]
+            # Neutron generation times for burnup calc
+            self.ngt = [[n[0],n[1]*n[0]] for n in results.resdata['adjNauchiGenTime']]
+            # Beta total for burnup calc
+            self.beta_tot = [[b[0], b[1]*b[0]] for b in results.resdata['adjNauchiBetaEff']]
+            # Betas for burnup calc
+            betas = results.resdata['adjNauchiBetaEff']
+            self.betas = []
+            for i in range(len(self.days)):
+                beta = []
+                for j in range(len(betas[i])//2):
+                    if j == 0:
+                        pass
+                    else:
+                        b = betas[i][j*2]
+                        b_err = betas[i][j*2 + 1] * b
+                        beta.append([b,b_err])
+                self.betas.append(beta)
+            return True
+
+
+
+
+
+
 
 
 
 
 if __name__ == '__main__':
     test = serpDeck()
-    test.do_plots = True
-    #test.control_rods[0] = 1
-    #test.control_rods[1] = 1
-    #test.control_rods[2] = 1
-    #test.control_rods[3] = 1
-
-    test.mod_tempK = 300
-    test._save_deck()
+    #test.do_plots = True
+    test.refuel = True
+    #test.save_deck()
     #os.system('sss2 -plot -omp 20 nerthus/nerthus')
+    #test.queue = 'fill'
+    #test.ompcores = 20
+    #test.histories = 100
+    #test.ngen = 10
+    #test.nskip = 5
+    #test.full_build_run()
+    test.deck_name = 'core'
+    print(test.get_results())
+    print(test.betas)
