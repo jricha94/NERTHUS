@@ -58,7 +58,7 @@ class serpDeck(object):
         self.gr_lib:str                 = '09c'                 # XS temp. selection for graphite
         self.lib:str                    = '09c'                 # XS temp. selection for other materials
         self.histories:int              = 20000                 # Number of histories to run per generation
-        self.ngen:int                   = 50 #200                   # Number of active generations
+        self.ngen:int                   = 60 #200                   # Number of active generations
         self.nskip:int                  = 20 #60                    # Number of inactive generations
         self.queue:str                  = 'fill'                # NECluster torque queue ('local' to run on your machine)
         self.ompcores:int               = 8                     # OMP cores used when running SERPENT
