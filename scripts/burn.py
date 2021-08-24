@@ -42,7 +42,6 @@ class burn(object):
         self.refuel_lower:float = 1e-10
 
 
-
     def get_enrichment(self) -> bool:
         #Create edge cases
         rho0:float = 1.0
