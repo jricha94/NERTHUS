@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+# TODO change generations back to normal after testing done
+
 
 from deck import serpDeck
 import numpy as np
@@ -33,7 +35,7 @@ class burn(object):
 
         # refuel rate variales
         self.refuel_path:str = os.getcwd() + '/refuel'
-        self.refuel_enr:float = .1975
+        self.refuel_enr:float = .1
         self.k_diff:float = 1.0
         self.min_k_diff:float = 0.00665
         self.run_max:int = 12
@@ -41,6 +43,8 @@ class burn(object):
         self.refuel_upper:float= 1e-5
         self.refuel_lower:float = 1e-10
 
+    def test(self):
+        print('This works')
 
     def get_enrichment(self) -> bool:
         #Create edge cases
