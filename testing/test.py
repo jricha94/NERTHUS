@@ -13,5 +13,7 @@ from burn import burn
 
 test = burn('flibe', 'flibe')
 
+test.histories = 8000
+
 test.get_enrichment()
 test.save_enrs()

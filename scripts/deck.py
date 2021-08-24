@@ -993,7 +993,7 @@ class serpDeck(object):
         qsub_content = dedent(f'''
             #!/bin/bash
             #PBS -V
-            #PBS -N ThorCon_like_lat
+            #PBS -N NERTHUS
             #PBS -q {self.queue}
             #PBS -l nodes=1:ppn={self.ompcores}
             hostname
