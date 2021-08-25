@@ -43,9 +43,6 @@ class burn(object):
         self.refuel_upper:float= 1e-5
         self.refuel_lower:float = 1e-10
 
-    def test(self):
-        print('This works')
-
     def get_enrichment(self) -> bool:
         #Create edge cases
         rho0:float = 1.0
@@ -126,7 +123,6 @@ class burn(object):
             nert.ompcores = self.ompcores
             nert.deck_path = self.enr_path + '/nert'
             nert.deck_name = 'nert_deck'
-            nert.thermal_expansion = thermal_expansion
 
             nert.full_build_run()
 
