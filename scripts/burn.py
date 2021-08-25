@@ -28,6 +28,7 @@ class burn(object):
         self.enr_path:str = os.getcwd() + '/enr_search'
         self.enr_min:float = 0.01
         self.enr_max:float = 0.2
+        self.enr_eps:float = 1e-9
         self.rho_tgt:float = 100.0
         self.rho_eps:float = 100.0
         self.RhoData = namedtuple("rhoData", 'enr rho rho_err')

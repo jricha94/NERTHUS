@@ -13,7 +13,7 @@ from burn import burn
 
 test = burn('flibe', 'flibe')
 
-test.histories = 8000
+test.histories = 1000
 test.enr_min = 0.01
 test.enr_max = 0.05
 
