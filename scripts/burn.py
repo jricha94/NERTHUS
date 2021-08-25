@@ -27,7 +27,7 @@ class burn(object):
         # Enrichment search varibles
         self.enr_path:str = os.getcwd() + '/enr_search'
         self.enr_min:float = 0.01
-        self.enr_max:float = .2
+        self.enr_max:float = 0.2
         self.rho_tgt:float = 100.0
         self.rho_eps:float = 100.0
         self.RhoData = namedtuple("rhoData", 'enr rho rho_err')
@@ -49,8 +49,8 @@ class burn(object):
         rho1:float = -1.0
         enr0:float = self.enr_min
         enr1:float = self.enr_max
-        rho0err:float = 0.0
-        rho1err:float = 0.0
+        rho0_err:float = 0.0
+        rho1_err:float = 0.0
 
         while rho0 > 0.0 or rho1 < 0.0:
             # Make edge cores
@@ -58,13 +58,13 @@ class burn(object):
             nert0.queue = self.queue
             nert0.ompcores = self.ompcores
             nert0.deck_path = self.enr_path + '/nert0'
-            nert0.deck_name = 'nert0_deck'
+            nert0.deck_name = 'nert0'
 
             nert1 = serpDeck(fuel_salt = self.fuel_salt, enr = enr1)
             nert1.queue = self.queue
             nert1.ompcores = self.ompcores
             nert1.deck_path = self.enr_path + '/nert1'
-            nert1.deck_name = 'nert1_deck'
+            nert1.deck_name = 'nert1'
 
             # Run edge cases
             nert0.full_build_run()
@@ -97,17 +97,17 @@ class burn(object):
                 if self.enr_max > 0.99:     # Sanity check
                     self.enr_max = 0.99
 
-        self.rholist.append(self.RhoData(enr0, rho0, rho0err))
-        self.rholist.append(self.RhoData(enr1, rho1, rho1err))
+        self.rholist.append(self.RhoData(enr0, rho0, rho0_err))
+        self.rholist.append(self.RhoData(enr1, rho1, rho1_err))
 
-        n_enr:int = 0
+        n_iter:int = 0
         side:int = 0
         enri:float = None
         rhoi:float = None
         rhoierr:float = None
         os.chdir(self.enr_path)
-        while n_enr < self.enr_max:
-            n_enr += 1
+        while n_iter < self.enr_max:
+            n_iter += 1
             d_rho = rho0 - rho1
             if d_rho == 0.0:
                 print('ERROR: divide by 0')
@@ -122,7 +122,7 @@ class burn(object):
             nert.queue = self.queue
             nert.ompcores = self.ompcores
             nert.deck_path = self.enr_path + '/nert'
-            nert.deck_name = 'nert_deck'
+            nert.deck_name = 'nerthus'
 
             nert.full_build_run()
 
