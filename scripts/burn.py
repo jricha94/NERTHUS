@@ -33,6 +33,7 @@ class burn(object):
         self.rho_eps:float = 100.0
         self.RhoData = namedtuple("rhoData", 'enr rho rho_err')
         self.rholist = []
+        self.iter_max:int  = 20
 
         # refuel rate variales
         self.refuel_path:str = os.getcwd() + '/refuel'
@@ -107,7 +108,7 @@ class burn(object):
         rhoi:float = None
         rhoierr:float = None
         os.chdir(self.enr_path)
-        while n_iter < self.enr_max:
+        while n_iter < self.iter_max:
             n_iter += 1
             d_rho = rho0 - rho1
             if d_rho == 0.0:
