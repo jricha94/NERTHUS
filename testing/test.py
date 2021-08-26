@@ -6,6 +6,7 @@ import os
 cwd = os.getcwd()
 os.chdir('..')
 script_path = os.getcwd() + '/scripts'
+print(script_path)
 os.chdir(cwd)
 sys.path.insert(1, script_path)
 
@@ -14,8 +15,9 @@ from burn import burn
 test = burn('flibe', 'flibe')
 
 test.histories = 300
-test.enr_min = 0.01
-test.enr_max = 0.05
 
-test.get_enrichment()
-test.save_enrs()
+test.refuel_min = 1e-11
+test.refuel_max = 1e-8
+
+test.read_enrs_if_done()
+test.get_refuel_rate()

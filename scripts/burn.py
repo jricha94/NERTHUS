@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 # TODO change generations back to normal after testing done
-
+# TODO put depletion back to normal
 
 from deck import serpDeck
 import numpy as np
@@ -31,8 +31,9 @@ class burn(object):
         self.enr_eps:float = 1e-9
         self.rho_tgt:float = 100.0
         self.rho_eps:float = 100.0
+        self.conv_enr:float = None
         self.RhoData = namedtuple("rhoData", 'enr rho rho_err')
-        self.rholist = []
+        self.rholist:list = []
         self.iter_max:int  = 20
 
         # refuel rate variales
@@ -41,8 +42,12 @@ class burn(object):
         self.refuel_min:float = 1e-10
         self.refuel_max:float = 1e-5
         self.refuel_eps:float = 1e-9
-        self.k_tgt:float      = 1.0065
-        
+        self.k_diff_tgt:float      = 0.003
+        self.k_diff_eps:float      = 0.003
+        self.refuelData = namedtuple("refuelData", 'rate k k_err')
+        self.refuel_list:list = []
+        self.refuel_iter:int = 20
+
 
     def get_enrichment(self) -> bool:
         #Create edge cases
@@ -156,7 +161,7 @@ class burn(object):
 
         return True
 
-    def save_enrs(self, save_file:str='converge_data.txt'):
+    def save_enrs(self, save_file:str='enr_data.txt'):
         'save history of the enrative search'
         if not self.rholist:
             print("Warning: No enrations to save!")
@@ -174,6 +179,170 @@ class burn(object):
                   self.enr_path + '/' + save_file)
             print(e)
 
+    def read_enrs_if_done(self, save_file:str='enr_data.txt') -> bool:
+        'Try to load previous search file'
+        if os.path.exists(self.enr_path + '/' + save_file) and \
+                os.path.getsize(self.enr_path + '/' + save_file) > 50:
+            fh = open(self.enr_path + '/' + save_file, 'r')
+        else:
+            return False
+        myline = fh.readline().strip()
+        mysalt = myline.split()[-1]
+
+        if not (mysalt==self.fuel_salt):
+            print("ERROR: Lattice parameters do not match!")
+            return False
+        for myline in fh.readlines():
+            myline = myline.strip().split()
+            myenr = float(myline[0])
+            myrho = float(myline[1])
+            myrhoerr = float(myline[2])
+            self.rholist.append(self.RhoData(myenr, myrho, myrhoerr))
+
+        if len(self.rholist) < 3:
+            return False
+
+        found_rho0   = self.rholist[-1][1]
+        if abs(found_rho0 - self.rho_tgt) < self.rho_eps:
+            self.conv_enr    = self.rholist[-1][0]
+            self.conv_rho    = self.rholist[-1][1]
+            self.conv_rhoerr = self.rholist[-1][2]
+            return True
+        else:
+            return False
+
     def get_refuel_rate(self) -> bool:
-        if not conv_enr:
+        if not self.conv_enr:
             print('Error: need critical enrichment [run get_enrichment()]')
+            return False
+        # Create edge cases
+        k_diff0:float = 1.0
+        k_diff1:float = -1.0
+        rate0:float = self.refuel_min
+        rate1:float = self.refuel_max
+        kd0_err:float = 0.0
+        kd1_err:float = 0.0
+
+        while k_diff0 > 0.0 and k_diff1 < 1.0:
+            nert0 = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
+            nert0.refuel_rate = self.refuel_min
+            nert0.queue = self.queue
+            nert0.ompcores = self.ompcores
+            nert0.deck_path = self.refuel_path + '/nert0'
+            nert0.deck_name = 'nert0'
+
+            nert1 = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
+            nert1.refuel_rate = self.refuel_max
+            nert1.queue = self.queue
+            nert1.ompcores = self.ompcores
+            nert1.deck_path = self.refuel_path + '/nert1'
+            nert1.deck_name = 'nert1'
+
+            nert0.full_build_run()
+            nert1.full_build_run()
+
+            is_done = False
+            while not is_done:
+                if nert0.get_results and nert1.get_results():
+                    is_done = True
+
+            nert0.cleanup()
+            nert1.cleanup()
+
+            k_diff0 = nert0.k[0][0] - nert0.k[-1][0]
+            k_diff1 = nert1.k[0][0] - nert1.k[-1][0]
+            rate0   = self.refuel_min
+            rate1   = self.refuel_max
+            kd0_err = np.sqrt((nert0.k[0][1])**2 + (nert0.k[-1][1])**2)
+            kd1_err = np.sqrt((nert1.k[0][1])**2 + (nert1.k[-1][1])**2)
+
+            if kd0_err > 0.0:
+                self.refuel_min /= 10.0
+            if kd1_err < 0.0:
+                self.refuel_max *= 10.0
+
+        self.refuel_list.append(self.refuelData(rate0, k_diff0, kd0_err))
+        self.refuel_list.append(self.refuelData(rate1, k_diff1, kd1_err))
+
+        n_iter:int = 0
+        side:int = 0
+        ratei:float = None
+        k_diffi:float = None
+        kd_err:float = None
+        os.chdir(self.refuel_path)
+        while n_iter < self.refuel_iter:
+            n_iter += 1
+            k_diff = k_diff0 - k_diff1
+            if k_diff == 0.0:
+                print('ERROR: divide by 0')
+                return False
+
+        ratei = ((k_diff0-self.k_diff_tgt)*rate1 - (k_diff1 - self.k_diff_tgt)*rate0) / k_diff
+
+        if abs(rate1-rate0) < self.refuel_eps*abs(rate1+rate0):
+            break # Close enough, all good
+
+        os.chdir(self.refuel_path)
+        nert = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
+        nert.refuel_rate = ratei
+        nert.queue = self.queue
+        nert.ompcores = self.ompcores
+        nert.deck_path = self.refuel_path + '/nert'
+        nert.deck_name = 'nerthus'
+
+        nert.full_build_run()
+
+        while not nert.get_results:
+            time.sleep(SLEEP_SEC)
+
+        nert.cleanup()
+
+        k_diff = nert.k[0][0] - nert.k[-1][0]
+        kd_err = np.sqrt((nert.k[0][1])**2 + (nert.k[-1][1])**2)
+        self.refuel_list.append(self.refuelData(ratei, k_diff, dk_err))
+
+        if (k_diff-self.k_diff_tgt)*(k_diff-self.rho_tgt) > 0.0:
+            rate1 = ratei
+            k_diff1 = k_diff
+            if side == -1:
+                k_diff0 = (k_diff0-self.k_diff_tgt)/2.0 + self.k_diff_tgt
+            side = -1
+        if (k_diff0-self.k_diff_tgt)*(k_diff-self.k_diff_tgt) > 0.0:
+            rate0 = ratei
+            k_diff0 = k_diff
+            if side == 1:
+                k_diff1 = (k_diff1 - self.k_diff_tgt)/2.0 + self.k_diff_tgt
+            side = 1
+        if abs(k_diff-self.k_diff_tgt) < self.k_diff_eps:
+            break
+
+    self.conv_rate = ratei
+    self.conv_k_diff = k_diff
+    self.conv_kd_err = kd_err
+
+    return True
+
+def save_refuel(self, save_file:str='refuel_data.txt'):
+    if not self.refuel_list:
+        print('Warning: No refuel data to save')
+        return
+    result = f'rate    k diff     k diff err for {self.fuel_salt} refueled with {self.refuel_salt}\n'
+    for r in self.refuel_list:
+        result += f'{r[0]} {r[1]:.8f} {r[2]:.8f}'
+
+    try:
+        fh = open(self.refuel_path + '/' + save_file, 'w')
+        fs.write(result)
+        fh.close()
+    except IOError as e:
+        print('[ERROR] Unable to write file: ',
+                self.refuel_path + '/' + save_file)
+        print(e)
+
+
+
+
+if __name__ == '__main__':
+    test = burn()
+    test.read_enrs_if_done()
+    print(test.conv_enr)
