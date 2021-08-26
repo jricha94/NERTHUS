@@ -38,12 +38,11 @@ class burn(object):
         # refuel rate variales
         self.refuel_path:str = os.getcwd() + '/refuel'
         self.refuel_enr:float = .1
-        self.k_diff:float = 1.0
-        self.min_k_diff:float = 0.00665
-        self.run_max:int = 12
-        self.refuel_rate:float =  1e-7
-        self.refuel_upper:float= 1e-5
-        self.refuel_lower:float = 1e-10
+        self.refuel_min:float = 1e-10
+        self.refuel_max:float = 1e-5
+        self.refuel_eps:float = 1e-9
+        self.k_tgt:float      = 1.0065
+        
 
     def get_enrichment(self) -> bool:
         #Create edge cases
@@ -178,31 +177,3 @@ class burn(object):
     def get_refuel_rate(self) -> bool:
         if not conv_enr:
             print('Error: need critical enrichment [run get_enrichment()]')
-        while self.k_diff > self.min_k_diff and run < self.max_run:
-            nert = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
-            nert.queue = self.queue
-            nert.ompcores = self.ompcores
-            nert.deck_path = self.refuel_path + '/refuel' + str(run)
-            nert.refuel_rate = self.refuel_rate
-            nert.full_build_run()
-
-            is_done = False
-            while not is_done:
-                if lat.get_results():
-                    is_done = True
-                time.sleep(SLEEP_SEC)
-
-            start_k = nert.k[0][0]
-            end_k   = nert.k[-1][0]
-            self.k_diff = abs(start_k-end_k)
-
-            if end_k > start_k:
-                old_rate  = self.refuel_rate
-                self.refuel_rate = (old_rate+self.refuel_lower)/2.0
-                self.refuel_upper = old_rate
-            else:
-                old_rate = self.refuel_rate
-                self.refuel_rate = (old_rate+self.refuel_upper)/2.0
-                self.refuel_lower = old_rate
-            run += 1
-        return True
