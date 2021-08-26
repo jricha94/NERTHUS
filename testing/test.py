@@ -21,3 +21,4 @@ test.refuel_max = 1e-8
 
 test.read_enrs_if_done()
 test.get_refuel_rate()
+

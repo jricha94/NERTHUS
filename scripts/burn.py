@@ -322,22 +322,22 @@ class burn(object):
 
         return True
 
-def save_refuel(self, save_file:str='refuel_data.txt'):
-    if not self.refuel_list:
-        print('Warning: No refuel data to save')
-        return
-    result = f'rate    k diff     k diff err for {self.fuel_salt} refueled with {self.refuel_salt}\n'
-    for r in self.refuel_list:
-        result += f'{r[0]} {r[1]:.8f} {r[2]:.8f}'
+    def save_refuel(self, save_file:str='refuel_data.txt'):
+        if not self.refuel_list:
+            print('Warning: No refuel data to save')
+            return
+        result = f'rate    k diff     k diff err for {self.fuel_salt} refueled with {self.refuel_salt}\n'
+        for r in self.refuel_list:
+            result += f'{r[0]} {r[1]:.8f} {r[2]:.8f}'
 
-    try:
-        fh = open(self.refuel_path + '/' + save_file, 'w')
-        fs.write(result)
-        fh.close()
-    except IOError as e:
-        print('[ERROR] Unable to write file: ',
+        try:
+            fh = open(self.refuel_path + '/' + save_file, 'w')
+            fs.write(result)
+            fh.close()
+        except IOError as e:
+            print('[ERROR] Unable to write file: ',
                 self.refuel_path + '/' + save_file)
-        print(e)
+            print(e)
 
 
 
