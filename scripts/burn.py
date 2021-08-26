@@ -277,50 +277,50 @@ class burn(object):
                 print('ERROR: divide by 0')
                 return False
 
-        ratei = ((k_diff0-self.k_diff_tgt)*rate1 - (k_diff1 - self.k_diff_tgt)*rate0) / k_diff
+            ratei = ((k_diff0-self.k_diff_tgt)*rate1 - (k_diff1 - self.k_diff_tgt)*rate0) / k_diff
 
-        if abs(rate1-rate0) < self.refuel_eps*abs(rate1+rate0):
-            break # Close enough, all good
+            if abs(rate1-rate0) < self.refuel_eps*abs(rate1+rate0):
+                break # Close enough, all good
 
-        os.chdir(self.refuel_path)
-        nert = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
-        nert.refuel_rate = ratei
-        nert.queue = self.queue
-        nert.ompcores = self.ompcores
-        nert.deck_path = self.refuel_path + '/nert'
-        nert.deck_name = 'nerthus'
+            os.chdir(self.refuel_path)
+            nert = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
+            nert.refuel_rate = ratei
+            nert.queue = self.queue
+            nert.ompcores = self.ompcores
+            nert.deck_path = self.refuel_path + '/nert'
+            nert.deck_name = 'nerthus'
 
-        nert.full_build_run()
+            nert.full_build_run()
 
-        while not nert.get_results:
-            time.sleep(SLEEP_SEC)
+            while not nert.get_results:
+                time.sleep(SLEEP_SEC)
 
-        nert.cleanup()
+            nert.cleanup()
 
-        k_diff = nert.k[0][0] - nert.k[-1][0]
-        kd_err = np.sqrt((nert.k[0][1])**2 + (nert.k[-1][1])**2)
-        self.refuel_list.append(self.refuelData(ratei, k_diff, dk_err))
+            k_diff = nert.k[0][0] - nert.k[-1][0]
+            kd_err = np.sqrt((nert.k[0][1])**2 + (nert.k[-1][1])**2)
+            self.refuel_list.append(self.refuelData(ratei, k_diff, dk_err))
 
-        if (k_diff-self.k_diff_tgt)*(k_diff-self.rho_tgt) > 0.0:
-            rate1 = ratei
-            k_diff1 = k_diff
-            if side == -1:
-                k_diff0 = (k_diff0-self.k_diff_tgt)/2.0 + self.k_diff_tgt
-            side = -1
-        if (k_diff0-self.k_diff_tgt)*(k_diff-self.k_diff_tgt) > 0.0:
-            rate0 = ratei
-            k_diff0 = k_diff
-            if side == 1:
-                k_diff1 = (k_diff1 - self.k_diff_tgt)/2.0 + self.k_diff_tgt
-            side = 1
-        if abs(k_diff-self.k_diff_tgt) < self.k_diff_eps:
-            break
+            if (k_diff-self.k_diff_tgt)*(k_diff-self.rho_tgt) > 0.0:
+                rate1 = ratei
+                k_diff1 = k_diff
+                if side == -1:
+                    k_diff0 = (k_diff0-self.k_diff_tgt)/2.0 + self.k_diff_tgt
+                side = -1
+            if (k_diff0-self.k_diff_tgt)*(k_diff-self.k_diff_tgt) > 0.0:
+                rate0 = ratei
+                k_diff0 = k_diff
+                if side == 1:
+                    k_diff1 = (k_diff1 - self.k_diff_tgt)/2.0 + self.k_diff_tgt
+                side = 1
+            if abs(k_diff-self.k_diff_tgt) < self.k_diff_eps:
+                break
 
-    self.conv_rate = ratei
-    self.conv_k_diff = k_diff
-    self.conv_kd_err = kd_err
+        self.conv_rate = ratei
+        self.conv_k_diff = k_diff
+        self.conv_kd_err = kd_err
 
-    return True
+        return True
 
 def save_refuel(self, save_file:str='refuel_data.txt'):
     if not self.refuel_list:
