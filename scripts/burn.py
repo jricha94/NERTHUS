@@ -248,10 +248,6 @@ class burn(object):
             nert0.get_results()
             nert1.get_results()
 
-            if cleanup:
-                nert0.cleanup()
-                nert1.cleanup()
-
             k_diff0 = nert0.k[0][0] - nert0.k[-1][0]
             k_diff1 = nert1.k[0][0] - nert1.k[-1][0]
             rate0   = self.refuel_min
@@ -263,6 +259,11 @@ class burn(object):
                 self.refuel_min /= 10.0
             if kd1_err < 0.0:
                 self.refuel_max *= 10.0
+
+            if cleanup:
+                nert0.cleanup()
+                nert1.cleanup()
+
 
         self.refuel_list.append(self.refuelData(rate0, k_diff0, kd0_err))
         self.refuel_list.append(self.refuelData(rate1, k_diff1, kd1_err))
