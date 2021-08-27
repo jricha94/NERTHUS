@@ -245,6 +245,8 @@ class burn(object):
             while not is_done:
                 if nert0.get_results and nert1.get_results():
                     is_done = True
+            nert0.get_results()
+            nert1.get_results()
 
             if cleanup:
                 nert0.cleanup()
@@ -296,7 +298,8 @@ class burn(object):
             while not nert.get_results:
                 time.sleep(SLEEP_SEC)
 
-            nert.cleanup()
+            if cleanup:
+                nert.cleanup()
 
             k_diff = nert.k[0][0] - nert.k[-1][0]
             kd_err = np.sqrt((nert.k[0][1])**2 + (nert.k[-1][1])**2)

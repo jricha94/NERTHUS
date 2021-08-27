@@ -1112,7 +1112,7 @@ if __name__ == '__main__':
     #test.ngen = 10
     #test.nskip = 5
     #test.full_build_run()
-    test.deck_name = 'core'
-    test.deck_path = '/home/jarod/Projects/NERTHUS/nerthus'
+    test.deck_name = 'nerthus'
+    test.deck_path = '/home/jarod/Projects/NERTHUS/testing/refuel/edge0'
     print(test.get_results())
     print(test.k)
