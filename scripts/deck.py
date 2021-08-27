@@ -897,6 +897,7 @@ class serpDeck(object):
             set pop {self.histories} {self.ngen} {self.nskip} % {self.histories} neutrons, {self.ngen} active cycles, {self.nskip} inactive cycles
             set arr 2
             set printm 1
+            set mcvol 10000000
             ''')
 
         if self.nuc_libs == 'ENDF7':
