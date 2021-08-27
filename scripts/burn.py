@@ -260,9 +260,8 @@ class burn(object):
             if kd1_err < 0.0:
                 self.refuel_max *= 10.0
 
-            if cleanup:
-                nert0.cleanup()
-                nert1.cleanup()
+            nert0.cleanup()
+            nert1.cleanup()
 
 
         self.refuel_list.append(self.refuelData(rate0, k_diff0, kd0_err))
