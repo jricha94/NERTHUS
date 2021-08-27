@@ -211,7 +211,7 @@ class burn(object):
         else:
             return False
 
-    def get_refuel_rate(self) -> bool:
+    def get_refuel_rate(self, cleanup:bool=False) -> bool:
         if not self.conv_enr:
             print('Error: need critical enrichment [run get_enrichment()]')
             return False
@@ -228,15 +228,15 @@ class burn(object):
             nert0.refuel_rate = self.refuel_min
             nert0.queue = self.queue
             nert0.ompcores = self.ompcores
-            nert0.deck_path = self.refuel_path + '/nert0'
-            nert0.deck_name = 'nert0'
+            nert0.deck_path = self.refuel_path + '/edge0'
+            nert0.deck_name = 'nerthus'
 
             nert1 = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
             nert1.refuel_rate = self.refuel_max
             nert1.queue = self.queue
             nert1.ompcores = self.ompcores
-            nert1.deck_path = self.refuel_path + '/nert1'
-            nert1.deck_name = 'nert1'
+            nert1.deck_path = self.refuel_path + '/edge1'
+            nert1.deck_name = 'nerthus'
 
             nert0.full_build_run()
             nert1.full_build_run()
@@ -246,8 +246,9 @@ class burn(object):
                 if nert0.get_results and nert1.get_results():
                     is_done = True
 
-            nert0.cleanup()
-            nert1.cleanup()
+            if cleanup:
+                nert0.cleanup()
+                nert1.cleanup()
 
             k_diff0 = nert0.k[0][0] - nert0.k[-1][0]
             k_diff1 = nert1.k[0][0] - nert1.k[-1][0]
@@ -287,7 +288,7 @@ class burn(object):
             nert.refuel_rate = ratei
             nert.queue = self.queue
             nert.ompcores = self.ompcores
-            nert.deck_path = self.refuel_path + '/nert'
+            nert.deck_path = self.refuel_path + '/nert' + str(n_iter)
             nert.deck_name = 'nerthus'
 
             nert.full_build_run()

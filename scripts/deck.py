@@ -1113,5 +1113,6 @@ if __name__ == '__main__':
     #test.nskip = 5
     #test.full_build_run()
     test.deck_name = 'core'
+    test.deck_path = '/home/jarod/Projects/NERTHUS/nerthus'
     print(test.get_results())
-    print(test.betas)
+    print(test.k)
