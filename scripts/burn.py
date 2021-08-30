@@ -243,7 +243,7 @@ class burn(object):
 
             is_done = False
             while not is_done:
-                if nert0.get_results and nert1.get_results():
+                if nert0.get_results() and nert1.get_results():
                     is_done = True
             nert0.get_results()
             nert1.get_results()
