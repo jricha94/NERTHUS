@@ -565,7 +565,7 @@ mat overflow -0.001 burn 1 vol 1e9 tmp 900.0
 set pcc 0 % predictor-corrector turned off for depletion
 
 mflow U_in
-all 1.0000000000000001e-20
+all 1e-12
 
 mflow offgasratecore
 Ne 1e-2
@@ -577,7 +577,7 @@ Rn 1e-2
 
 % Account for increase in volume with refueling
 mflow over
-all 1.0000000000000001e-20
+all 1e-12
 
 rep source_rep
 rc refuelsalt fuelsalt U_in 0
