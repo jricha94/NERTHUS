@@ -239,8 +239,8 @@ class burn(object):
             nert1.deck_path = self.refuel_path + '/edge1'
             nert1.deck_name = 'nerthus'
 
-            #nert0.full_build_run()
-            #nert1.full_build_run()
+            nert0.full_build_run()
+            nert1.full_build_run()
 
             is_done = False
             while not is_done:
