@@ -1061,6 +1061,7 @@ class serpDeck(object):
                     beta_err = betas[i*2+1] * beta
                     self.betas.append([beta, beta_err])
             return True
+
         if self.refuel: # refueling
             results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_res.m")
             burn_results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_dep.m")
