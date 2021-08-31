@@ -223,8 +223,7 @@ class burn(object):
         kd0_err:float = 0.0
         kd1_err:float = 0.0
         
-        help = True
-        while help: #k_diff0 > 0.0 and k_diff1 < 1.0:
+        while k_diff0 > 0.0 and k_diff1 < 1.0:
             nert0 = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
             nert0.refuel_rate = self.refuel_min
             nert0.queue = self.queue
@@ -258,9 +257,9 @@ class burn(object):
             kd0_err = np.sqrt((nert0.k[0][1])**2 + (nert0.k[-1][1])**2)
             kd1_err = np.sqrt((nert1.k[0][1])**2 + (nert1.k[-1][1])**2)
 
-            if kd0_err > 0.0:
+            if k_diff0 > 0.0:
                 self.refuel_min /= 10.0
-            if kd1_err < 0.0:
+            if k_diff1 < 0.0:
                 self.refuel_max *= 10.0
 
             nert0.cleanup()

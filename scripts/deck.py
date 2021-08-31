@@ -1061,6 +1061,7 @@ class serpDeck(object):
                     beta_err = betas[i*2+1] * beta
                     self.betas.append([beta, beta_err])
             return True
+
         if self.refuel: # refueling
             results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_res.m")
             burn_results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_dep.m")
@@ -1074,17 +1075,14 @@ class serpDeck(object):
             self.beta_tot = [[b[0], b[1]*b[0]] for b in results.resdata['adjNauchiBetaEff']]
             # Betas for burnup calc
             betas = results.resdata['adjNauchiBetaEff']
-            print(self.k)
             self.betas = []
             for i in range(len(self.days)):
                 beta = []
                 for j in range(len(betas[i])//2):
                     if j == 0:
-                        print('break')
                         pass
                     else:
                         b = betas[i][j*2]
-                        print(b)
                         b_err = betas[i][j*2 + 1] * b
                         beta.append([b,b_err])
                 self.betas.append(beta)
