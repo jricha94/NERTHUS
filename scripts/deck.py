@@ -1074,14 +1074,17 @@ class serpDeck(object):
             self.beta_tot = [[b[0], b[1]*b[0]] for b in results.resdata['adjNauchiBetaEff']]
             # Betas for burnup calc
             betas = results.resdata['adjNauchiBetaEff']
+            print(self.k)
             self.betas = []
             for i in range(len(self.days)):
                 beta = []
                 for j in range(len(betas[i])//2):
                     if j == 0:
+                        print('break')
                         pass
                     else:
                         b = betas[i][j*2]
+                        print(b)
                         b_err = betas[i][j*2 + 1] * b
                         beta.append([b,b_err])
                 self.betas.append(beta)

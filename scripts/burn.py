@@ -222,8 +222,9 @@ class burn(object):
         rate1:float = self.refuel_max
         kd0_err:float = 0.0
         kd1_err:float = 0.0
-
-        while k_diff0 > 0.0 and k_diff1 < 1.0:
+        
+        help = True
+        while help: #k_diff0 > 0.0 and k_diff1 < 1.0:
             nert0 = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
             nert0.refuel_rate = self.refuel_min
             nert0.queue = self.queue
@@ -238,8 +239,8 @@ class burn(object):
             nert1.deck_path = self.refuel_path + '/edge1'
             nert1.deck_name = 'nerthus'
 
-            nert0.full_build_run()
-            nert1.full_build_run()
+            #nert0.full_build_run()
+            #nert1.full_build_run()
 
             is_done = False
             while not is_done:
@@ -250,6 +251,8 @@ class burn(object):
 
             k_diff0 = nert0.k[0][0] - nert0.k[-1][0]
             k_diff1 = nert1.k[0][0] - nert1.k[-1][0]
+            print(k_diff0)
+            print(k_diff1)
             rate0   = self.refuel_min
             rate1   = self.refuel_max
             kd0_err = np.sqrt((nert0.k[0][1])**2 + (nert0.k[-1][1])**2)
@@ -260,15 +263,14 @@ class burn(object):
             if kd1_err < 0.0:
                 self.refuel_max *= 10.0
 
-            if cleanup:
-                nert0.cleanup()
-                nert1.cleanup()
+            nert0.cleanup()
+            nert1.cleanup()
 
 
         self.refuel_list.append(self.refuelData(rate0, k_diff0, kd0_err))
         self.refuel_list.append(self.refuelData(rate1, k_diff1, kd1_err))
 
-        n_iter:int = 0
+        n_iter:int = 100
         side:int = 0
         ratei:float = None
         k_diffi:float = None
