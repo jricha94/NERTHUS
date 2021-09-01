@@ -48,7 +48,6 @@ class burn(object):
         self.refuel_list:list = []
         self.refuel_iter:int = 20
 
-
     def get_enrichment(self) -> bool:
         #Create edge cases
         rho0:float = 1.0
@@ -346,7 +345,40 @@ class burn(object):
                 self.refuel_path + '/' + save_file)
             print(e)
 
+    def read_refuel_if_done(self, save_file:str='refuel_data.txt'):
+         'Try to load previous search file'
+        if os.path.exists(self.refuel_path + '/' + save_file) and \
+                os.path.getsize(self.refuel_path + '/' + save_file) > 50:
+            fh = open(self.refuel_path + '/' + save_file, 'r')
+        else:
+            return False
+        myline = fh.readline().strip()
+        mysalt = myline.split()[-1]
 
+        if not (mysalt==self.fuel_salt):
+            print('ERROR: Lattice parameters do not match!')
+            return False
+
+        for myline in fh.readlines():
+            myline = myline.strip().split()
+            myrate = float(myline[0])
+            mykdiff = float(myline[1])
+            mykderr = float(myline[2])
+            self.refuel_list.append(self.RefuelData(myrate, mykdiff, mykderr))
+
+        if len(self.refuel_list) < 3:
+            return False
+
+        found_kdiff = self.refuel_list[-1][1]
+        if abs(found_kdiff - self.k_diff_tgt) < self.k_diff_eps:
+            self.conv_rate = self.refuel_list[-1][0]
+            self.conv_k_diff = self.refuel_list[-1][1]
+            self.conv_kd_err = self.refuel_list[-1][2]
+            return True
+        else:
+            return False
+
+        
 
 
 if __name__ == '__main__':
