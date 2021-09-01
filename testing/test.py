@@ -6,7 +6,6 @@ import os
 cwd = os.getcwd()
 os.chdir('..')
 script_path = os.getcwd() + '/scripts'
-print(script_path)
 os.chdir(cwd)
 sys.path.insert(1, script_path)
 
