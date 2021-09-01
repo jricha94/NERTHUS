@@ -243,6 +243,7 @@ class burn(object):
 
             is_done = False
             while not is_done:
+                time.sleep(SLEEP_SEC)
                 if nert0.get_results() and nert1.get_results():
                     is_done = True
             nert0.get_results()
@@ -269,7 +270,7 @@ class burn(object):
         self.refuel_list.append(self.refuelData(rate0, k_diff0, kd0_err))
         self.refuel_list.append(self.refuelData(rate1, k_diff1, kd1_err))
 
-        n_iter:int = 100
+        n_iter:int = 0
         side:int = 0
         ratei:float = None
         k_diffi:float = None
@@ -297,7 +298,7 @@ class burn(object):
 
             nert.full_build_run()
 
-            while not nert.get_results:
+            while not nert.get_results():
                 time.sleep(SLEEP_SEC)
 
             if cleanup:
@@ -305,7 +306,7 @@ class burn(object):
 
             k_diff = nert.k[0][0] - nert.k[-1][0]
             kd_err = np.sqrt((nert.k[0][1])**2 + (nert.k[-1][1])**2)
-            self.refuel_list.append(self.refuelData(ratei, k_diff, dk_err))
+            self.refuel_list.append(self.refuelData(ratei, k_diff, kd_err))
 
             if (k_diff-self.k_diff_tgt)*(k_diff-self.rho_tgt) > 0.0:
                 rate1 = ratei
@@ -338,7 +339,7 @@ class burn(object):
 
         try:
             fh = open(self.refuel_path + '/' + save_file, 'w')
-            fs.write(result)
+            fh.write(result)
             fh.close()
         except IOError as e:
             print('[ERROR] Unable to write file: ',
