@@ -338,7 +338,7 @@ class burn(object):
 
         try:
             fh = open(self.refuel_path + '/' + save_file, 'w')
-            fs.write(result)
+            fh.write(result)
             fh.close()
         except IOError as e:
             print('[ERROR] Unable to write file: ',
