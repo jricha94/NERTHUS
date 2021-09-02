@@ -2,7 +2,6 @@
 
 # TODO change generations back to normal after testing done
 # TODO put depletion back to normal
-
 from deck import serpDeck
 import numpy as np
 from collections import namedtuple
