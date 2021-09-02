@@ -345,8 +345,8 @@ class burn(object):
             print(e)
 
     def read_refuel_if_done(self, save_file:str='refuel_data.txt'):
-         'Try to load previous search file'
-        if os.path.exists(self.refuel_path + '/' + save_file) and \ 
+        'Try to load previous search file'
+        if os.path.exists(self.enr_path + '/' + save_file) and \
                 os.path.getsize(self.refuel_path + '/' + save_file) > 50:
             fh = open(self.refuel_path + '/' + save_file, 'r')
         else:
