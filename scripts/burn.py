@@ -302,23 +302,23 @@ class burn(object):
             if cleanup:
                 nert.cleanup()
 
-            k_diff = nert.k[0][0] - nert.k[-1][0]
-            kd_err = np.sqrt((nert.k[0][1])**2 + (nert.k[-1][1])**2)
-            self.refuel_list.append(self.refuelData(ratei, k_diff, kd_err))
+            k_diff_i = nert.k[0][0] - nert.k[-1][0]
+            kdi_err = np.sqrt((nert.k[0][1])**2 + (nert.k[-1][1])**2)
+            self.refuel_list.append(self.refuelData(ratei, k_diff_i, kdi_err))
 
-            if (k_diff-self.k_diff_tgt)*(k_diff-self.rho_tgt) > 0.0:
+            if (k_diff_i-self.k_diff_tgt)*(k_diff1-self.k_diff_tgt) > 0.0:
                 rate1 = ratei
-                k_diff1 = k_diff
+                k_diff1 = k_diff_i
                 if side == -1:
                     k_diff0 = (k_diff0-self.k_diff_tgt)/2.0 + self.k_diff_tgt
                 side = -1
-            if (k_diff0-self.k_diff_tgt)*(k_diff-self.k_diff_tgt) > 0.0:
+            if (k_diff0-self.k_diff_tgt)*(k_diff_i-self.k_diff_tgt) > 0.0:
                 rate0 = ratei
-                k_diff0 = k_diff
+                k_diff0 = k_diff_i
                 if side == 1:
                     k_diff1 = (k_diff1 - self.k_diff_tgt)/2.0 + self.k_diff_tgt
                 side = 1
-            if abs(k_diff-self.k_diff_tgt) < self.k_diff_eps:
+            if abs(k_diff_i-self.k_diff_tgt) < self.k_diff_eps:
                 break
 
         self.conv_rate = ratei
