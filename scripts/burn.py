@@ -275,6 +275,7 @@ class burn(object):
         while n_iter < self.refuel_iter:
             n_iter += 1
             d_k_diff = k_diff0 - k_diff1
+            print(d_k_diff)
             if d_k_diff == 0.0:
                 print('ERROR: divide by 0')
                 return False
@@ -332,7 +333,7 @@ class burn(object):
             return
         result = f'rate    k diff     k diff err for {self.fuel_salt} refueled with {self.refuel_salt}\n'
         for r in self.refuel_list:
-            result += f'{r[0]}\t{r[1]:.8f}\t{r[2]:.8f\n}'
+            result += f'{r[0]}\t{r[1]:.8f}\t{r[2]:.8f}\n'
 
         try:
             fh = open(self.refuel_path + '/' + save_file, 'w')
