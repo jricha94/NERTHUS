@@ -322,7 +322,7 @@ class burn(object):
                 break
 
         self.conv_rate = ratei
-        self.conv_k_diff = k_diff
+        self.conv_k_diff = k_diff_i
         self.conv_kd_err = kd_err
 
         return True
