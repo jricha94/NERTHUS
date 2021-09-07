@@ -48,7 +48,7 @@ class burn(object):
         self.refuel_iter:int = 20
 
     def get_enrichment(self) -> bool:
-        #Create edge cases
+        '''Finds critical enrichment of NERTHUS'''
         rho0:float = 1.0
         rho1:float = -1.0
         enr0:float = self.enr_min
@@ -223,7 +223,7 @@ class burn(object):
         
         while k_diff0 > 0.0 and k_diff1 < 1.0:
             nert0 = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
-            nert0.refuel_rate = self.refuel_min
+            nert0.refuel_rate = self.refuel_max
             nert0.queue = self.queue
             nert0.ompcores = self.ompcores
             nert0.deck_path = self.refuel_path + '/edge0'
@@ -247,8 +247,6 @@ class burn(object):
 
             k_diff0 = nert0.k[0][0] - nert0.k[-1][0]
             k_diff1 = nert1.k[0][0] - nert1.k[-1][0]
-            print(k_diff0)
-            print(k_diff1)
             rate0   = self.refuel_min
             rate1   = self.refuel_max
             kd0_err = np.sqrt((nert0.k[0][1])**2 + (nert0.k[-1][1])**2)
@@ -275,7 +273,6 @@ class burn(object):
         while n_iter < self.refuel_iter:
             n_iter += 1
             d_k_diff = k_diff0 - k_diff1
-            print(d_k_diff)
             if d_k_diff == 0.0:
                 print('ERROR: divide by 0')
                 return False
