@@ -106,6 +106,7 @@ class serpDeck(object):
         x_rot = x * math.cos(math.radians(rotation)) - y * math.sin(math.radians(rotation))
         y_rot = x * math.sin(math.radians(rotation)) + y * math.cos(math.radians(rotation))
         return [x_rot, y_rot]
+    
 
     def _translate(self, point:list=None, pos:list=None):
         '''Moves a point to a new location'''
