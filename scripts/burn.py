@@ -47,6 +47,12 @@ class burn(object):
         self.refuel_list:list = []
         self.refuel_iter:int = 20
 
+        # feedback coefficient variables
+        self.feedback_path = os.getcwd() + '/feedback'
+        self.feedback_temps:list = [800.0, 850.0, 900.0, 950.0, 1000.0]
+        self.base_temp:float = 900.0
+        self.feedback_runs:dict = {}
+
     def get_enrichment(self) -> bool:
         '''Finds critical enrichment of NERTHUS'''
         rho0:float = 1.0
@@ -373,6 +379,70 @@ class burn(object):
             return True
         else:
             return False
+
+    def run_feedbacks(self, feedback:str='fs.tot', thermal_expansion:bool=True, recalc:bool=False):
+        '''
+        Calculates feedback coefficients for NERTHUS
+        fs.tot = fuelsalt total feedback
+        fs.dopp = fuelsalt doppler feedback
+        fs.dens = fuelsalt density feedback
+
+        gr.tot = total graphite feedback
+
+        total = total feedback for NERTHUS
+        '''
+        for temp in self.feedback_temps:
+            fb_run_name = feedback + '.' + str(int(temp))
+            self.feedback_runs[fb_run_name] = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
+            nert = self.feedback_runs[fb_run_name] 
+            nert.queue = self.queue
+            nert.ompcores = self.ompcores
+            nert.deck_path = self.feedback_path + '/' + feedback + str(int(temp))
+            nert.refuel_rate = self.conv_rate
+            nert.thermal_expansion = thermal_expansion
+
+            if feedback == 'fs.tot':
+                nert.fs_mat_tempK = temp
+                nert.fs_dens_tempK = temp
+                nert.mod_tempK = self.base_temp + 50.0
+
+            elif feedback == 'fs.dopp':
+                nert.fs_mat_tempK = temp
+                nert.fs_dens_tempK = self.base_temp
+                nert.mod_tempK = self.base_temp + 50.0
+
+            elif feedback == 'fs.dens':
+                nert.fs_mat_tempK = self.base_temp
+                nert.fs_dens_tempK = temp
+                nert.mod_tempK = self.base_temp + 50.0
+
+            elif feedback == 'gr.tot':
+                nert.fs_mat_tempK = self.base_temp
+                nert.fs_dens_tempK = self.base_temp
+                nert.mod_tempK = temp + 50.0
+
+            elif feedback == 'total':
+                nert.fs_mat_tempK = temp
+                nert.fs_dens_tempK = temp
+                nert.mod_tempK = temp + 50.0
+
+            else:
+                raise ValueError("feedback " + feedback + ' not implemented!')
+
+            if nert.fs_mat_tempK < 900.0:
+                nert.fs_lib = '06c'
+            if nert.mod_tempK < 900.0:
+                nert.gr_lib = '06c'
+            if recalc or not nert.get_results():
+                nert.cleanup()
+                nert.full_build_run()
+
+    def get_feedbacks(self, feedback='fs.tot'):
+        pass
+
+
+
+
 
         
 

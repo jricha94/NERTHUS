@@ -107,7 +107,6 @@ class serpDeck(object):
         y_rot = x * math.sin(math.radians(rotation)) + y * math.cos(math.radians(rotation))
         return [x_rot, y_rot]
     
-
     def _translate(self, point:list=None, pos:list=None):
         '''Moves a point to a new location'''
         x, y = point[0], point[1]
@@ -1031,7 +1030,6 @@ class serpDeck(object):
         self.run_deck()
 
     def get_results(self) -> bool:
-        # Check if SERPENT is done
         if os.path.exists(self.deck_path+'/done.out') and \
             os.path.getsize(self.deck_path+'/done.out') > 30:
             pass
