@@ -229,7 +229,7 @@ class burn(object):
         
         while k_diff0 > 0.0 and k_diff1 < 1.0:
             nert0 = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
-            nert0.refuel_rate = self.refuel_max
+            nert0.refuel_rate = self.refuel_min
             nert0.queue = self.queue
             nert0.ompcores = self.ompcores
             nert0.deck_path = self.refuel_path + '/edge0'
@@ -251,12 +251,12 @@ class burn(object):
                 if nert0.get_results() and nert1.get_results():
                     is_done = True
 
-            k_diff0 = nert0.k[0][0] - nert0.k[-1][0]
-            k_diff1 = nert1.k[0][0] - nert1.k[-1][0]
+            k_diff0 = nert0.k[-1][0] - nert0.k[0][0]
+            k_diff1 = nert1.k[-1][0] - nert1.k[0][0]
             rate0   = self.refuel_min
             rate1   = self.refuel_max
-            kd0_err = np.sqrt((nert0.k[0][1])**2 + (nert0.k[-1][1])**2)
-            kd1_err = np.sqrt((nert1.k[0][1])**2 + (nert1.k[-1][1])**2)
+            kd0_err = np.sqrt((nert0.k[-1][1])**2 + (nert0.k[0][1])**2)
+            kd1_err = np.sqrt((nert1.k[-1][1])**2 + (nert1.k[0][1])**2)
 
             if k_diff0 > 0.0:
                 self.refuel_min /= 10.0
@@ -273,7 +273,7 @@ class burn(object):
         n_iter:int = 0
         side:int = 0
         ratei:float = None
-        k_diffi:float = None
+        k_diff_i:float = None
         kd_err:float = None
         os.chdir(self.refuel_path)
         while n_iter < self.refuel_iter:
@@ -305,8 +305,8 @@ class burn(object):
             if cleanup:
                 nert.cleanup()
 
-            k_diff_i = nert.k[0][0] - nert.k[-1][0]
-            kdi_err = np.sqrt((nert.k[0][1])**2 + (nert.k[-1][1])**2)
+            k_diff_i = nert.k[-1][0] - nert.k[0][0]
+            kdi_err = np.sqrt((nert.k[-1][1])**2 + (nert.k[0][1])**2)
             self.refuel_list.append(self.refuelData(ratei, k_diff_i, kdi_err))
 
             if (k_diff_i-self.k_diff_tgt)*(k_diff1-self.k_diff_tgt) > 0.0:
@@ -366,7 +366,7 @@ class burn(object):
             myrate = float(myline[0])
             mykdiff = float(myline[1])
             mykderr = float(myline[2])
-            self.refuel_list.append(self.RefuelData(myrate, mykdiff, mykderr))
+            self.refuel_list.append(self.refuelData(myrate, mykdiff, mykderr))
 
         if len(self.refuel_list) < 3:
             return False

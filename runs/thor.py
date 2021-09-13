@@ -15,8 +15,9 @@ thor.enr_path = cwd + '/thorcon/enr_search'
 thor.enr_min = 0.15
 thor.enr_max = 0.25
 
-thor.get_enrichment()
-thor.save_enrs()
+#thor.get_enrichment()
+#thor.save_enrs()
+thor.read_enrs_if_done()
 
 thor.refuel_path = cwd + '/thorcon/refuel'
 

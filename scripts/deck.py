@@ -913,9 +913,9 @@ class serpDeck(object):
         if self.do_plots:
             data_cards += dedent('''
                 % --- PLOTS
-                plot 1 3000 3000 0 -290 290 -290 290
-                plot 2 3000 3000 0 -290 290 -290 290
-                plot 2 3000 3000 0 -290 290 -290 290
+                plot 1 7000 7000 0 -290 290 -290 290
+                plot 2 7000 7000 0 -290 290 -290 290
+                plot 3 7000 7000 0 -290 290 -290 290
 
                 ''')
 
@@ -1101,17 +1101,17 @@ class serpDeck(object):
 
 if __name__ == '__main__':
     test = serpDeck()
-    #test.do_plots = True
-    test.refuel = True
-    #test.save_deck()
-    #os.system('sss2 -plot -omp 20 nerthus/nerthus')
+    test.do_plots = True
+    test.refuel = False
+    test.save_deck()
+    os.system('sss2 -plot -omp 20 nerthus/nerthus')
     #test.queue = 'fill'
     #test.ompcores = 20
     #test.histories = 100
     #test.ngen = 10
     #test.nskip = 5
     #test.full_build_run()
-    test.deck_name = 'nerthus'
-    test.deck_path = '/home/jarod/Projects/NERTHUS/testing/refuel/edge0'
-    print(test.get_results())
-    print(test.k)
+    #test.deck_name = 'nerthus'
+    #test.deck_path = '/home/jarod/Projects/NERTHUS/testing/refuel/edge0'
+    #print(test.get_results())
+    #print(test.k)
