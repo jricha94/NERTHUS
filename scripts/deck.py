@@ -925,11 +925,11 @@ class serpDeck(object):
 
                 % - OFFGAS TANK
                 mat offgas -0.001 burn 1 vol 1e9 tmp {self.fs_mat_tempK}
-                 2004.{self.lib} 1
+                 2004.{self.fs_lib} 1
 
                 % - OVERFLOW TANK
                 mat overflow -0.001 burn 1 vol 1e9 tmp {self.fs_mat_tempK}
-                2004.{self.lib} 1
+                2004.{self.fs_lib} 1
 
                 % --- MASS FLOW DEFINITIONS
 
