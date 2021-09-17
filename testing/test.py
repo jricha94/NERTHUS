@@ -23,4 +23,4 @@ test.read_enrs_if_done()
 #test.save_refuel()
 test.read_refuel_if_done()
 
-test.get_feedbacks(feedback='fs.tot', thermal_expansion=True, recalc=True)
+test.run_feedbacks(feedback='fs.tot', thermal_expansion=True, recalc=True)
