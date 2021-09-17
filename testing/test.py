@@ -19,5 +19,8 @@ test.refuel_min = 1e-8
 test.refuel_max = 1e-11
 
 test.read_enrs_if_done()
-test.get_refuel_rate(cleanup=False)
-test.save_refuel()
+#test.get_refuel_rate(cleanup=False)
+#test.save_refuel()
+test.read_refuel_if_done()
+
+test.get_feedbacks(feedback='fs.tot', thermal_expansion=True, recalc=True)

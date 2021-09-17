@@ -49,7 +49,7 @@ class burn(object):
 
         # feedback coefficient variables
         self.feedback_path = os.getcwd() + '/feedback'
-        self.feedback_temps:list = [800.0, 850.0, 900.0, 950.0, 1000.0]
+        self.feedback_temps:list = [800.0, 900.0, 1000.0]# [800.0, 850.0, 900.0, 950.0, 1000.0]
         self.base_temp:float = 900.0
         self.feedback_runs:dict = {}
 
@@ -347,12 +347,13 @@ class burn(object):
                 self.refuel_path + '/' + save_file)
             print(e)
 
-    def read_refuel_if_done(self, save_file:str='refuel_data.txt'):
+    def read_refuel_if_done(self, save_file:str='refuel_data.txt') -> bool:
         'Try to load previous search file'
-        if os.path.exists(self.enr_path + '/' + save_file) and \
+        if os.path.exists(self.refuel_path + '/' + save_file) and \
                 os.path.getsize(self.refuel_path + '/' + save_file) > 50:
             fh = open(self.refuel_path + '/' + save_file, 'r')
         else:
+            print('nope')
             return False
         myline = fh.readline().strip()
         mysalt = myline.split()[-1]

@@ -28,5 +28,8 @@ flibe.ompcores = 64
 flibe.refuel_min = 1e-11
 flibe.refuel_max = 1e-8
 
-flibe.get_refuel_rate(cleanup=False)
-flibe.save_refuel()
+#flibe.get_refuel_rate(cleanup=False)
+#flibe.save_refuel()
+
+flibe.read_refuel_if_done()
+print(flibe.conv_rate)

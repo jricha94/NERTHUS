@@ -959,9 +959,11 @@ class serpDeck(object):
                 dep
                 pro source_rep
                 daystep
-                0.0208 0.0208 0.9584 2 4 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-                30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
-                30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
+                0.0208 2
+                %0.0208 0.0208 0.9584 2 4 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+                %30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
+                %30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
+
 
                 set inventory
                 1
@@ -1101,17 +1103,17 @@ class serpDeck(object):
 
 if __name__ == '__main__':
     test = serpDeck()
-    test.do_plots = True
-    test.refuel = False
-    test.save_deck()
-    os.system('sss2 -plot -omp 20 nerthus/nerthus')
+    #test.do_plots = True
+    #test.refuel = False
+    #test.save_deck()
+    #os.system('sss2 -plot -omp 20 nerthus/nerthus')
     #test.queue = 'fill'
     #test.ompcores = 20
     #test.histories = 100
     #test.ngen = 10
     #test.nskip = 5
     #test.full_build_run()
-    #test.deck_name = 'nerthus'
-    #test.deck_path = '/home/jarod/Projects/NERTHUS/testing/refuel/edge0'
-    #print(test.get_results())
-    #print(test.k)
+    test.deck_name = 'nerthus'
+    test.deck_path = '/home/jarod/Projects/NERTHUS/runs/thorcon/refuel/nert1'
+    print(test.get_results())
+    print(test.k)
