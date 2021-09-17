@@ -49,7 +49,7 @@ class burn(object):
 
         # feedback coefficient variables
         self.feedback_path = os.getcwd() + '/feedback'
-        self.feedback_temps:list = [800.0, 900.0, 1000.0]# [800.0, 850.0, 900.0, 950.0, 1000.0]
+        self.feedback_temps:list = [800.0, 850.0, 900.0, 950.0, 1000.0]
         self.base_temp:float = 900.0
         self.feedback_runs:dict = {}
 
@@ -398,7 +398,7 @@ class burn(object):
             nert = self.feedback_runs[fb_run_name] 
             nert.queue = self.queue
             nert.ompcores = self.ompcores
-            nert.deck_path = self.feedback_path + '/' + feedback + str(int(temp))
+            nert.deck_path = self.feedback_path + '/' + feedback + '.' + str(int(temp))
             nert.refuel_rate = self.conv_rate
             nert.thermal_expansion = thermal_expansion
 

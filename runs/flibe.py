@@ -32,4 +32,15 @@ flibe.refuel_max = 1e-8
 #flibe.save_refuel()
 
 flibe.read_refuel_if_done()
-print(flibe.conv_rate)
+
+flibe.feedback_path = cwd + 'flibe/feedback'
+flibe.queue = 'fill'
+flibe.ompcores = 8
+flibe.run_feedbacks('fs.tot', True, True)
+flibe.run_feedbacks('gr.tot', True, True)
+
+flibe.feedback_path = cwd + 'flibe/feedback/no_therm_exp'
+flibe.run_feedbacks('gr.tot', False, True)
+
+
+
