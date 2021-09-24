@@ -540,10 +540,11 @@ burn 1 vol 13670000
 
 % ===== Data Cards ===== %
 set power 557000000 % Watts
-set pop 20000 200 60 % 20000 neutrons, 200 active cycles, 60 inactive cycles
+set pop 100 60 20 % 100 neutrons, 60 active cycles, 20 inactive cycles
 set arr 2
 set printm 1
 set mcvol 10000000
+set depmtx 1
 
 % Data Libraries
 set acelib "sss_endfb7u.sssdir"
@@ -565,7 +566,7 @@ mat overflow -0.001 burn 1 vol 1e9 tmp 900.0
 set pcc 0 % predictor-corrector turned off for depletion
 
 mflow U_in
-all -6.142867631486024e-05
+all -4.132036195246437e-05
 
 mflow offgasratecore
 Ne 1e-1
@@ -577,7 +578,7 @@ Rn 1e-1
 
 % Account for increase in volume with refueling
 mflow over
-all -6.142867631486024e-05
+all -4.132036195246437e-05
 
 rep source_rep
 rc refuelsalt fuelsalt U_in 0
