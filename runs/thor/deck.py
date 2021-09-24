@@ -57,7 +57,7 @@ class serpDeck(object):
         self.fs_lib:str                 = '09c'                 # XS temp. selection for fuel salt
         self.gr_lib:str                 = '09c'                 # XS temp. selection for graphite
         self.lib:str                    = '09c'                 # XS temp. selection for other materials
-        self.histories:int              = 20000                 # Number of histories to run per generation
+        self.histories:int              = 100# Number of histories to run per generation
         self.ngen:int                   = 200                   # Number of active generations
         self.nskip:int                  = 60                    # Number of inactive generations
         self.queue:str                  = 'fill'                # NECluster torque queue ('local' to run on your machine)
@@ -898,6 +898,7 @@ class serpDeck(object):
             set arr 2
             set printm 1
             set mcvol 10000000
+            set depmtx 1
             ''')
 
         if self.nuc_libs == 'ENDF7':

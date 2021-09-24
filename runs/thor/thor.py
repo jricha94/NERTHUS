@@ -23,6 +23,7 @@ thor.ompcores = 64
 thor.refuel_min = 1e-8
 thor.refuel_max = 1e-5
 
+
 thor.get_refuel_rate(cleanup=False)
 thor.save_refuel()
 

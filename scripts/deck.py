@@ -1113,6 +1113,8 @@ if __name__ == '__main__':
     #test.nskip = 5
     #test.full_build_run()
     test.deck_name = 'nerthus'
-    test.deck_path = '/home/jarod/Projects/NERTHUS/runs/thorcon/refuel/nert1'
+    test.refuel = True
+    test.deck_path = '/home/jarod/Projects/NERTHUS/runs/flibe/feedback/fs.tot.800'
     print(test.get_results())
-    print(test.k)
+    for n, k in enumerate(test.k):
+        print(n, "\t", k)
