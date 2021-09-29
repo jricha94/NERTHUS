@@ -51,7 +51,7 @@ class burn(object):
 
         # feedback coefficient variables
         self.feedback_path = os.getcwd() + '/feedback'
-        self.feedback_temps:list = [800.0, 850.0, 900.0, 950.0, 1000.0]
+        self.feedback_temps:list = [850.0]
         self.base_temp:float = 900.0
         self.feedback_runs:dict = {}
 

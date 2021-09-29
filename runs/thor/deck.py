@@ -870,7 +870,7 @@ class serpDeck(object):
         graphite = dedent(f'''
             % Graphite moderator
             mat graphite -{gr_dens:.8f} moder graph 6000
-            tms {self.mod_tempK} rgb 59 59 59 {'burn 1' if self.refuel else ''}
+            tms {self.mod_tempK} rgb 59 59 59
              6000.{self.gr_lib} {gr_frac}   % Natural Carbon
              5010.{self.gr_lib} {b10_frac}  % Boron 10
              5011.{self.gr_lib} {b11_frac}  % Boron 11

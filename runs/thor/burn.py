@@ -38,7 +38,7 @@ class burn(object):
         # refuel rate variales
         self.refuel_path:str = os.getcwd() + '/refuel'
         self.refuel_enr:float = .1
-        self.refuel_min:float = 1e-10
+        self.refuel_min:float = 0
         self.refuel_max:float = 1e-5
         self.refuel_eps:float = 1e-9
         self.k_diff_tgt:float      = 0.003

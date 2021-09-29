@@ -31,9 +31,9 @@ flibe.read_refuel_if_done()
 flibe.histories = 100000
 
 flibe.feedback_path = cwd + '/feedback'
-flibe.queue = 'fill'
-flibe.ompcores = 8
-flibe.run_feedbacks('fs.tot', True, True)
+#flibe.queue = 'fill'
+#flibe.ompcores = 8
+#flibe.run_feedbacks('fs.tot', True, True)
 flibe.run_feedbacks('gr.tot', True, True)
 
 flibe.feedback_path = cwd + '/feedback/no_therm_exp'
