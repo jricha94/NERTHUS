@@ -16,7 +16,7 @@ thor.read_enrs_if_done()
 
 thor.refuel_path = cwd + '/refuel'
 
-thor.e_ref = 0.1975
+thor.refuel_enr = 0.1975
 thor.queue = 'xeon'
 thor.ompcores = 64
 
