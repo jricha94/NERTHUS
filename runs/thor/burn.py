@@ -7,6 +7,8 @@ import numpy as np
 from collections import namedtuple
 import os
 import time
+import scipy
+from scipy import optimize
 
 
 SLEEP_SEC:int = 60
@@ -38,7 +40,7 @@ class burn(object):
         # refuel rate variales
         self.refuel_path:str = os.getcwd() + '/refuel'
         self.refuel_enr:float = .1
-        self.refuel_min:float = 0
+        self.refuel_min:float = 1e-10
         self.refuel_max:float = 1e-5
         self.refuel_eps:float = 1e-9
         self.k_diff_tgt:float      = 0.003
@@ -439,16 +441,52 @@ class burn(object):
                 nert.full_build_run()
 
     def get_feedbacks(self, feedback='fs.tot'):
-        pass
+        if len(self.feedback_runs) == 0:
+            for temp in self.feedback_temps:
+                fb_run_name = feedback + '.' + str(int(temp))
+                self.feedback_runs[fb_run_name] = serpDeck(fuel_salt = self.fuel_salt, refuel_salt = self.refuel_salt, refuel = True)
+                nert = self.feedback_runs[fb_run_name]
+                nert.deck_path = self.feedback_path + '/' + feedback + '.' + str(int(temp))
 
 
+        while True:
+            is_done = True
+            for temp in self.feedback_temps:
+                fb_run_name = feedback + '.' + str(int(temp))
+                if not self.feedback_runs[fb_run_name].get_results():
+                    time.sleep(SLEEP_SEC)
+                    is_done = False
+            if is_done:
+                break
+
+        self.days = self.feedback_runs[fb_run_name].days
+        self.alphas = []
+
+        def line(x, a, b):
+            return a * x + b
+
+        for i in range(len(self.days)):
+            rho_list = []
+            for temp in self.feedback_temps:
+                fb_run_name = feedback + '.' + str(int(temp))
+                nert = self.feedback_runs[fb_run_name]
+                rho_list.append((rho(nert.k[i][0]), nert.k[i][1] * 1e5))
+            temps = self.feedback_temps
+            rhos = [r for r,e in rho_list]
+            e    = [e for r,e in rho_list]
+
+            alpha, error = scipy.optimize.curve_fit(line, temps, rhos, sigma = e)
+            self.alphas.append((alpha[0], np.sqrt(error[0,0])))
 
 
+ 
 
-        
+
 
 
 if __name__ == '__main__':
     test = burn()
-    test.read_enrs_if_done()
-    print(test.conv_enr)
+    test.feedback_path = '/home/jarod/Projects/NERTHUS/runs/flibe/feedback'
+    test.get_feedbacks('gr.tot')
+    for a in test.alphas:
+        print(a)

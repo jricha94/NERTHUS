@@ -544,7 +544,6 @@ set pop 100 60 20 % 100 neutrons, 60 active cycles, 20 inactive cycles
 set arr 2
 set printm 1
 set mcvol 10000000
-set depmtx 1
 
 % Data Libraries
 set acelib "sss_endfb7u.sssdir"
@@ -566,7 +565,7 @@ mat overflow -0.001 burn 1 vol 1e9 tmp 900.0
 set pcc 0 % predictor-corrector turned off for depletion
 
 mflow U_in
-all 1.1185276743938731e-05
+all 5.916226122945118e-05
 
 mflow offgasratecore
 Ne 1e-1
@@ -578,7 +577,7 @@ Rn 1e-1
 
 % Account for increase in volume with refueling
 mflow over
-all 1.1185276743938731e-05
+all 5.916226122945118e-05
 
 rep source_rep
 rc refuelsalt fuelsalt U_in 0

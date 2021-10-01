@@ -21,7 +21,7 @@ thor.queue = 'xeon'
 thor.ompcores = 64
 
 thor.refuel_min = 1e-8
-thor.refuel_max = 1e-5
+thor.refuel_max = 1e-4
 
 
 thor.get_refuel_rate(cleanup=False)

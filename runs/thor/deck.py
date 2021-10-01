@@ -898,7 +898,6 @@ class serpDeck(object):
             set arr 2
             set printm 1
             set mcvol 10000000
-            set depmtx 1
             ''')
 
         if self.nuc_libs == 'ENDF7':
