@@ -57,9 +57,9 @@ class serpDeck(object):
         self.fs_lib:str                 = '09c'                 # XS temp. selection for fuel salt
         self.gr_lib:str                 = '09c'                 # XS temp. selection for graphite
         self.lib:str                    = '09c'                 # XS temp. selection for other materials
-        self.histories:int              = 100# Number of histories to run per generation
-        self.ngen:int                   = 60                   # Number of active generations
-        self.nskip:int                  = 20                    # Number of inactive generations
+        self.histories:int              = 20000                 # Number of histories to run per generation
+        self.ngen:int                   = 200                   # Number of active generations
+        self.nskip:int                  = 60                    # Number of inactive generations
         self.queue:str                  = 'fill'                # NECluster torque queue ('local' to run on your machine)
         self.ompcores:int               = 8                     # OMP cores used when running SERPENT
         self.thermal_expansion:bool     = True                  # Bool to include thermal expansion; if False, reactor is modeled at 900K
@@ -939,12 +939,12 @@ class serpDeck(object):
                 all {self.refuel_rate}
 
                 mflow offgasratecore
-                Ne 1e-1
-                Ar 1e-1
-                He 1e-1
-                Kr 1e-1
-                Xe 1e-1
-                Rn 1e-1
+                Ne 1e-2
+                Ar 1e-2
+                He 1e-2
+                Kr 1e-2
+                Xe 1e-2
+                Rn 1e-2
 
                 % Account for increase in volume with refueling
                 mflow over
@@ -1113,6 +1113,8 @@ if __name__ == '__main__':
     #test.nskip = 5
     #test.full_build_run()
     test.deck_name = 'nerthus'
-    test.deck_path = '/home/jarod/Projects/NERTHUS/runs/thorcon/refuel/nert1'
+    test.refuel = True
+    test.deck_path = '/home/jarod/Projects/NERTHUS/runs/flibe/feedback/fs.tot.800'
     print(test.get_results())
-    print(test.k)
+    for n, k in enumerate(test.k):
+        print(n, "\t", k)
