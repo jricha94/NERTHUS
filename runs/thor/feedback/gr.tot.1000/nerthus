@@ -1,0 +1,601 @@
+
+% ===== NERTHUS Serpent input file ===== %
+
+set title "NERTHUS"
+
+
+% ===== SURFACES AND CELL CARDS
+
+% --- OUTER WALL OF REACTOR
+
+% - SURFACES FOR CYLINDRICAL WALL
+surf pot_wall_outer cyl 0.0 0.0 248.05
+surf pot_wall_inner cyl 0.0 0.0 243.05
+surf pot_wall_top   pz  234.7
+surf pot_wall_bot   pz -234.7
+
+% - CELL
+cell pot_wall 0 sus316_stainless_steel
+-pot_wall_outer pot_wall_inner -pot_wall_top pot_wall_bot
+
+% --- TOP WALL OF REACTOR
+
+% - SURFACED FOR CURVED TOP
+surf pot_top_outer quadratic 1.59056989E-05 1.59056989E-05 4.35841894E-04 0 0 0 0 0 0 -1
+trans S pot_top_outer 0 0 239.7
+surf pot_top_inner quadratic 1.69281208E-05 1.69281208E-05 6.18488820E-04 0 0 0 0 0 0 -1
+trans S pot_top_inner 0 0 239.7
+surf pot_top_plane pz 239.7
+surf pot_top_tube_out cyl 0 -50.5 20.5
+surf pot_top_tube_in  cyl 0 -50.5 15.5
+surf pot_top_tube_top pz 305
+surf pot_top_ctrl_out cyl 0 0.0 24.5
+surf pot_top_ctrl_in  cyl 0 0.0 19.5
+
+% - CELL
+cell pot_top 0 sus316_stainless_steel
+-pot_top_outer pot_top_inner pot_top_plane pot_top_tube_out pot_top_ctrl_out:
+(pot_top_tube_in -pot_top_tube_out -pot_top_tube_top pot_top_inner pot_wall_top):
+(pot_top_ctrl_in -pot_top_ctrl_out -pot_top_tube_top pot_top_inner pot_wall_top)
+
+% --- PIECE THAT CONNECTS THE TOP TO THE WALL
+
+% - SURFACE FOR CONNECTOR
+surf pot_top_con   cyl 0.0 0.0 256
+
+% - CELL
+cell pot_connector 0 sus316_stainless_steel
+-pot_top_con pot_wall_inner -pot_top_plane pot_wall_top
+
+% --- BOTTOM WALL OF REACTOR
+
+% - SURFACE FOR CURVED BOTTOM
+surf pot_bot_outer quadratic 1.62525510E-05 1.62525510E-05 4.09775607E-04 0 0 0 0 0 0 -1
+trans S pot_bot_outer 0 0 -234.7
+surf pot_bot_inner quadratic 1.69281208E-05 1.69281208E-05 5.07264021E-04 0 0 0 0 0 0 -1
+trans S pot_bot_inner 0 0 -234.7
+surf pot_bot_tube_out cyl 0 0 22.8
+surf pot_bot_tube_in  cyl 0 0 17.8
+surf pot_bot_tube_bot pz -300
+
+% - CELL
+cell pot_bot 0 sus316_stainless_steel
+-pot_wall_bot -pot_bot_outer pot_bot_inner pot_bot_tube_out:
+(pot_bot_tube_in -pot_bot_tube_out pot_bot_tube_bot pot_bot_inner -pot_wall_bot)
+
+% --- VOID
+cell void1 0 outside
+ pot_wall_outer -pot_wall_top pot_wall_bot
+
+cell void2 0 outside
+ pot_top_con pot_wall_top -pot_top_plane
+
+cell void3 0 outside
+ pot_top_plane -pot_top_tube_top pot_top_outer pot_top_tube_out pot_top_ctrl_out
+
+cell void4 0 outside
+ -pot_wall_bot pot_bot_outer pot_bot_tube_out pot_bot_tube_bot
+
+cell void5 0 outside
+ pot_top_tube_top
+
+cell void6 0 outside
+-pot_bot_tube_bot
+
+% --- BORON CARBIDE SHIELD AROUND CORE
+
+% - SURFACES
+surf shield_inner cyl 0 0 230
+surf shield_outer cyl 0 0 240
+surf shield_top     pz  189
+surf shield_bot     pz -189
+
+% - CELL
+cell shield 0 B4C_shield
+-shield_outer shield_inner -shield_top shield_bot
+
+% --- GRAPHITE HAT
+
+% - SURFS
+surf hat_out cyl 0 0 233.61733350
+surf hat_bot pz 191.50605450
+surf hat_mid_plane pz 239.63323050
+surf hat_top pz 268.91059590
+surf hat_dome quadratic 1.83227170E-05 1.83227170E-05 7.80486301E-04 0 0 0 0 0 0 -1
+trans S hat_dome 0 0 239.6332305
+surf hat_corner_cyl cyl 0 0 223.59083850
+surf hat_corner_plane pz 201.53254950
+surf hat_corner torz 0 0 201.53254950 223.59083850 10.02649500 10.02649500
+
+% - CELLS
+cell hat 0 graphite
+(hat_corner_plane -hat_top (-hat_dome: -hat_mid_plane) -hat_out rod_chan_0  rod_chan_1 rod_chan_2 rod_chan_3):
+-hat_corner: (hat_bot -hat_corner_cyl -hat_corner_plane rod_chan_0  rod_chan_1 rod_chan_2 rod_chan_3)
+
+% --- GRAPHITE PLUG
+
+% - SURFS
+surf plug_out cyl 0 0 236.77567942
+surf plug_top pz -191.50605450
+surf plug_mid_plane pz -217.93589532
+surf plug_bot pz -266.70476700
+surf plug_dome quadratic 1.78447202E-05 1.78447202E-05 3.50144492E-04 0 0 0 0 0 0 -1
+trans S plug_dome 0 0 -217.93589532000001
+surf plug_corner_cyl cyl 0 0 226.74918443
+surf plug_corner_plane pz -201.53254950
+surf plug_corner torz 0 0 -201.53254950 226.74918443 10.02649500 10.02649500
+
+% - CELL
+cell plug 0 graphite
+(plug_bot -plug_corner_plane (-plug_dome: plug_mid_plane) -plug_out):
+-plug_corner: (plug_corner_plane -plug_top -plug_corner_cyl)
+
+% --- FUEL SALT CELLS
+
+% FILL TUBES AND OUTSIDE SHIELD
+cell fs1 0 fuelsalt
+(pot_top_inner -pot_top_tube_in -pot_top_tube_top hat_top):
+(pot_top_inner -pot_top_ctrl_in -pot_top_tube_top hat_top
+rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
+(pot_bot_tube_bot pot_bot_inner -pot_bot_tube_in -plug_bot):
+(shield_bot -shield_top shield_outer -pot_wall_inner)
+
+% FILL TOP OF REACTOR
+cell fs2 0 fuelsalt
+(-hat_mid_plane hat_corner_plane hat_out -pot_wall_inner):
+(hat_dome hat_mid_plane -pot_top_inner
+rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
+(hat_top -hat_dome
+rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
+(hat_out -pot_wall_inner hat_bot -hat_mid_plane):
+(hat_corner -hat_corner_plane hat_bot hat_corner_cyl -pot_wall_inner):
+(shield_inner -pot_wall_inner -hat_bot shield_top):
+(pot_wall_top -pot_top_plane -pot_top_outer pot_top_inner -pot_wall_inner)
+
+% FILL BOTTOM OF REACTOR
+cell fs3 0 fuelsalt
+(plug_dome -pot_bot_inner -plug_mid_plane):
+(-plug_dome -plug_bot):
+(plug_out -pot_wall_inner plug_mid_plane -plug_corner_plane):
+(plug_dome pot_bot_inner -pot_wall_inner -plug_mid_plane pot_wall_bot):
+(plug_corner -plug_top -pot_wall_inner plug_corner_plane plug_corner_cyl):
+(plug_top shield_inner -pot_wall_inner -shield_bot)
+
+% --- Core definition
+
+% - top and bottom of logs
+surf log_top pz 189.5007555
+surf log_bot pz -189.5007555
+
+% --- YOKE1 DEFINITION
+
+% - SURFACES
+surf yoke1_plane0 plane 0.00000000 -0.24063588 0.0 1.60423920 -1.03272898 0.0 1.60423920 -1.03272898 -1.0
+surf yoke1_plane1 plane 1.60423920 -1.03272898 0.0 1.60423920 -21.25616940 0.0 1.60423920 -21.25616940 -1.0
+surf yoke1_plane2 plane 1.60423920 -21.25616940 0.0 0.34090083 -21.88783858 0.0 0.34090083 -21.88783858 -1.0
+surf yoke1_plane3 plane 0.34090083 -21.88783858 0.0 -1.60423920 -20.93532156 0.0 -1.60423920 -20.93532156 -1.0
+surf yoke1_plane4 plane -1.60423920 -20.93532156 0.0 -1.60423920 -1.03272898 0.0 -1.60423920 -1.03272898 -1.0
+surf yoke1_plane5 plane -1.60423920 -1.03272898 0.0 0.00000000 -0.24063588 0.0 0.00000000 -0.24063588 -1.0
+
+% - CELLS FOR YOKE1
+cell yoke1 2 graphite
+-yoke1_plane0 -yoke1_plane1 -yoke1_plane2
+-yoke1_plane3 -yoke1_plane4 -yoke1_plane5
+-log_top log_bot
+
+% --- YOKE2 DEFINITION
+
+% - SURFACES
+surf yoke2_plane0 plane -0.20839679 0.12031794 0.0 -1.69648914 -0.87294741 0.0 -1.69648914 -0.87294741 -1.0
+surf yoke2_plane1 plane -1.69648914 -0.87294741 0.0 -19.21050229 9.23877280 0.0 -19.21050229 9.23877280 -1.0
+surf yoke2_plane2 plane -19.21050229 9.23877280 0.0 -19.12587466 10.64869051 0.0 -19.12587466 10.64869051 -1.0
+surf yoke2_plane3 plane -19.12587466 10.64869051 0.0 -17.32840071 11.85697268 0.0 -17.32840071 11.85697268 -1.0
+surf yoke2_plane4 plane -17.32840071 11.85697268 0.0 -0.09224994 1.90567639 0.0 -0.09224994 1.90567639 -1.0
+surf yoke2_plane5 plane -0.09224994 1.90567639 0.0 -0.20839679 0.12031794 0.0 -0.20839679 0.12031794 -1.0
+
+% - CELLS FOR YOKE2
+cell yoke2 2 graphite
+-yoke2_plane0 -yoke2_plane1 -yoke2_plane2
+-yoke2_plane3 -yoke2_plane4 -yoke2_plane5
+-log_top log_bot
+
+% --- SLAB1 DEFINITION
+
+% - SURFACES
+surf slab1_plane1 plane -1.99527250 -0.70185465 0.0 -1.99527250 -5.48449276 0.0 -1.99527250 -5.48449276 -1.0
+surf slab1_plane2 plane -1.99527250 -5.48449276 0.0 -1.61426570 -5.48449276 0.0 -1.61426570 -5.48449276 -1.0
+surf slab1_plane3 plane -1.61426570 -5.48449276 0.0 -1.61426570 -6.08608246 0.0 -1.61426570 -6.08608246 -1.0
+surf slab1_plane4 plane -1.61426570 -6.08608246 0.0 -1.99527250 -6.08608246 0.0 -1.99527250 -6.08608246 -1.0
+surf slab1_plane5 plane -1.99527250 -15.50096127 0.0 -1.61426570 -15.50096127 0.0 -1.61426570 -15.50096127 -1.0
+surf slab1_plane6 plane -1.61426570 -16.10255097 0.0 -1.99527250 -16.10255097 0.0 -1.99527250 -16.10255097 -1.0
+surf slab1_plane7 plane -1.99527250 -20.45404980 0.0 -5.38823841 -18.49511331 0.0 -5.38823841 -18.49511331 -1.0
+surf slab1_plane8 plane -5.38823841 -18.49511331 0.0 -5.38823841 -18.58535879 0.0 -5.38823841 -18.58535879 -1.0
+surf slab1_plane9 plane -5.38823841 -18.58535879 0.0 -5.98982811 -18.58535879 0.0 -5.98982811 -18.58535879 -1.0
+surf slab1_plane10 plane -5.98982811 -18.58535879 0.0 -5.98982811 1.16746001 0.0 -5.98982811 1.16746001 -1.0
+surf slab1_plane11 plane -5.98982811 1.16746001 0.0 -2.59686220 -0.79209310 0.0 -2.59686220 -0.79209310 -1.0
+surf slab1_plane12 plane -2.59686220 -0.79209310 0.0 -2.59686220 -0.70185465 0.0 -2.59686220 -0.70185465 -1.0
+surf slab1_plane13 plane -2.59686220 -0.70185465 0.0 -1.99527250 -0.70185465 0.0 -1.99527250 -0.70185465 -1.0
+
+% - CELLS FOR SLAB1
+cell slab1 2 graphite
+(-slab1_plane1 -slab1_plane7 -slab1_plane10 -slab1_plane11 -log_top log_bot):
+( slab1_plane1 -slab1_plane2 -slab1_plane3 -slab1_plane4 -log_top log_bot):
+( slab1_plane1 -slab1_plane5 -slab1_plane3 -slab1_plane6 -log_top log_bot):
+( slab1_plane7 -slab1_plane8 -slab1_plane9 -slab1_plane10 -log_top log_bot):
+( slab1_plane11 -slab1_plane12 -slab1_plane13 -slab1_plane1 -log_top log_bot)
+
+
+% --- SLAB2 DEFINITION
+
+% - SURFACES
+surf slab2_plane1 plane -6.37685082 1.82331812 0.0 -6.37685082 -2.95932000 0.0 -6.37685082 -2.95932000 -1.0
+surf slab2_plane2 plane -6.37685082 -2.95932000 0.0 -5.99584401 -2.95932000 0.0 -5.99584401 -2.95932000 -1.0
+surf slab2_plane3 plane -5.99584401 -2.95932000 0.0 -5.99584401 -3.56090970 0.0 -5.99584401 -3.56090970 -1.0
+surf slab2_plane4 plane -5.99584401 -3.56090970 0.0 -6.37685082 -3.56090970 0.0 -6.37685082 -3.56090970 -1.0
+surf slab2_plane5 plane -6.37685082 -12.97578850 0.0 -5.99584401 -12.97578850 0.0 -5.99584401 -12.97578850 -1.0
+surf slab2_plane6 plane -5.99584401 -13.57737820 0.0 -6.37685082 -13.57737820 0.0 -6.37685082 -13.57737820 -1.0
+surf slab2_plane7 plane -6.37685082 -17.92887703 0.0 -9.76981673 -15.96994055 0.0 -9.76981673 -15.96994055 -1.0
+surf slab2_plane8 plane -9.76981673 -15.96994055 0.0 -9.76981673 -16.06018602 0.0 -9.76981673 -16.06018602 -1.0
+surf slab2_plane9 plane -9.76981673 -16.06018602 0.0 -10.37140643 -16.06018602 0.0 -10.37140643 -16.06018602 -1.0
+surf slab2_plane10 plane -10.37140643 -16.06018602 0.0 -10.37140643 3.69263278 0.0 -10.37140643 3.69263278 -1.0
+surf slab2_plane11 plane -10.37140643 3.69263278 0.0 -6.97844052 1.73307966 0.0 -6.97844052 1.73307966 -1.0
+surf slab2_plane12 plane -6.97844052 1.73307966 0.0 -6.97844052 1.82331812 0.0 -6.97844052 1.82331812 -1.0
+surf slab2_plane13 plane -6.97844052 1.82331812 0.0 -6.37685082 1.82331812 0.0 -6.37685082 1.82331812 -1.0
+
+% - CELLS FOR SLAB2
+cell slab2 2 graphite
+(-slab2_plane1 -slab2_plane7 -slab2_plane10 -slab2_plane11 -log_top log_bot):
+( slab2_plane1 -slab2_plane2 -slab2_plane3 -slab2_plane4 -log_top log_bot):
+( slab2_plane1 -slab2_plane5 -slab2_plane3 -slab2_plane6 -log_top log_bot):
+( slab2_plane7 -slab2_plane8 -slab2_plane9 -slab2_plane10 -log_top log_bot):
+( slab2_plane11 -slab2_plane12 -slab2_plane13 -slab2_plane1 -log_top log_bot)
+
+
+% --- SLAB3 DEFINITION
+
+% - SURFACES
+surf slab3_plane1 plane -10.76845563 4.35430625 0.0 -10.76845563 -0.42833187 0.0 -10.76845563 -0.42833187 -1.0
+surf slab3_plane2 plane -10.76845563 -0.42833187 0.0 -10.38744882 -0.42833187 0.0 -10.38744882 -0.42833187 -1.0
+surf slab3_plane3 plane -10.38744882 -0.42833187 0.0 -10.38744882 -1.02992157 0.0 -10.38744882 -1.02992157 -1.0
+surf slab3_plane4 plane -10.38744882 -1.02992157 0.0 -10.76845563 -1.02992157 0.0 -10.76845563 -1.02992157 -1.0
+surf slab3_plane5 plane -10.76845563 -10.44480037 0.0 -10.38744882 -10.44480037 0.0 -10.38744882 -10.44480037 -1.0
+surf slab3_plane6 plane -10.38744882 -11.04639007 0.0 -10.76845563 -11.04639007 0.0 -10.76845563 -11.04639007 -1.0
+surf slab3_plane7 plane -10.76845563 -15.39788890 0.0 -14.16142154 -13.43895241 0.0 -14.16142154 -13.43895241 -1.0
+surf slab3_plane8 plane -14.16142154 -13.43895241 0.0 -14.16142154 -13.52919789 0.0 -14.16142154 -13.52919789 -1.0
+surf slab3_plane9 plane -14.16142154 -13.52919789 0.0 -14.76301124 -13.52919789 0.0 -14.76301124 -13.52919789 -1.0
+surf slab3_plane10 plane -14.76301124 -13.52919789 0.0 -14.76301124 6.22362091 0.0 -14.76301124 6.22362091 -1.0
+surf slab3_plane11 plane -14.76301124 6.22362091 0.0 -11.37004533 4.26406779 0.0 -11.37004533 4.26406779 -1.0
+surf slab3_plane12 plane -11.37004533 4.26406779 0.0 -11.37004533 4.35430625 0.0 -11.37004533 4.35430625 -1.0
+surf slab3_plane13 plane -11.37004533 4.35430625 0.0 -10.76845563 4.35430625 0.0 -10.76845563 4.35430625 -1.0
+
+% - CELLS FOR SLAB3
+cell slab3 2 graphite
+(-slab3_plane1 -slab3_plane7 -slab3_plane10 -slab3_plane11 -log_top log_bot):
+( slab3_plane1 -slab3_plane2 -slab3_plane3 -slab3_plane4 -log_top log_bot):
+( slab3_plane1 -slab3_plane5 -slab3_plane3 -slab3_plane6 -log_top log_bot):
+( slab3_plane7 -slab3_plane8 -slab3_plane9 -slab3_plane10 -log_top log_bot):
+( slab3_plane11 -slab3_plane12 -slab3_plane13 -slab3_plane1 -log_top log_bot)
+
+
+% --- SLAB4 DEFINITION
+
+% - SURFACES
+surf slab4_plane1 plane -15.16507369 6.88820206 0.0 -15.16507369 2.10556395 0.0 -15.16507369 2.10556395 -1.0
+surf slab4_plane2 plane -15.16507369 2.10556395 0.0 -14.78406688 2.10556395 0.0 -14.78406688 2.10556395 -1.0
+surf slab4_plane3 plane -14.78406688 2.10556395 0.0 -14.78406688 1.50397425 0.0 -14.78406688 1.50397425 -1.0
+surf slab4_plane4 plane -14.78406688 1.50397425 0.0 -15.16507369 1.50397425 0.0 -15.16507369 1.50397425 -1.0
+surf slab4_plane5 plane -15.16507369 -7.91090456 0.0 -14.78406688 -7.91090456 0.0 -14.78406688 -7.91090456 -1.0
+surf slab4_plane6 plane -14.78406688 -8.51249426 0.0 -15.16507369 -8.51249426 0.0 -15.16507369 -8.51249426 -1.0
+surf slab4_plane7 plane -15.16507369 -12.86399308 0.0 -18.55803960 -10.90505660 0.0 -18.55803960 -10.90505660 -1.0
+surf slab4_plane8 plane -18.55803960 -10.90505660 0.0 -18.55803960 -10.99530207 0.0 -18.55803960 -10.99530207 -1.0
+surf slab4_plane9 plane -18.55803960 -10.99530207 0.0 -19.15962930 -10.99530207 0.0 -19.15962930 -10.99530207 -1.0
+surf slab4_plane10 plane -19.15962930 -10.99530207 0.0 -19.15962930 8.75751673 0.0 -19.15962930 8.75751673 -1.0
+surf slab4_plane11 plane -19.15962930 8.75751673 0.0 -15.76666339 6.79796361 0.0 -15.76666339 6.79796361 -1.0
+surf slab4_plane12 plane -15.76666339 6.79796361 0.0 -15.76666339 6.88820206 0.0 -15.76666339 6.88820206 -1.0
+surf slab4_plane13 plane -15.76666339 6.88820206 0.0 -15.16507369 6.88820206 0.0 -15.16507369 6.88820206 -1.0
+
+% - CELLS FOR SLAB4
+cell slab4 2 graphite
+(-slab4_plane1 -slab4_plane7 -slab4_plane10 -slab4_plane11 -log_top log_bot):
+( slab4_plane1 -slab4_plane2 -slab4_plane3 -slab4_plane4 -log_top log_bot):
+( slab4_plane1 -slab4_plane5 -slab4_plane3 -slab4_plane6 -log_top log_bot):
+( slab4_plane7 -slab4_plane8 -slab4_plane9 -slab4_plane10 -log_top log_bot):
+( slab4_plane11 -slab4_plane12 -slab4_plane13 -slab4_plane1 -log_top log_bot)
+
+
+% - LOG FUELSALT CELL
+
+cell log_salt 2 fuelsalt
+#(-guide_cyl log_top: -guide_cyl -log_bot)
+
+#(-yoke1_plane0 -yoke1_plane1 -yoke1_plane2
+-yoke1_plane3 -yoke1_plane4 -yoke1_plane5
+-log_top log_bot)
+#(-yoke2_plane0 -yoke2_plane1 -yoke2_plane2
+-yoke2_plane3 -yoke2_plane4 -yoke2_plane5
+-log_top log_bot)
+#(-slab1_plane1 -slab1_plane7 -slab1_plane10 -slab1_plane11 -log_top log_bot:
+ slab1_plane1 -slab1_plane2 -slab1_plane3 -slab1_plane4 -log_top log_bot:
+ slab1_plane1 -slab1_plane5 -slab1_plane3 -slab1_plane6 -log_top log_bot:
+ slab1_plane7 -slab1_plane8 -slab1_plane9 -slab1_plane10 -log_top log_bot:
+ slab1_plane11 -slab1_plane12 -slab1_plane13 -slab1_plane1 -log_top log_bot)
+#(-slab2_plane1 -slab2_plane7 -slab2_plane10 -slab2_plane11 -log_top log_bot:
+ slab2_plane1 -slab2_plane2 -slab2_plane3 -slab2_plane4 -log_top log_bot:
+ slab2_plane1 -slab2_plane5 -slab2_plane3 -slab2_plane6 -log_top log_bot:
+ slab2_plane7 -slab2_plane8 -slab2_plane9 -slab2_plane10 -log_top log_bot:
+ slab2_plane11 -slab2_plane12 -slab2_plane13 -slab2_plane1 -log_top log_bot)
+#(-slab3_plane1 -slab3_plane7 -slab3_plane10 -slab3_plane11 -log_top log_bot:
+ slab3_plane1 -slab3_plane2 -slab3_plane3 -slab3_plane4 -log_top log_bot:
+ slab3_plane1 -slab3_plane5 -slab3_plane3 -slab3_plane6 -log_top log_bot:
+ slab3_plane7 -slab3_plane8 -slab3_plane9 -slab3_plane10 -log_top log_bot:
+ slab3_plane11 -slab3_plane12 -slab3_plane13 -slab3_plane1 -log_top log_bot)
+#(-slab4_plane1 -slab4_plane7 -slab4_plane10 -slab4_plane11 -log_top log_bot:
+ slab4_plane1 -slab4_plane2 -slab4_plane3 -slab4_plane4 -log_top log_bot:
+ slab4_plane1 -slab4_plane5 -slab4_plane3 -slab4_plane6 -log_top log_bot:
+ slab4_plane7 -slab4_plane8 -slab4_plane9 -slab4_plane10 -log_top log_bot:
+ slab4_plane11 -slab4_plane12 -slab4_plane13 -slab4_plane1 -log_top log_bot)
+% --- GUIDE ROD AT TOP AND BOTTOM OF LOG
+
+% - SURFACES
+surf guide_cyl cyl 0 0 4.461790275
+
+% - CELLS
+cell guide_rod 2 graphite
+-guide_cyl log_top: -guide_cyl -log_bot
+
+% - SET SYMMETRY
+set usym 2   3   3  0  0 150 120
+
+% --- CONTROL LOG AND ROD DEFINITION
+
+% - SURFACES
+surf ctrl_hex hexxc 0 0 19.10548622
+surf group1cyl0 cyl -11.54865518 6.66761917 0.52639099
+surf group1cyl1 cyl -9.07262959 6.68528503 0.52639099
+surf group1cyl2 cyl -10.32594146 8.85608488 0.52639099
+surf group1cyl3 cyl -12.83256521 8.85608488 0.52639099
+surf group1cyl4 cyl -14.08587709 6.68528503 0.52639099
+surf group1cyl5 cyl -12.83256521 4.51448519 0.52639099
+surf group1cyl6 cyl -10.32594146 4.51448519 0.52639099
+surf group2cyl0 cyl -0.00000000 -13.33523835 0.52639099
+surf group2cyl1 cyl 2.50662375 -13.37057006 0.52639099
+surf group2cyl2 cyl 1.25331187 -11.19977022 0.52639099
+surf group2cyl3 cyl -1.25331188 -11.19977022 0.52639099
+surf group2cyl4 cyl -2.50662375 -13.37057006 0.52639099
+surf group2cyl5 cyl -1.25331188 -15.54136991 0.52639099
+surf group2cyl6 cyl 1.25331187 -15.54136991 0.52639099
+surf group3cyl0 cyl 11.54865518 6.66761918 0.52639099
+surf group3cyl1 cyl 14.08587709 6.68528503 0.52639099
+surf group3cyl2 cyl 12.83256521 8.85608488 0.52639099
+surf group3cyl3 cyl 10.32594146 8.85608488 0.52639099
+surf group3cyl4 cyl 9.07262959 6.68528503 0.52639099
+surf group3cyl5 cyl 10.32594146 4.51448519 0.52639099
+surf group3cyl6 cyl 12.83256521 4.51448519 0.52639099
+surf rod_chan_0 cyl 0 0 5.31404235
+surf rod_chan_1 cyl 0.00000000 13.33523835 6.01589700
+surf rod_chan_2 cyl -11.54865518 -6.66761918 6.01589700
+surf rod_chan_3 cyl 11.54865518 -6.66761918 6.01589700
+
+% - CELLS
+cell ctrl_log 7 graphite
+-ctrl_hex -log_top log_bot
+ group1cyl0 group1cyl1 group1cyl2 group1cyl3 group1cyl4 group1cyl5 group1cyl6
+ group2cyl0 group2cyl1 group2cyl2 group2cyl3 group2cyl4 group2cyl5 group2cyl6
+ group3cyl0 group3cyl1 group3cyl2 group3cyl3 group3cyl4 group3cyl5 group3cyl6
+ rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3
+
+% - FUELSALT CELL
+cell ctrl_fs 7 fuelsalt
+(log_top -ctrl_hex rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
+(-log_bot -ctrl_hex):
+(log_bot -log_top ctrl_hex):
+(log_top ctrl_hex):
+(-log_bot ctrl_hex):
+#( group1cyl0 group1cyl1 group1cyl2 group1cyl3 group1cyl4 group1cyl5 group1cyl6
+ group2cyl0 group2cyl1 group2cyl2 group2cyl3 group2cyl4 group2cyl5 group2cyl6
+ group3cyl0 group3cyl1 group3cyl2 group3cyl3 group3cyl4 group3cyl5 group3cyl6
+)
+
+% --- CONTROL LOGS / SALT IF NOT INSERTED
+
+
+% - CONTROL ROD 0 CELL (NOT INSERTED)
+cell ctrl0_core 7 fuelsalt log_bot -rod_chan_0
+
+cell ctrl0 0 fuelsalt
+(hat_bot -hat_mid_plane -rod_chan_0):
+(hat_mid_plane -hat_top -rod_chan_0):
+(hat_top -hat_dome -rod_chan_0):
+(hat_dome -pot_top_inner -rod_chan_0):
+(pot_top_inner hat_top -pot_top_tube_top -rod_chan_0)
+
+% - CONTROL ROD 1 CELL (NOT INSERTED)
+
+cell ctrl1_core 7 fuelsalt log_bot -rod_chan_1
+
+cell ctrl1 0 fuelsalt
+(hat_bot -hat_mid_plane -rod_chan_1):
+(hat_mid_plane -hat_top -rod_chan_1):
+(hat_top -hat_dome -rod_chan_1):
+(hat_dome -pot_top_inner -rod_chan_1):
+(pot_top_inner hat_top -pot_top_tube_top -rod_chan_1)
+
+% - CONTROL ROD 2 CELL (NOT INSERTED)
+
+cell ctrl2_core 7 fuelsalt log_bot -rod_chan_2
+
+cell ctrl2 0 fuelsalt
+(hat_bot -hat_mid_plane -rod_chan_2):
+(hat_mid_plane -hat_top -rod_chan_2):
+(hat_top -hat_dome -rod_chan_2):
+(hat_dome -pot_top_inner -rod_chan_2):
+(pot_top_inner hat_top -pot_top_tube_top -rod_chan_2)
+
+% - CONTROL ROD 3 CELL (NOT INSERTED)
+
+cell ctrl3_core 7 fuelsalt log_bot -rod_chan_3
+
+cell ctrl3 0 fuelsalt
+(hat_bot -hat_mid_plane -rod_chan_3):
+(hat_mid_plane -hat_top -rod_chan_3):
+(hat_top -hat_dome -rod_chan_3):
+(hat_dome -pot_top_inner -rod_chan_3):
+(pot_top_inner hat_top -pot_top_tube_top -rod_chan_3)
+
+% --- SOLID GRAPHITE HEXAGON FOR OUTER REFLECTOR
+
+% - SURFACES
+surf ref_hex hexxc 0 0 20.10813572
+
+% - CELLS
+cell ref_hex 3 graphite -ref_hex -log_top log_bot
+
+% - FUELSALT
+cell ref_hex_fs 3 fuelsalt #(-ref_hex -log_top log_bot)
+
+% --- LATTICE DEFINITION FOR WHOLE CORE
+%lat <uni> <type> 0 0 <nx> <ny> <p>
+lat lattice 2 0 0 17 17 38.21137350
+%0 1 2 3 4 5 6 7 c 9 0 1 2 3 4 5 6
+ 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+ 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+ 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+ 3 3 3 3 3 3 3 3 3 2 2 2 2 3 3 3 3 %1
+ 3 3 3 3 3 3 3 2 2 2 2 2 2 2 3 3 3 %2
+ 3 3 3 3 3 3 2 2 2 2 2 2 2 2 3 3 3 %3
+ 3 3 3 3 3 2 2 2 2 2 2 2 2 2 3 3 3 %4
+ 3 3 3 3 2 2 2 2 2 2 2 2 2 2 3 3 3 %5
+ 3 3 3 3 2 2 2 2 7 2 2 2 2 3 3 3 3 %c
+ 3 3 3 2 2 2 2 2 2 2 2 2 2 3 3 3 3 %7
+ 3 3 3 2 2 2 2 2 2 2 2 2 3 3 3 3 3 %8
+ 3 3 3 2 2 2 2 2 2 2 2 3 3 3 3 3 3 %9
+ 3 3 3 2 2 2 2 2 2 2 3 3 3 3 3 3 3 %10
+ 3 3 3 3 2 2 2 2 3 3 3 3 3 3 3 3 3 %11
+ 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+ 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+ 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+
+% - CORE
+cell core 0 fill lattice -shield_inner -hat_bot plug_top
+
+% ===== Material Cards ===== %
+
+% sus316 stainless steel for outer walls
+mat sus316_stainless_steel -7.9 rgb 222 58 74
+ 6000.09c -0.0008   % Natural Carbon
+ 7014.09c -0.001    % Natural Nitrogen
+14000.09c -0.0075   % Natural Silicon
+15031.09c -0.00045  % Natural Phosphorous
+16000.09c -0.0003   % Natural Sulfur
+24000.09c -0.17     % Natural Chromium
+25055.09c -0.02     % Natural Manganese
+26000.09c -0.65495  % Natural Iron
+28000.09c -0.12     % Natural Nickle
+42000.09c -0.025    % Natural Molybdenum
+
+% Boron Carbide with naturally enriched boron
+mat B4C_natural -2.52 rgb 43 77 227
+ 5010.09c 0.16 % Boron 10
+ 5011.09c 0.64 % Boron 11
+ 6000.09c 0.2  % Natural Carbon
+
+% 10% Boron Carbide 90% graphite, used for shield
+mat B4C_shield -3.6343001900057894 rgb 99 73 214
+ 5010.09c 0.16   % Boron 10
+ 5011.09c 0.64   % Boron 11
+ 6000.09c 0.92   % Natural Carbon
+
+% Graphite moderator
+mat graphite -1.79811132 moder graph 6000
+tms 1050.0 rgb 59 59 59
+ 6000.09c 0.999998   % Natural Carbon
+ 5010.09c 4e-07  % Boron 10
+ 5011.09c 1.6e-06  % Boron 11
+% Thermal scattering libraries for graphite
+therm graph 0 gre7.04t gre7.08t gre7.12t gre7.16t gre7.18t gre7.22t
+
+% Fuel salt: 76%NaF + 12%BeF2 + 9.5%ThF4 + 2.5%UF4, U enrichment 0.19450097
+mat fuelsalt  -3.24052513 rgb 54 227 167 tmp  900.000
+burn 1 vol 13670000
+  4009.09c  -0.014486833693    %  Be-9
+  9019.09c  -0.376652659612    %  F-19
+ 11023.09c  -0.234050960971    %  Na-23
+ 90232.09c  -0.295287488946    %  Th-232
+ 92234.09c  -0.000135676886    %  U-234
+ 92235.09c  -0.015309924320    %  U-235
+ 92236.09c  -0.000070725768    %  U-236
+ 92238.09c  -0.064005729804    %  U-238
+
+% Fuel salt: 76%NaF + 12%BeF2 + 9.5%ThF4 + 2.5%UF4, U enrichment 0.1975
+mat refuelsalt  -3.24051519 rgb 54 227 167 tmp  900.000
+burn 1 vol 13670000
+  4009.09c  -0.014486878096    %  Be-9
+  9019.09c  -0.376653814067    %  F-19
+ 11023.09c  -0.234051678346    %  Na-23
+ 90232.09c  -0.295288394014    %  Th-232
+ 92234.09c  -0.000137769324    %  U-234
+ 92235.09c  -0.015546037231    %  U-235
+ 92236.09c  -0.000071816516    %  U-236
+ 92238.09c  -0.063763612406    %  U-238
+
+% ===== Data Cards ===== %
+set power 557000000 % Watts
+set pop 20000 200 60 % 20000 neutrons, 200 active cycles, 60 inactive cycles
+set arr 2
+set printm 1
+set mcvol 10000000
+
+% Data Libraries
+set acelib "sss_endfb7u.sssdir"
+set declib "sss_endfb7.dec"
+set nfylib "sss_endfb7.nfy"
+
+% --- REPROCESSING CARDS
+
+% - OFFGAS TANK
+mat offgas -0.001 burn 1 vol 1e9 tmp 900.0
+ 2004.09c 1
+
+% - OVERFLOW TANK
+mat overflow -0.001 burn 1 vol 1e9 tmp 900.0
+2004.09c 1
+
+% --- MASS FLOW DEFINITIONS
+
+set pcc 0 % predictor-corrector turned off for depletion
+
+mflow U_in
+all 9.256591859373625e-06
+
+mflow offgasratecore
+Ne 1e-2
+Ar 1e-2
+He 1e-2
+Kr 1e-2
+Xe 1e-2
+Rn 1e-2
+
+% Account for increase in volume with refueling
+mflow over
+all 9.256591859373625e-06
+
+rep source_rep
+rc refuelsalt fuelsalt U_in 0
+rc fuelsalt offgas offgasratecore 1
+rc fuelsalt overflow over 1
+
+% 4 years of burnup
+dep
+pro source_rep
+daystep
+0.0208 0.0208 0.9584 2 4 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
+30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
+
+
+set inventory
+1
+86
+fp
+lanthanides
+actinides
