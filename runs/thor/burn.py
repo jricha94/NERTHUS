@@ -24,6 +24,9 @@ class burn(object):
         self.refuel_salt:str = refuel_salt
         self.queue:str = 'fill'
         self.ompcores:int = 8
+        self.histories:int = 20000
+        self.ngen:int = 200
+        self.nskip:int = 60
 
         # Enrichment search varibles
         self.enr_path:str = os.getcwd() + '/enr_search'
@@ -69,12 +72,18 @@ class burn(object):
             nert0 = serpDeck(fuel_salt = self.fuel_salt, enr = enr0)
             nert0.queue = self.queue
             nert0.ompcores = self.ompcores
+            nert0.histories = self.histories
+            nert0.ngen = self.ngen
+            nert0.nskip = self.nskip
             nert0.deck_path = self.enr_path + '/nert0'
             nert0.deck_name = 'nert0'
 
             nert1 = serpDeck(fuel_salt = self.fuel_salt, enr = enr1)
             nert1.queue = self.queue
             nert1.ompcores = self.ompcores
+            nert1.histories = self.histories
+            nert1.ngen = self.ngen
+            nert1.nskip = self.nskip
             nert1.deck_path = self.enr_path + '/nert1'
             nert1.deck_name = 'nert1'
 
@@ -133,6 +142,9 @@ class burn(object):
             nert = serpDeck(fuel_salt = self.fuel_salt, enr = enri)
             nert.queue = self.queue
             nert.ompcores = self.ompcores
+            nert.histories = self.histories
+            nert.ngen = self.ngen
+            nert.nskip = self.nskip
             nert.deck_path = self.enr_path + '/nert'
             nert.deck_name = 'nerthus'
 
@@ -234,6 +246,9 @@ class burn(object):
             nert0.refuel_rate = self.refuel_min
             nert0.queue = self.queue
             nert0.ompcores = self.ompcores
+            nert0.histories = self.histories
+            nert0.ngen = self.ngen
+            nert0.nskip = self.nskip
             nert0.deck_path = self.refuel_path + '/edge0'
             nert0.deck_name = 'nerthus'
 
@@ -241,6 +256,10 @@ class burn(object):
             nert1.refuel_rate = self.refuel_max
             nert1.queue = self.queue
             nert1.ompcores = self.ompcores
+            nert1.histories = self.histories
+            nert1.ngen = self.ngen
+            nert1.nskip = self.nskip
+           
             nert1.deck_path = self.refuel_path + '/edge1'
             nert1.deck_name = 'nerthus'
 
@@ -296,6 +315,9 @@ class burn(object):
             nert.refuel_rate = ratei
             nert.queue = self.queue
             nert.ompcores = self.ompcores
+            nert.histories = self.histories
+            nert.ngen = self.ngen
+            nert.nskip = self.nskip
             nert.deck_path = self.refuel_path + '/nert' + str(n_iter)
             nert.deck_name = 'nerthus'
 
@@ -400,6 +422,9 @@ class burn(object):
             nert = self.feedback_runs[fb_run_name] 
             nert.queue = self.queue
             nert.ompcores = self.ompcores
+            nert.histories = self.histories
+            nert.ngen = self.ngen
+            nert.nskip = self.nskip
             nert.deck_path = self.feedback_path + '/' + feedback + '.' + str(int(temp))
             nert.refuel_rate = self.conv_rate
             nert.thermal_expansion = thermal_expansion

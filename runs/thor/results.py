@@ -5,17 +5,17 @@ from burn import burn
 import matplotlib.pyplot as plt
 
 
-flibe = burn('flibe', 'flibe')
+thor = burn('thorConSalt', 'thorConSalt')
 
-flibe.feedback_path = '/home/jarod/Projects/NERTHUS/runs/flibe/feedback'
+thor.feedback_path = '/home/jarod/Projects/NERTHUS/runs/thor/feedback'
 
-flibe.get_feedbacks('fs.tot')
-fs_fb = flibe.alphas
+thor.get_feedbacks('fs.tot')
+fs_fb = thor.alphas
 
 
-flibe.get_feedbacks('gr.tot')
-gr_fb = flibe.alphas
-days = flibe.days
+thor.get_feedbacks('gr.tot')
+gr_fb = thor.alphas
+days = thor.days
 
 
 
@@ -48,5 +48,5 @@ ax2.set_title('Graphite', fontsize=12)
 ax2.set_xlim(0, days[-1])
 ax2.grid(True)
 
-fig.savefig('Nerthus_Flibe_FB.png', bbox_inches = 'tight')
+fig.savefig('Nerthus_Thor_FB.png', bbox_inches = 'tight')
 

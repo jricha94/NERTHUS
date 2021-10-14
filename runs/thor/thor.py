@@ -1,4 +1,4 @@
-import sys
+#!/usr/bin/env python3
 import os
 from burn import burn
 
@@ -34,7 +34,7 @@ thor.histories = 100000
 
 thor.feedback_path = cwd + '/feedback'
 thor.queue = 'fill'
-thor.ompcores = 8 
+thor.ompcores = 8
 thor.run_feedbacks('fs.tot', True, True)
 thor.run_feedbacks('gr.tot', True, True)
 
