@@ -7,15 +7,12 @@ NERTHUS is inspired by.
 '''
  #TODO: kill script if too hot or cold
 
-from typing import Tuple
 from salts import Salt
 from textwrap import dedent
 import math
-import copy
 import os
 import serpentTools
 import shutil
-import time
 
 
 serpentTools.settings.rc['verbosity'] = 'error'
@@ -89,7 +86,7 @@ class serpDeck(object):
 
         self.refuel_rate:float  = 1e-9
 
-    def _make_ellipsoid(self, pos:list=None, axes:list=None, name:str=None) -> str:
+    def _make_ellipsoid(self, pos:list, axes:list, name:str=None):
         '''creates A B C D E F G H I J values for ellipsoid surface in SERPENT'''
         x, y, z = pos
         a, b, c = axes
@@ -107,7 +104,7 @@ class serpDeck(object):
         y_rot = x * math.sin(math.radians(rotation)) + y * math.cos(math.radians(rotation))
         return [x_rot, y_rot]
     
-    def _translate(self, point:list=None, pos:list=None):
+    def _translate(self, point:list, pos:list):
         '''Moves a point to a new location'''
         x, y = point[0], point[1]
         x_tran = pos[0]
@@ -117,7 +114,7 @@ class serpDeck(object):
         y = y + y_tran
         return [x,y]
 
-    def _make_plane(self, point1:list=None, point2:list=None, name:str=None) -> str:
+    def _make_plane(self, point1:list, point2:list, name:str) -> str:
         x1, y1 = point1[0], point1[1]
         x2, y2 = point2[0], point2[1]
         plane = f'\nsurf {name} plane {x1:.8f} {y1:.8f} 0.0 {x2:.8f} {y2:.8f} 0.0 {x2:.8f} {y2:.8f} -1.0'
@@ -408,7 +405,7 @@ class serpDeck(object):
             surf log_bot pz {log_bot}
             ''')
 
-        def make_slab(trans:list=None, name:str=None):
+        def make_slab(trans:list, name:str):
             '''Creates input for NERTHUS slab'''
 
             slab = dedent(f'''
@@ -479,7 +476,7 @@ class serpDeck(object):
 
             return slab, cell
 
-        def make_yoke(trans:list=None, rot:float=None, name:str=None):
+        def make_yoke(trans:list, rot:float, name:str):
             '''Writes yoke input for NERTHUS'''
 
             yoke = dedent(f'''
@@ -536,7 +533,7 @@ class serpDeck(object):
         yoke1_trans = self._GLE([0, -0.24])
         yoke2_trans = self._rotate(yoke1_trans, -120)
 
-        yoke1, yoke_fs1 = make_yoke(yoke1_trans, None, 'yoke1')
+        yoke1, yoke_fs1 = make_yoke(yoke1_trans, 0.0, 'yoke1')
         yoke2, yoke_fs2 = make_yoke(yoke2_trans,-120.0, 'yoke2')
 
         log += yoke1 + yoke2
@@ -896,7 +893,6 @@ class serpDeck(object):
             set power 557000000 % Watts
             set pop {self.histories} {self.ngen} {self.nskip} % {self.histories} neutrons, {self.ngen} active cycles, {self.nskip} inactive cycles
             set arr 2
-            set printm 1
             set mcvol 10000000
             ''')
 
@@ -913,9 +909,9 @@ class serpDeck(object):
         if self.do_plots:
             data_cards += dedent('''
                 % --- PLOTS
-                plot 1 7000 7000 0 -290 290 -290 290
-                plot 2 7000 7000 0 -290 290 -290 290
-                plot 3 7000 7000 0 -290 290 -290 290
+                plot 1 9000 9000 197.497 124.5 124.6 239.5 240.6
+                %plot 2 7000 7000 0 -290 290 -290 290
+                %plot 3 7000 7000 0 -290 290 -290 290
 
                 ''')
 
@@ -1088,7 +1084,7 @@ class serpDeck(object):
             return True
 
     def cleanup(self, purge:bool=True):
-        'Delete the run directory'
+        'Delete the run directories'
         if os.path.isdir(self.deck_path):
             if purge:
                 shutil.rmtree(self.deck_path)
@@ -1102,19 +1098,14 @@ class serpDeck(object):
 
 if __name__ == '__main__':
     test = serpDeck()
-    #test.do_plots = True
-    #test.refuel = False
-    #test.save_deck()
-    #os.system('sss2 -plot -omp 20 nerthus/nerthus')
+    test.do_plots = True
+    # test.refuel = False
+    test.save_deck()
+    test.thermal_expansion = False
+    os.system('sss2 -plot -omp 20 nerthus/nerthus')
     #test.queue = 'fill'
     #test.ompcores = 20
     #test.histories = 100
     #test.ngen = 10
     #test.nskip = 5
     #test.full_build_run()
-    test.deck_name = 'nerthus'
-    test.refuel = True
-    test.deck_path = '/home/jarod/Projects/NERTHUS/runs/flibe/feedback/fs.tot.800'
-    print(test.get_results())
-    for n, k in enumerate(test.k):
-        print(n, "\t", k)
