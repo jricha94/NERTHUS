@@ -1,14 +1,11 @@
 #!/usr/bin/python3
 
-# TODO change generations back to normal after testing done
-# TODO put depletion back to normal
 from deck import serpDeck
 import numpy as np
 from collections import namedtuple
 import os
 import time
-import scipy
-from scipy import optimize
+import scipy.optimize
 
 
 SLEEP_SEC:int = 60

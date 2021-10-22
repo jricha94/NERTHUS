@@ -30,14 +30,11 @@ thor.refuel_max = 1e-5
 thor.read_refuel_if_done()
 
 
-thor.histories = 100000
+thor.histories = 80000
 
 thor.feedback_path = cwd + '/feedback'
 thor.queue = 'fill'
 thor.ompcores = 8
 thor.run_feedbacks('fs.tot', True, True)
 thor.run_feedbacks('gr.tot', True, True)
-
-thor.feedback_path = cwd + '/feedback/no_therm_exp'
-thor.run_feedbacks('gr.tot', False, True)
 
