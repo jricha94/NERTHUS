@@ -7,8 +7,7 @@ import numpy as np
 from collections import namedtuple
 import os
 import time
-import scipy
-from scipy import optimize
+import scipy.optimize
 
 
 SLEEP_SEC:int = 60

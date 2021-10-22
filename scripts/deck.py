@@ -909,7 +909,7 @@ class serpDeck(object):
         if self.do_plots:
             data_cards += dedent('''
                 % --- PLOTS
-                plot 1 9000 9000 197.497 124.5 124.6 239.5 240.6
+                plot 1 9000 7000 197.497 124 125 239 240
                 %plot 2 7000 7000 0 -290 290 -290 290
                 %plot 3 7000 7000 0 -290 290 -290 290
 
@@ -1098,11 +1098,12 @@ class serpDeck(object):
 
 if __name__ == '__main__':
     test = serpDeck()
-    test.do_plots = True
+    # test.do_plots = True
     # test.refuel = False
+    test.mod_tempK = 10000.0
     test.save_deck()
-    test.thermal_expansion = False
-    os.system('sss2 -plot -omp 20 nerthus/nerthus')
+    # test.thermal_expansion = False
+    # os.system('sss2 -plot -omp 20 nerthus/nerthus')
     #test.queue = 'fill'
     #test.ompcores = 20
     #test.histories = 100
