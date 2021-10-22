@@ -1098,14 +1098,9 @@ class serpDeck(object):
 
 if __name__ == '__main__':
     test = serpDeck()
-    test.do_plots = True
-    # test.refuel = False
+    test.deck_name = '800'
+    test.mod_tempK = 800
     test.save_deck()
-    test.thermal_expansion = False
-    os.system('sss2 -plot -omp 20 nerthus/nerthus')
-    #test.queue = 'fill'
-    #test.ompcores = 20
-    #test.histories = 100
-    #test.ngen = 10
-    #test.nskip = 5
-    #test.full_build_run()
+    test.deck_name = '1000'
+    test.mod_tempK = 1000
+    test.save_deck()
