@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 '''
 Module for writing and running NERTHUS reactor using the SERPENT Monte Carlo code.
 
@@ -7,15 +7,13 @@ NERTHUS is inspired by.
 '''
  #TODO: kill script if too hot or cold
 
-from typing import Tuple
 from salts import Salt
 from textwrap import dedent
 import math
-import copy
 import os
 import serpentTools
 import shutil
-import time
+
 
 
 serpentTools.settings.rc['verbosity'] = 'error'
@@ -89,7 +87,7 @@ class serpDeck(object):
 
         self.refuel_rate:float  = 1e-9
 
-    def _make_ellipsoid(self, pos:list=None, axes:list=None, name:str=None) -> str:
+    def _make_ellipsoid(self, pos:list[float], axes:list[float], name:str=None):
         '''creates A B C D E F G H I J values for ellipsoid surface in SERPENT'''
         x, y, z = pos
         a, b, c = axes
@@ -107,7 +105,7 @@ class serpDeck(object):
         y_rot = x * math.sin(math.radians(rotation)) + y * math.cos(math.radians(rotation))
         return [x_rot, y_rot]
     
-    def _translate(self, point:list=None, pos:list=None):
+    def _translate(self, point:list, pos:list):
         '''Moves a point to a new location'''
         x, y = point[0], point[1]
         x_tran = pos[0]
@@ -117,13 +115,13 @@ class serpDeck(object):
         y = y + y_tran
         return [x,y]
 
-    def _make_plane(self, point1:list=None, point2:list=None, name:str=None) -> str:
+    def _make_plane(self, point1:list, point2:list, name:str) -> str:
         x1, y1 = point1[0], point1[1]
         x2, y2 = point2[0], point2[1]
         plane = f'\nsurf {name} plane {x1:.8f} {y1:.8f} 0.0 {x2:.8f} {y2:.8f} 0.0 {x2:.8f} {y2:.8f} -1.0'
         return plane
 
-    def _GLE(self, point = None) -> list:
+    def _GLE(self, point = None) -> list[float]:
         '''Method for calculating change in distance due to thermal expansion
         of graphite. If thermal expansion is excluded, the geometry is modeled at 900k '''
         if self.thermal_expansion == True:
@@ -139,7 +137,7 @@ class serpDeck(object):
         else:
             if type(point) is list:
                 x0, y0 = point[0], point[1]
-                xf = x0 * (1.0 + GRAPHITE_CTE * (607.0))
+                xf = x0 * (1.0 + GRAPHITE_CTE * (606.0))
                 yf = y0 * (1.0 + GRAPHITE_CTE * (607.0))
                 result = [xf, yf]
             else:
@@ -161,239 +159,250 @@ class serpDeck(object):
     def _make_surfs_and_cells(self) -> str:
         '''method for writing the surfaces and cells for the NERTHUS model'''
 
-        surfs_and_cells_cards:str = dedent(f'''
+        surfs_and_cells_cards:str = dedent('''
             % ===== NERTHUS Serpent input file ===== %
-
+            set lost -1
             set title "NERTHUS"
 
-
-            % ===== SURFACES AND CELL CARDS
+            % =================================== %
+            % ===== SURFACES AND CELL CARDS ===== %
+            % =================================== %
             ''')
 
-        # Wall of reactor
-        pot_wall = dedent(f'''
-            % --- OUTER WALL OF REACTOR
-
-            % - SURFACES FOR CYLINDRICAL WALL
+        pot_wall = dedent('''
+            % --- STAINLESS STEEL WALL OF REACTOR --- %
             surf pot_wall_outer cyl 0.0 0.0 248.05
             surf pot_wall_inner cyl 0.0 0.0 243.05
-            surf pot_wall_top   pz  234.7
-            surf pot_wall_bot   pz -234.7
+            surf pot_wall_top pz  234.7
+            surf pot_wall_bot pz -234.7
 
-            % - CELL
+            % --- CELL FOR POT WALL --- %
             cell pot_wall 0 sus316_stainless_steel
-            -pot_wall_outer pot_wall_inner -pot_wall_top pot_wall_bot
+            -pot_wall_outer pot_wall_inner pot_wall_bot -pot_wall_top
             ''')
+
         surfs_and_cells_cards += pot_wall
 
-        # Top wall
         pot_top_outer, pot_top_outer_trans = self._make_ellipsoid([0,0,239.7], [250.74, 250.74, 47.9], 'pot_top_outer')
-        pot_top_inner, pot_top_inner_trans = self._make_ellipsoid([0,0,239.7], [243.05, 243.05, 40.21], 'pot_top_inner')
+        pot_top_inner, pot_top_inner_trans = self._make_ellipsoid([0,0,239.7], [243.05, 243.05, 42.9], 'pot_top_inner')
 
         pot_top = dedent(f'''
-            % --- TOP WALL OF REACTOR
+            % --- TOP WALL OF POT --- %
 
-            % - SURFACED FOR CURVED TOP
+            % - wall of the top - %
             {pot_top_outer}
             {pot_top_outer_trans}
             {pot_top_inner}
             {pot_top_inner_trans}
-            surf pot_top_plane pz 239.7
-            surf pot_top_tube_out cyl 0 -50.5 20.5
-            surf pot_top_tube_in  cyl 0 -50.5 15.5
-            surf pot_top_tube_top pz 305
-            surf pot_top_ctrl_out cyl 0 0.0 24.5
-            surf pot_top_ctrl_in  cyl 0 0.0 19.5
 
-            % - CELL
+            % - brim at the top of the reactor - %
+            surf pot_brim_top pz 239.7
+            surf pot_brim_outer cyl 0.0 0.0 254
+
+            % - pipes for control rods and fuel salt - %
+            surf pot_top_tube_out cyl 0.0 -50.5 20.5
+            surf pot_top_tube_in  cyl 0.0 -50.5 15.5
+            surf pot_top_ctrl_out cyl 0.0 0.0 24.5
+            surf pot_top_ctrl_in  cyl 0.0 0.0 19.5
+            surf pot_top_plane    pz 295
+
+            % --- CELL FOR POT TOP WALL --- %
             cell pot_top 0 sus316_stainless_steel
-            -pot_top_outer pot_top_inner pot_top_plane pot_top_tube_out pot_top_ctrl_out:
-            (pot_top_tube_in -pot_top_tube_out -pot_top_tube_top pot_top_inner pot_wall_top):
-            (pot_top_ctrl_in -pot_top_ctrl_out -pot_top_tube_top pot_top_inner pot_wall_top)
-
-            % --- PIECE THAT CONNECTS THE TOP TO THE WALL
-
-            % - SURFACE FOR CONNECTOR
-            surf pot_top_con   cyl 0.0 0.0 256
-
-            % - CELL
-            cell pot_connector 0 sus316_stainless_steel
-            -pot_top_con pot_wall_inner -pot_top_plane pot_wall_top
+            (-pot_top_outer pot_top_inner pot_brim_top pot_top_tube_out pot_top_ctrl_out):
+            (-pot_brim_outer pot_wall_inner pot_wall_top -pot_brim_top):
+            (-pot_top_tube_out pot_top_tube_in pot_top_inner -pot_top_plane pot_brim_top):
+            (-pot_top_ctrl_out pot_top_ctrl_in pot_top_inner -pot_top_plane pot_brim_top)
             ''')
+
         surfs_and_cells_cards += pot_top
 
-        # Bottom wall
-        pot_bot_outer = self._make_ellipsoid([0,0,-234.7], [248.05,248.05,49.4], 'pot_bot_outer')
-        pot_bot_inner = self._make_ellipsoid([0,0,-234.7], [243.05,243.05,44.4], 'pot_bot_inner')
+        pot_bot_outer, pot_bot_outer_trans = self._make_ellipsoid([0,0,-234.7], [248.05, 248.05, 49.4], 'pot_bot_outer')
+        pot_bot_inner, pot_bot_inner_trans = self._make_ellipsoid([0,0,-234.7], [243.05, 243.05, 44.4], 'pot_bot_inner')
 
         pot_bot = dedent(f'''
-            % --- BOTTOM WALL OF REACTOR
+            % --- BOTTOM WALL OF REACTOR --- %
 
-            % - SURFACE FOR CURVED BOTTOM
-            {pot_bot_outer[0]}
-            {pot_bot_outer[1]}
-            {pot_bot_inner[0]}
-            {pot_bot_inner[1]}
-            surf pot_bot_tube_out cyl 0 0 22.8
-            surf pot_bot_tube_in  cyl 0 0 17.8
-            surf pot_bot_tube_bot pz -300
+            % - wall of the bottom - %
+            {pot_bot_outer}
+            {pot_bot_outer_trans}
+            {pot_bot_inner}
+            {pot_bot_inner_trans}
 
-            % - CELL
+            % - tube for fuel salt - %
+            surf pot_bot_tube_out cyl 0.0 0.0 24.8
+            surf pot_bot_tube_in  cyl 0.0 0.0 19.8
+            surf pot_bot_plane    pz -295
+
+            % --- CELL FOR POT BOTTOM WALL --- %
             cell pot_bot 0 sus316_stainless_steel
-            -pot_wall_bot -pot_bot_outer pot_bot_inner pot_bot_tube_out:
-            (pot_bot_tube_in -pot_bot_tube_out pot_bot_tube_bot pot_bot_inner -pot_wall_bot)
+            (-pot_bot_outer pot_bot_inner -pot_wall_bot pot_bot_tube_out):
+            (-pot_bot_tube_out pot_bot_tube_in pot_bot_plane -pot_wall_bot pot_bot_inner)
             ''')
+
         surfs_and_cells_cards += pot_bot
 
-        # Void
+
         void = dedent('''
-            % --- VOID
-            cell void1 0 outside
-             pot_wall_outer -pot_wall_top pot_wall_bot
+            % --- VOID CELLS --- %
 
-            cell void2 0 outside
-             pot_top_con pot_wall_top -pot_top_plane
+            cell void_mid 0 outside
+            pot_wall_outer -pot_wall_top pot_wall_bot
 
-            cell void3 0 outside
-             pot_top_plane -pot_top_tube_top pot_top_outer pot_top_tube_out pot_top_ctrl_out
+            cell void_up 0 outside
+            pot_top_plane
 
-            cell void4 0 outside
-             -pot_wall_bot pot_bot_outer pot_bot_tube_out pot_bot_tube_bot
+            cell void_down 0 outside
+            -pot_bot_plane
 
-            cell void5 0 outside
-             pot_top_tube_top
+            cell void_brim 0 outside
+            pot_brim_outer pot_wall_top -pot_brim_top
 
-            cell void6 0 outside
-            -pot_bot_tube_bot
+            cell void_top 0 outside
+            pot_brim_top -pot_top_plane pot_top_tube_out pot_top_ctrl_out pot_top_outer
+
+            cell void_bot 0 outside
+            -pot_wall_bot pot_bot_plane pot_bot_tube_out pot_bot_outer
             ''')
+
         surfs_and_cells_cards += void
 
-        # Shield
         shield = dedent('''
-            % --- BORON CARBIDE SHIELD AROUND CORE
+            % --- BORON CARBIDE SHIELD --- %
 
-            % - SURFACES
-            surf shield_inner cyl 0 0 230
-            surf shield_outer cyl 0 0 240
-            surf shield_top     pz  189
-            surf shield_bot     pz -189
+            % - shield surfaces - %
+            surf shield_outer cyl 0.0 0.0 240
+            surf shield_inner cyl 0.0 0.0 230
+            surf shield_top   pz  189
+            surf shield_bot   pz -189
 
-            % - CELL
+            % --- CELL FOR B4C SHIELD --- %
             cell shield 0 B4C_shield
             -shield_outer shield_inner -shield_top shield_bot
             ''')
+
         surfs_and_cells_cards += shield
 
-        # Graphite Hat and top reflector
-        # Z location for top dome
-        hat_z = self._GLE(239)
-        # Axes for ellipsoid
-        hat_AB = self._GLE(233)
-        hat_C = self._GLE(35.7)
-        hat_dome, hat_dome_trans = self._make_ellipsoid([0,0,hat_z], [hat_AB,hat_AB,hat_C], 'hat_dome')
 
-        # Variables for hat
-        hat_out = self._GLE(233)
-        hat_bot = self._GLE(191)
-        hat_mid_plane = self._GLE(239)
-        hat_top = self._GLE(268.2)
-        hat_corner_cyl = self._GLE(223)
-        hat_corner_plane = self._GLE(201)
-        hat_corner_rad = self._GLE(10)
-
-        hat = dedent(f'''
-            % --- GRAPHITE HAT
-
-            % - SURFS
-            surf hat_out cyl 0 0 {hat_out:.8f}
-            surf hat_bot pz {hat_bot:.8f}
-            surf hat_mid_plane pz {hat_mid_plane:.8f}
-            surf hat_top pz {hat_top:.8f}
-            {hat_dome}
-            {hat_dome_trans}
-            surf hat_corner_cyl cyl 0 0 {hat_corner_cyl:.8f}
-            surf hat_corner_plane pz {hat_corner_plane:.8f}
-            surf hat_corner torz 0 0 {hat_corner_plane:.8f} {hat_corner_cyl:.8f} {hat_corner_rad:.8f} {hat_corner_rad:.8f}
-
-            % - CELLS
-            cell hat 0 graphite
-            (hat_corner_plane -hat_top (-hat_dome: -hat_mid_plane) -hat_out rod_chan_0  rod_chan_1 rod_chan_2 rod_chan_3):
-            -hat_corner: (hat_bot -hat_corner_cyl -hat_corner_plane rod_chan_0  rod_chan_1 rod_chan_2 rod_chan_3)
-            ''')
-        surfs_and_cells_cards += hat
-
-        # Graphite Plug and bottom reflector
-        # Z location for top dome
-        plug_z = self._GLE(-217.36)
-        # Axes for ellipsoid
-        plug_AB = self._GLE(236.1)
-        plug_C = self._GLE(53.3)
-        plug_dome = self._make_ellipsoid([0,0,plug_z], [plug_AB,plug_AB,plug_C], 'plug_dome')
-
-        # Variables for plug
+        # Plug values
         plug_out = self._GLE(236.15)
         plug_top = self._GLE(-191.0)
-        plug_mid_plane = self._GLE(-217.36)
+        plug_mid = self._GLE(-217.36)
         plug_bot = self._GLE(-266.0)
+        # Pretty rounded coreners
         plug_corner_cyl = self._GLE(226.15)
         plug_corner_plane = self._GLE(-201.0)
-        plug_corner_rad = self._GLE(10)
+        plug_corner_rad = self._GLE(10.0)
+        # Graphite dome
+        plug_z = self._GLE(-217.36)
+        plug_AB = self._GLE(236.15)
+        plug_C  = self._GLE(53.3)
+        plug_dome, plug_dome_trans = self._make_ellipsoid([0,0,plug_z], [plug_AB, plug_AB, plug_C], 'plug_dome')
+
 
         plug = dedent(f'''
-            % --- GRAPHITE PLUG
-
-            % - SURFS
-            surf plug_out cyl 0 0 {plug_out:.8f}
-            surf plug_top pz {plug_top:.8f}
-            surf plug_mid_plane pz {plug_mid_plane:.8f}
-            surf plug_bot pz {plug_bot:.8f}
-            {plug_dome[0]}
-            {plug_dome[1]}
-            surf plug_corner_cyl cyl 0 0 {plug_corner_cyl:.8f}
+            % --- GRAPHITE PLUG REFLECTOR --- %
+            
+            % - plug surfaces - %
+            surf plug_out cyl 0.0 0.0 {plug_out:.8f}
+            surf plug_top   pz  {plug_top:.8f}
+            surf plug_bot   pz  {plug_bot:.8f}
+            surf plug_mid   pz  {plug_mid:.8f}
             surf plug_corner_plane pz {plug_corner_plane:.8f}
-            surf plug_corner torz 0 0 {plug_corner_plane:.8f} {plug_corner_cyl:.8f} {plug_corner_rad:.8f} {plug_corner_rad:.8f}
+            surf plug_corner_cyl cyl 0.0 0.0 {plug_corner_cyl:.8f}
+            surf plug_corner torz 0.0 0.0 {plug_corner_plane:.8f} {plug_corner_cyl:.8f} {plug_corner_rad:.8f} {plug_corner_rad:.8f}
+            {plug_dome}
+            {plug_dome_trans}
 
-            % - CELL
-            cell plug 0 graphite
-            (plug_bot -plug_corner_plane (-plug_dome: plug_mid_plane) -plug_out):
-            -plug_corner: (plug_corner_plane -plug_top -plug_corner_cyl)
+
+            % --- CELL FOR PLUG GRAPHITE--- %
+            cell plug plug graphite
+            (-plug_top plug_corner_plane -plug_corner_cyl):
+            (-plug_corner_plane plug_mid -plug_out):
+            (-plug_dome -plug_mid plug_bot):
+            (-plug_corner plug_corner_cyl plug_corner_plane)
+
+            % --- CELL FOR PLUG FUEL SALT --- %
+            cell plug_fuel_salt plug fuelsalt
+            -plug_bot: plug_top:
+            (plug_dome -plug_mid plug_bot):
+            (plug_out plug_mid -plug_corner_plane):
+            (plug_corner plug_corner_cyl plug_corner_plane)
+
+
+            % --- CELL TO FILL PLUG --- %
+            cell plug_fill 0 fill plug
+            (-plug_top -pot_wall_inner pot_wall_bot):
+            (-pot_bot_inner -pot_wall_bot)
             ''')
+
         surfs_and_cells_cards += plug
 
-        # Fuel salt cells
-        fuelsalt = dedent(f'''
-            % --- FUEL SALT CELLS
+        hat_out = self._GLE(233.0)
+        hat_bot = self._GLE(191.0)
+        hat_mid = self._GLE(239.0)
+        hat_top = self._GLE(268.2)
+        # Pretty rounded corners
+        hat_corner_cyl = self._GLE(223.0)
+        hat_corner_plane = self._GLE(201.0)
+        hat_corner_rad = self._GLE(10.0)
+        # Graphite dome
+        hat_z = self._GLE(239.0)
+        hat_AB = self._GLE(233.0)
+        hat_C = self._GLE(35.7)
+        hat_dome, hat_dome_trans = self._make_ellipsoid([0.0,0.0,hat_z], [hat_AB, hat_AB, hat_C], 'hat_dome')
 
-            % FILL TUBES AND OUTSIDE SHIELD
-            cell fs1 0 fuelsalt
-            (pot_top_inner -pot_top_tube_in -pot_top_tube_top hat_top):
-            (pot_top_inner -pot_top_ctrl_in -pot_top_tube_top hat_top
-            rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
-            (pot_bot_tube_bot pot_bot_inner -pot_bot_tube_in -plug_bot):
-            (shield_bot -shield_top shield_outer -pot_wall_inner)
+        hat = dedent(f'''
+            % --- GRAPHITE HAT REFLECTOR --- %
 
-            % FILL TOP OF REACTOR
-            cell fs2 0 fuelsalt
-            (-hat_mid_plane hat_corner_plane hat_out -pot_wall_inner):
-            (hat_dome hat_mid_plane -pot_top_inner
-            rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
-            (hat_top -hat_dome
-            rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
-            (hat_out -pot_wall_inner hat_bot -hat_mid_plane):
-            (hat_corner -hat_corner_plane hat_bot hat_corner_cyl -pot_wall_inner):
-            (shield_inner -pot_wall_inner -hat_bot shield_top):
-            (pot_wall_top -pot_top_plane -pot_top_outer pot_top_inner -pot_wall_inner)
+            % - hat surfaces - %
+            surf hat_out cyl 0.0 0.0 {hat_out:.8f}
+            surf hat_top pz {hat_top:.8f}
+            surf hat_bot pz {hat_bot:.8f}
+            surf hat_mid pz {hat_mid:.8f}
+            surf hat_corner_plane pz {hat_corner_plane:.8f}
+            surf hat_corner_cyl cyl 0.0 0.0 {hat_corner_cyl:.8f}
+            surf hat_corner torz 0.0 0.0 {hat_corner_plane} {hat_corner_cyl} {hat_corner_rad} {hat_corner_rad}
+            {hat_dome}
+            {hat_dome_trans}
 
-            % FILL BOTTOM OF REACTOR
-            cell fs3 0 fuelsalt
-            (plug_dome -pot_bot_inner -plug_mid_plane):
-            (-plug_dome -plug_bot):
-            (plug_out -pot_wall_inner plug_mid_plane -plug_corner_plane):
-            (plug_dome pot_bot_inner -pot_wall_inner -plug_mid_plane pot_wall_bot):
-            (plug_corner -plug_top -pot_wall_inner plug_corner_plane plug_corner_cyl):
-            (plug_top shield_inner -pot_wall_inner -shield_bot)
+            % --- CELL FOR HAT GRAPHITE --- %
+            cell hat hat graphite
+            (hat_bot -hat_corner_plane -hat_corner_cyl rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
+            (hat_corner_plane -hat_mid -hat_out rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
+            (hat_mid -hat_dome -hat_top rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
+            (-hat_corner hat_corner_cyl -hat_corner_plane)
+
+            % --- CELL FOR HAT FUELSALT --- %
+            cell hat_fuel_salt hat fuelsalt
+            (hat_top rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
+            (-hat_bot rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3):
+            (hat_dome hat_mid -hat_top):
+            (hat_out -hat_mid hat_corner_plane):
+            (hat_corner hat_corner_cyl -hat_corner_plane)
+            
+
+            % --- CELL TO FILL HAT --- %
+            cell hat_fill 0 fill hat
+            (hat_bot -pot_wall_inner -pot_brim_top):
+            (pot_brim_top -pot_top_inner)
             ''')
-        surfs_and_cells_cards += fuelsalt
+
+
+        surfs_and_cells_cards += hat
+
+        salt_cell = dedent('''
+            % --- FUEL SALT CELL --- %
+
+            cell fuel_salt 0 fuelsalt
+            (shield_top shield_inner -hat_bot -pot_wall_inner):             % Above shield
+            (shield_outer -shield_top shield_bot -pot_wall_inner):          % Outside shield
+            (-shield_bot shield_inner plug_top -pot_wall_inner):            % Below shield
+            (pot_bot_inner -pot_wall_bot -pot_bot_tube_in pot_bot_plane):   % In bottom pipe
+            (pot_top_inner pot_brim_top -pot_top_tube_in -pot_top_plane):   % In top pipe
+            (pot_top_inner pot_brim_top -pot_top_ctrl_in -pot_top_plane rod_chan_0 rod_chan_1 rod_chan_2 rod_chan_3) % In top control pipe
+            ''')
+
+        surfs_and_cells_cards += salt_cell
 
         # Logs and Guide rods
 
@@ -408,7 +417,7 @@ class serpDeck(object):
             surf log_bot pz {log_bot}
             ''')
 
-        def make_slab(trans:list=None, name:str=None):
+        def make_slab(trans:list, name:str):
             '''Creates input for NERTHUS slab'''
 
             slab = dedent(f'''
@@ -479,7 +488,7 @@ class serpDeck(object):
 
             return slab, cell
 
-        def make_yoke(trans:list=None, rot:float=None, name:str=None):
+        def make_yoke(trans:list, rot:float, name:str):
             '''Writes yoke input for NERTHUS'''
 
             yoke = dedent(f'''
@@ -536,7 +545,7 @@ class serpDeck(object):
         yoke1_trans = self._GLE([0, -0.24])
         yoke2_trans = self._rotate(yoke1_trans, -120)
 
-        yoke1, yoke_fs1 = make_yoke(yoke1_trans, None, 'yoke1')
+        yoke1, yoke_fs1 = make_yoke(yoke1_trans, 0.0, 'yoke1')
         yoke2, yoke_fs2 = make_yoke(yoke2_trans,-120.0, 'yoke2')
 
         log += yoke1 + yoke2
@@ -614,7 +623,7 @@ class serpDeck(object):
         channel_distance:float = 2.5  # [cm] distance from center fuelsalt channel to center of outer fuelsalt channels
 
         # Make the small channels for cooling the log
-        # 3 groups of channels with 7 holes per channel (center and 5 surrounding)
+        # 3 groups of channels with 7 holes per channel (center and 6 surrounding)
         for group in [1,2,3]:
             theta = group * 120.0 + 30.0
             x1 = self._GLE(outer_distance * math.cos(math.radians(theta)))
@@ -634,133 +643,110 @@ class serpDeck(object):
 
 
         # Make the large channels where the control rods are inserted
+        ctrl_channels = dedent('''
+        % --- FILL CONTROL ROD CHANNELS --- %
+        ''')
         name = 'rod_chan_0'
         gr_cell += f' {name}'
-        #fs_cell += f' {name}'
         ctrl_log += f'surf {name} cyl 0 0 {self._GLE(center_rod_radius):.8f}\n'
+
+        if self.control_rods[0] == 0:
+            ctrl_channels += dedent(f'''
+                % - control log universe
+                cell {name}_ctrl_log 7 fuelsalt
+                log_bot -{name}
+
+                % - hat universe
+                cell {name}_hat hat fuelsalt
+                -{name}
+
+                % - base universe
+                cell {name}_base 0 fuelsalt
+                -pot_top_plane pot_brim_top pot_top_inner -{name}
+                ''')
+        else:
+            ctrl_channels += dedent(f'''
+                % - surfaces for control rod - %
+                surf ctrl_rod0 cyl 0.0 0.0 4.7
+                surf ctrl_arm0 cyl 0.0 0.0 3.0
+
+                % - control log boron cell - %
+                cell ctrl0_log 7 B4C_natural shield_bot -shield_top -ctrl_rod0
+                % - control log steel cell - %
+                cell ctrl0_log_arm 7 sus316_stainless_steel shield_top -ctrl_arm0
+                % - control log salt cell - %
+                cell ctrl0_log_salt 7 fuelsalt
+                (-{name} ctrl_rod0 -shield_top shield_bot):
+                (-shield_bot -{name} log_bot):
+                (shield_top ctrl_arm0 -rod_chan_0)
+
+                % - hat steel cell - %
+                cell ctrl0_hat_arm hat sus316_stainless_steel -ctrl_arm0
+                % - hat salt cell - %
+                cell ctrl0_hat_salt hat fuelsalt -{name} ctrl_arm0 shield_bot
+
+                % - base universe steel cell - %
+                cell ctrl0_arm 0 sus316_stainless_steel -pot_top_plane -ctrl_arm0 pot_top_inner pot_brim_top
+                % - base universe salt cell - %
+                cell ctrl0_salt 0 fuelsalt -pot_top_plane ctrl_arm0 -rod_chan_0 pot_top_inner pot_brim_top
+
+                ''')
+
         for hole in [1,2,3]:
             theta = hole * 120.0 - 30
             x = self._GLE(outer_distance * math.cos(math.radians(theta)))
             y = self._GLE(outer_distance * math.sin(math.radians(theta)))
             name = f'rod_chan_{hole}'
             gr_cell += f' {name}'
-            #fs_cell += f' {name}'
             ctrl_log += f'surf {name} cyl {x:.8f} {y:.8f} {self._GLE(outer_rod_radius):.8f}\n'
+            # Add surfaces and cells for slat or control rods
+            if self.control_rods[hole] == 0:
+                ctrl_channels += dedent(f'''
+                    % - control log universe
+                    cell {name}_ctrl_log 7 fuelsalt
+                    log_bot -{name}
+
+                    % - hat universe
+                    cell {name}_hat hat fuelsalt
+                    -{name}
+
+                    % - base universe
+                    cell {name}_base 0 fuelsalt
+                    -pot_top_plane pot_brim_top pot_top_inner -{name}
+                    ''')
+            else:
+                ctrl_channels += dedent(f'''
+                    % - surfaces for control rod - %
+                    surf ctrl_rod{hole} cyl {x:.8f} {y:.8f} 4.7
+                    surf ctrl_arm{hole} cyl {x:.8f} {y:.8f} 3.0
+    
+                    % - control log boron cell - %
+                    cell ctrl{hole}_log 7 B4C_natural shield_bot -shield_top -ctrl_rod{hole}
+                    % - control log steel cell - %
+                    cell ctrl{hole}_log_arm 7 sus316_stainless_steel shield_top -ctrl_arm{hole}
+                    % - control log salt cell - %
+                    cell ctrl{hole}_log_salt 7 fuelsalt
+                    (-{name} ctrl_rod{hole} -shield_top shield_bot):
+                    (-shield_bot -{name} log_bot):
+                    (shield_top ctrl_arm{hole} -rod_chan_{hole})
+    
+                    % - hat steel cell - %
+                    cell ctrl{hole}_hat_arm hat sus316_stainless_steel -ctrl_arm{hole}
+                    % - hat salt cell - %
+                    cell ctrl{hole}_hat_salt hat fuelsalt -{name} ctrl_arm{hole} shield_bot
+    
+                    % - base universe steel cell - %
+                    cell ctrl{hole}_arm 0 sus316_stainless_steel -pot_top_plane -ctrl_arm{hole} pot_top_inner pot_brim_top
+                    % - base universe salt cell - %
+                    cell ctrl{hole}_salt 0 fuelsalt -pot_top_plane ctrl_arm{hole} -rod_chan_{hole} pot_top_inner pot_brim_top
+
+                ''')
 
         ctrl_log += gr_cell + '\n'
         ctrl_log += fs_cell + ')\n'
 
         surfs_and_cells_cards += ctrl_log
-
-        # Fill channels with control rods or salt if they aren't inserted
-        ctrl_log = dedent('''
-            % --- CONTROL LOGS / SALT IF NOT INSERTED
-
-            ''')
-
-        ctrl_rod0_rad = 4.7 # Center control rod radius
-        ctrl_rod_rad = 5.4  # Other control rods radius
-        ctrl_arm_rad = 3.0  # Stainless steel arm radius
-
-        for chan in self.control_rods:
-            if chan == 0:
-                if self.control_rods[chan] == 0:
-                    ctrl_log += dedent('''
-                        % - CONTROL ROD 0 CELL (NOT INSERTED)
-                        cell ctrl0_core 7 fuelsalt log_bot -rod_chan_0
-
-                        cell ctrl0 0 fuelsalt
-                        (hat_bot -hat_mid_plane -rod_chan_0):
-                        (hat_mid_plane -hat_top -rod_chan_0):
-                        (hat_top -hat_dome -rod_chan_0):
-                        (hat_dome -pot_top_inner -rod_chan_0):
-                        (pot_top_inner hat_top -pot_top_tube_top -rod_chan_0)
-                        ''')
-                else:
-                    ctrl_log += dedent(f'''
-                        % - CONTROL ROD 0 CELL (INSERTED)
-
-                        % - MAKE CONTROL ARM
-                        surf ctrl0_arm cyl 0 0 {ctrl_arm_rad}
-                        surf ctrl0 cyl 0 0 {ctrl_rod0_rad}
-
-                        % - CELLS
-                        cell ctrl0_core 7 B4C_natural
-                        log_bot -log_top -ctrl0
-
-                        cell ctrl0_core_arm 7 sus316_stainless_steel
-                        log_top -ctrl0_arm
-
-                        cell ctrl0_core_fs 7 fuelsalt
-                        (ctrl0 -rod_chan_0 log_bot -log_top):
-                        (log_top -rod_chan_0 ctrl0_arm)
-
-                        cell ctrl0_fs 0 fuelsalt
-                        (hat_bot -hat_mid_plane -rod_chan_0 ctrl0_arm):
-                        (hat_mid_plane -hat_top -rod_chan_0 ctrl0_arm):
-                        (hat_top -hat_dome -rod_chan_0 ctrl0_arm):
-                        (hat_dome -pot_top_inner -rod_chan_0 ctrl0_arm):
-                        (pot_top_inner hat_top -pot_top_tube_top -rod_chan_0 ctrl0_arm)
-
-                        cell ctrl0_arm 0 sus316_stainless_steel
-                        (hat_bot -hat_mid_plane -ctrl0_arm):
-                        (hat_mid_plane -hat_top -ctrl0_arm):
-                        (hat_top -hat_dome -ctrl0_arm):
-                        (hat_dome -pot_top_inner -ctrl0_arm):
-                        (pot_top_inner hat_top -pot_top_tube_top -ctrl0_arm)
-                        ''')
-            else:
-                if self.control_rods[chan] == 0:
-                    ctrl_log += dedent(f'''
-                        % - CONTROL ROD {chan} CELL (NOT INSERTED)
-
-                        cell ctrl{chan}_core 7 fuelsalt log_bot -rod_chan_{chan}
-
-                        cell ctrl{chan} 0 fuelsalt
-                        (hat_bot -hat_mid_plane -rod_chan_{chan}):
-                        (hat_mid_plane -hat_top -rod_chan_{chan}):
-                        (hat_top -hat_dome -rod_chan_{chan}):
-                        (hat_dome -pot_top_inner -rod_chan_{chan}):
-                        (pot_top_inner hat_top -pot_top_tube_top -rod_chan_{chan})
-                        ''')
-                else:
-                    theta = chan * 120.0 - 30
-                    x = self._GLE(outer_distance * math.cos(math.radians(theta)))
-                    y = self._GLE(outer_distance * math.sin(math.radians(theta)))
-                    ctrl_log += dedent(f'''
-                        % - CONTROL ROD {chan} CELL (INSERTED)
-
-                        % - MAKE CONTROL ARM
-                        surf ctrl{chan}_arm cyl {x:.8f} {y:.8f} {ctrl_arm_rad}
-                        surf ctrl{chan} cyl {x:.8f} {y:.8f} {ctrl_rod_rad}
-
-                        % - CELLS
-                        cell ctrl{chan}_core 7 B4C_natural
-                        log_bot -log_top -ctrl{chan}
-
-                        cell ctrl{chan}_core_arm 7 sus316_stainless_steel
-                        log_top -ctrl{chan}_arm
-
-                        cell ctrl{chan}_core_fs 7 fuelsalt
-                        (ctrl{chan} -rod_chan_{chan} log_bot -log_top):
-                        (log_top -rod_chan_{chan} ctrl{chan}_arm)
-
-                        cell ctrl{chan}_fs 0 fuelsalt
-                        (hat_bot -hat_mid_plane -rod_chan_{chan} ctrl{chan}_arm):
-                        (hat_mid_plane -hat_top -rod_chan_{chan} ctrl{chan}_arm):
-                        (hat_top -hat_dome -rod_chan_{chan} ctrl{chan}_arm):
-                        (hat_dome -pot_top_inner -rod_chan_{chan} ctrl{chan}_arm):
-                        (pot_top_inner hat_top -pot_top_tube_top -rod_chan_{chan} ctrl{chan}_arm)
-
-                        cell ctrl{chan}_arm 0 sus316_stainless_steel
-                        (hat_bot -hat_mid_plane -ctrl{chan}_arm):
-                        (hat_mid_plane -hat_top -ctrl{chan}_arm):
-                        (hat_top -hat_dome -ctrl{chan}_arm):
-                        (hat_dome -pot_top_inner -ctrl{chan}_arm):
-                        (pot_top_inner hat_top -pot_top_tube_top -ctrl{chan}_arm)
-                        ''')
-
-        surfs_and_cells_cards += ctrl_log
+        surfs_and_cells_cards += ctrl_channels
 
         # Make lattice for full core
         ref_hex_half_width = self._GLE(20.055)
@@ -816,8 +802,21 @@ class serpDeck(object):
         surfs_and_cells_cards += core
 
 
+
+
+
+
+
+
+
+
+
+
+
+
         return surfs_and_cells_cards
 
+        # Wall of reactor
     def _make_mat_cards(self) -> str:
         '''Creates material definitions for SERPENT input'''
         material_cards = dedent('''
@@ -896,7 +895,6 @@ class serpDeck(object):
             set power 557000000 % Watts
             set pop {self.histories} {self.ngen} {self.nskip} % {self.histories} neutrons, {self.ngen} active cycles, {self.nskip} inactive cycles
             set arr 2
-            set printm 1
             set mcvol 10000000
             ''')
 
@@ -913,9 +911,9 @@ class serpDeck(object):
         if self.do_plots:
             data_cards += dedent('''
                 % --- PLOTS
-                plot 1 7000 7000 0 -290 290 -290 290
-                plot 2 7000 7000 0 -290 290 -290 290
-                plot 3 7000 7000 0 -290 290 -290 290
+                plot 1 5000 5000 0 -300 300 -300 300
+                plot 2 5000 5000 0 -300 300 -300 300
+                plot 3 5000 5000 0 -300 300 -300 300
 
                 ''')
 
@@ -1088,7 +1086,7 @@ class serpDeck(object):
             return True
 
     def cleanup(self, purge:bool=True):
-        'Delete the run directory'
+        'Delete the run directories'
         if os.path.isdir(self.deck_path):
             if purge:
                 shutil.rmtree(self.deck_path)
@@ -1101,20 +1099,13 @@ class serpDeck(object):
 
 
 if __name__ == '__main__':
+    try:
+        temp = float(input())
+    except:
+        temp = 900.0
     test = serpDeck()
-    #test.do_plots = True
-    #test.refuel = False
-    #test.save_deck()
-    #os.system('sss2 -plot -omp 20 nerthus/nerthus')
-    #test.queue = 'fill'
-    #test.ompcores = 20
-    #test.histories = 100
-    #test.ngen = 10
-    #test.nskip = 5
-    #test.full_build_run()
-    test.deck_name = 'nerthus'
-    test.refuel = True
-    test.deck_path = '/home/jarod/Projects/NERTHUS/runs/flibe/feedback/fs.tot.800'
-    print(test.get_results())
-    for n, k in enumerate(test.k):
-        print(n, "\t", k)
+    test.mod_tempK = temp
+    test.do_plots = True
+    test.save_deck()
+    os.system("sss2 -omp 20 -plot nerthus/nerthus")
+
