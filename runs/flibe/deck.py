@@ -87,7 +87,7 @@ class serpDeck(object):
 
         self.refuel_rate:float  = 1e-9
 
-    def _make_ellipsoid(self, pos:list[float], axes:list[float], name:str=None):
+    def _make_ellipsoid(self, pos:list, axes:list, name:str=None):
         '''creates A B C D E F G H I J values for ellipsoid surface in SERPENT'''
         x, y, z = pos
         a, b, c = axes
@@ -121,7 +121,7 @@ class serpDeck(object):
         plane = f'\nsurf {name} plane {x1:.8f} {y1:.8f} 0.0 {x2:.8f} {y2:.8f} 0.0 {x2:.8f} {y2:.8f} -1.0'
         return plane
 
-    def _GLE(self, point = None) -> list[float]:
+    def _GLE(self, point = None) -> list:
         '''Method for calculating change in distance due to thermal expansion
         of graphite. If thermal expansion is excluded, the geometry is modeled at 900k '''
         if self.thermal_expansion == True:
