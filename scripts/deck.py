@@ -87,7 +87,7 @@ class serpDeck(object):
 
         self.refuel_rate:float  = 1e-9
 
-    def _make_ellipsoid(self, pos:list[float], axes:list[float], name:str=None):
+    def _make_ellipsoid(self, pos:list, axes:list, name:str=None):
         '''creates A B C D E F G H I J values for ellipsoid surface in SERPENT'''
         x, y, z = pos
         a, b, c = axes
@@ -121,7 +121,7 @@ class serpDeck(object):
         plane = f'\nsurf {name} plane {x1:.8f} {y1:.8f} 0.0 {x2:.8f} {y2:.8f} 0.0 {x2:.8f} {y2:.8f} -1.0'
         return plane
 
-    def _GLE(self, point = None) -> list[float]:
+    def _GLE(self, point = None) -> list:
         '''Method for calculating change in distance due to thermal expansion
         of graphite. If thermal expansion is excluded, the geometry is modeled at 900k '''
         if self.thermal_expansion == True:
@@ -266,14 +266,20 @@ class serpDeck(object):
 
         surfs_and_cells_cards += void
 
-        shield = dedent('''
+
+        shield_inner = self._GLE(230.0)
+        shield_outer = self._GLE(240.0)
+        shield_top = self._GLE(189.0)
+        shield_bot = self._GLE(-189.0)
+
+        shield = dedent(f'''
             % --- BORON CARBIDE SHIELD --- %
 
             % - shield surfaces - %
-            surf shield_outer cyl 0.0 0.0 240
-            surf shield_inner cyl 0.0 0.0 230
-            surf shield_top   pz  189
-            surf shield_bot   pz -189
+            surf shield_outer cyl 0.0 0.0 {shield_outer:.8f}
+            surf shield_inner cyl 0.0 0.0 {shield_inner:.8f}
+            surf shield_top   pz {shield_top:.8f}
+            surf shield_bot   pz {shield_bot:.8f}
 
             % --- CELL FOR B4C SHIELD --- %
             cell shield 0 B4C_shield
@@ -958,8 +964,8 @@ class serpDeck(object):
                 pro source_rep
                 daystep
                 0.0208 0.0208 0.9584 2 4 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-                30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
-                30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
+                #30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
+                #30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
 
 
                 set inventory
@@ -968,6 +974,9 @@ class serpDeck(object):
                 fp
                 lanthanides
                 actinides
+
+
+                set rfw 1
                 ''')
 
         return data_cards
@@ -1099,13 +1108,17 @@ class serpDeck(object):
 
 
 if __name__ == '__main__':
-    try:
-        temp = float(input())
-    except:
-        temp = 900.0
-    test = serpDeck()
-    test.mod_tempK = temp
-    test.do_plots = True
-    test.save_deck()
-    os.system("sss2 -omp 20 -plot nerthus/nerthus")
+#    try:
+#        temp = float(input())
+#    except:
+#        temp = 900.0
+    test = serpDeck(fuel_salt='flibe', enr=0.2, refuel_salt='flibe', enr_ref=0.1, refuel=True)
+    test.mod_tempK = 900.0 #temp
+    test.do_plots = False
+    test.histories = 100
+    test.ngen = 40
+    test.nskip = 1
+    test.queue = 'xeon'
+    test.ompcores = 64
+    test.full_build_run()
 
