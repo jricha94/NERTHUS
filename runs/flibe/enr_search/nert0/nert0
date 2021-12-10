@@ -84,10 +84,10 @@ cell void_bot 0 outside
 % --- BORON CARBIDE SHIELD --- %
 
 % - shield surfaces - %
-surf shield_outer cyl 0.0 0.0 240.55188000
-surf shield_inner cyl 0.0 0.0 230.52888500
-surf shield_top   pz 189.43460550
-surf shield_bot   pz -189.43460550
+surf shield_outer cyl 0.0 0.0 240
+surf shield_inner cyl 0.0 0.0 230
+surf shield_top   pz  189
+surf shield_bot   pz -189
 
 % --- CELL FOR B4C SHIELD --- %
 cell shield 0 B4C_shield
@@ -528,29 +528,16 @@ tms 950.0 rgb 59 59 59
 % Thermal scattering libraries for graphite
 therm graph 0 gre7.04t gre7.08t gre7.12t gre7.16t gre7.18t gre7.22t
 
-% Fuel salt: 72%LiF + 16%BeF2 + 12%UF4, U enrichment 0.2
-mat fuelsalt  -3.35586722 rgb 54 227 167 tmp  900.000 vol 13670000
-  3006.09c  -0.000003390719    %  Li-6
-  3007.09c  -0.079094339821    %  Li-7
-  4009.09c  -0.022578486099    %  Be-9
-  9019.09c  -0.452173929103    %  F-19
- 92234.09c  -0.000782776783    %  U-234
- 92235.09c  -0.088329365984    %  U-235
- 92236.09c  -0.000408046580    %  U-236
- 92238.09c  -0.356629664909    %  U-238
-
-% Fuel salt: 72%LiF + 16%BeF2 + 12%UF4, U enrichment 0.1
-mat refuelsalt  -3.35779157 rgb 54 227 167 tmp  900.000 vol 13670000
-  3006.09c  -0.000003388776    %  Li-6
-  3007.09c  -0.079049011013    %  Li-7
-  4009.09c  -0.022565546414    %  Be-9
-  9019.09c  -0.451914789127    %  F-19
- 92234.09c  -0.000391164088    %  U-234
- 92235.09c  -0.044139372301    %  U-235
- 92236.09c  -0.000203906365    %  U-236
- 92238.09c  -0.401732821917    %  U-238
-
-set rfr idx 4 nerthus.wrk
+% Fuel salt: 72%LiF + 16%BeF2 + 12%UF4, U enrichment 0.01
+mat fuelsalt  -3.35952348 rgb 54 227 167 tmp  900.000
+  3006.09c  -0.000003387029    %  Li-6
+  3007.09c  -0.079008259485    %  Li-7
+  4009.09c  -0.022553913371    %  Be-9
+  9019.09c  -0.451681816974    %  F-19
+ 92234.09c  -0.000039096243    %  U-234
+ 92235.09c  -0.004411661747    %  U-235
+ 92236.09c  -0.000020380125    %  U-236
+ 92238.09c  -0.442281485026    %  U-238
 
 % ===== Data Cards ===== %
 set power 557000000 % Watts
@@ -562,53 +549,3 @@ set mcvol 10000000
 set acelib "sss_endfb7u.sssdir"
 set declib "sss_endfb7.dec"
 set nfylib "sss_endfb7.nfy"
-
-% --- PLOTS
-plot 1 5000 5000 0 -300 300 -300 300
-plot 2 5000 5000 0 -300 300 -300 300
-plot 3 5000 5000 0 -300 300 -300 300
-
-
-% --- REPROCESSING CARDS
-
-% - OFFGAS TANK
-mat offgas -0.001 burn 1 vol 1e9 tmp 900.0
- 2004.09c 1
-
-% - OVERFLOW TANK
-mat overflow -0.001 burn 1 vol 1e9 tmp 900.0
-2004.09c 1
-
-% --- MASS FLOW DEFINITIONS
-
-set pcc 0 % predictor-corrector turned off for depletion
-
-mflow U_in
-all 1e-09
-
-mflow offgasratecore
-Ne 1e-2
-Ar 1e-2
-He 1e-2
-Kr 1e-2
-Xe 1e-2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
-Rn 1e-2
-
-% Account for increase in volume with refueling
-mflow over
-all 1e-09
-
-rep source_rep
-rc refuelsalt fuelsalt U_in 0
-rc fuelsalt offgas offgasratecore 1
-rc fuelsalt overflow over 1
-
-% 4 years of burnup
-dep
-pro source_rep
-daystep
-0.0208 0.0208 0.9584 2 4 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
-30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
-
-set rfw 1

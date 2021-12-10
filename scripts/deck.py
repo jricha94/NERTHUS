@@ -62,6 +62,9 @@ class serpDeck(object):
         self.ompcores:int               = 8                     # OMP cores used when running SERPENT
         self.thermal_expansion:bool     = True                  # Bool to include thermal expansion; if False, reactor is modeled at 900K
         self.refuel:bool                = refuel                # Bool to run burnup calculation
+        self.feedback:bool              = False                 # Bool to use materials card or restart file
+        self.restart_file:str           = self.deck_name+".wrk" # Name of restart file
+        self.feedback_index:int         = 0                     # index of burnstep to read material definitions from
         self.do_plots:bool              = False                 # Bool to plot core
         self.deck_path:str              = os.getcwd() + f'/{self.deck_name}' # Directory where SERPENT is ran
 
@@ -893,6 +896,9 @@ class serpDeck(object):
                                           'refuelsalt', self.fs_lib, self.fs_vol, '54 227 167')
             material_cards += refuel_salt
 
+        if self.feedback:
+            material_cards += f"\nset rfr idx {self.feedback_index} {self.restart_file}\n"
+
         return material_cards
 
     def _make_data_cards(self) -> str:
@@ -913,6 +919,7 @@ class serpDeck(object):
                 ''')
         else:
             print('Use ENDF7, or edit the source code to include other libraries')
+            exit()
 
         if self.do_plots:
             data_cards += dedent('''
@@ -947,7 +954,7 @@ class serpDeck(object):
                 Ar 1e-2
                 He 1e-2
                 Kr 1e-2
-                Xe 1e-2
+                Xe 1e-2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
                 Rn 1e-2
 
                 % Account for increase in volume with refueling
@@ -964,17 +971,8 @@ class serpDeck(object):
                 pro source_rep
                 daystep
                 0.0208 0.0208 0.9584 2 4 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-                #30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
-                #30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
-
-
-                set inventory
-                1
-                86
-                fp
-                lanthanides
-                actinides
-
+                30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
+                30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
 
                 set rfw 1
                 ''')
@@ -1108,17 +1106,9 @@ class serpDeck(object):
 
 
 if __name__ == '__main__':
-#    try:
-#        temp = float(input())
-#    except:
-#        temp = 900.0
     test = serpDeck(fuel_salt='flibe', enr=0.2, refuel_salt='flibe', enr_ref=0.1, refuel=True)
-    test.mod_tempK = 900.0 #temp
-    test.do_plots = False
-    test.histories = 100
-    test.ngen = 40
-    test.nskip = 1
-    test.queue = 'xeon'
-    test.ompcores = 64
-    test.full_build_run()
+    test.feedback = True
+    test.do_plots = True
+    test.feedback_index = 4
+    test.save_deck()
 

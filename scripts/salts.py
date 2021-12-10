@@ -357,9 +357,11 @@ class Salt(object):
                 if w.Z == 92:
                     print("DEBUG SALT: %d -> %8.3f" % (w.A, 100.0*w.wf/u) )
         mat  = "% Fuel salt: " + self.nice_name() + ", U enrichment " + str(self.enr)
-        mat += "\nmat %s %12.8f rgb %s tmp %8.3f\n" % (name, -1.0*self.densityK(tempK),rgb,mat_tempK)
+        mat += "\nmat %s %12.8f rgb %s tmp %8.3f" % (name, -1.0*self.densityK(tempK),rgb,mat_tempK)
         if vol != None:
-            mat += 'burn 1 vol %s\n' % (str(vol))
+            mat += f' vol %s\n' % (str(vol))
+        else:
+            mat += "\n"
         for w in self.wflist:
             mat += "%3d%03d.%s  %14.12f" % (w.Z, w.A, lib, -1.0*w.wf)
             mat += "    %  "+ self.ELEMENTS[w.Z].symbol +"-"+ str(w.A) +"\n"
