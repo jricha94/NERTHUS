@@ -27,12 +27,3 @@ thor.refuel_max = 1e-5
 thor.get_refuel_rate(cleanup=False)
 thor.save_refuel()
 
-thor.histories = 80000
-
-thor.feedback_path = cwd + '/feedback'
-thor.queue = 'fill'
-thor.ompcores = 32
-thor.run_feedbacks('fs.tot', True, True)
-thor.run_feedbacks('gr.tot', True, True)
-thor.run_feedbacks('gr.tot', False, True)
-

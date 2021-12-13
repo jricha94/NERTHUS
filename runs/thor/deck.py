@@ -62,6 +62,9 @@ class serpDeck(object):
         self.ompcores:int               = 8                     # OMP cores used when running SERPENT
         self.thermal_expansion:bool     = True                  # Bool to include thermal expansion; if False, reactor is modeled at 900K
         self.refuel:bool                = refuel                # Bool to run burnup calculation
+        self.feedback:bool              = False                 # Bool to use materials card or restart file
+        self.restart_file:str           = self.deck_name+".wrk" # Name of restart file
+        self.feedback_index:int         = 0                     # index of burnstep to read material definitions from
         self.do_plots:bool              = False                 # Bool to plot core
         self.deck_path:str              = os.getcwd() + f'/{self.deck_name}' # Directory where SERPENT is ran
 
@@ -161,7 +164,6 @@ class serpDeck(object):
 
         surfs_and_cells_cards:str = dedent('''
             % ===== NERTHUS Serpent input file ===== %
-            set lost -1
             set title "NERTHUS"
 
             % =================================== %
@@ -266,14 +268,20 @@ class serpDeck(object):
 
         surfs_and_cells_cards += void
 
-        shield = dedent('''
+
+        shield_inner = self._GLE(230.0)
+        shield_outer = self._GLE(240.0)
+        shield_top = self._GLE(189.0)
+        shield_bot = self._GLE(-189.0)
+
+        shield = dedent(f'''
             % --- BORON CARBIDE SHIELD --- %
 
             % - shield surfaces - %
-            surf shield_outer cyl 0.0 0.0 240
-            surf shield_inner cyl 0.0 0.0 230
-            surf shield_top   pz  189
-            surf shield_bot   pz -189
+            surf shield_outer cyl 0.0 0.0 {shield_outer:.8f}
+            surf shield_inner cyl 0.0 0.0 {shield_inner:.8f}
+            surf shield_top   pz {shield_top:.8f}
+            surf shield_bot   pz {shield_bot:.8f}
 
             % --- CELL FOR B4C SHIELD --- %
             cell shield 0 B4C_shield
@@ -887,6 +895,9 @@ class serpDeck(object):
                                           'refuelsalt', self.fs_lib, self.fs_vol, '54 227 167')
             material_cards += refuel_salt
 
+        if self.feedback:
+            material_cards += f"\nset rfr idx {self.feedback_index} {self.restart_file}\n"
+
         return material_cards
 
     def _make_data_cards(self) -> str:
@@ -907,6 +918,7 @@ class serpDeck(object):
                 ''')
         else:
             print('Use ENDF7, or edit the source code to include other libraries')
+            exit()
 
         if self.do_plots:
             data_cards += dedent('''
@@ -961,13 +973,7 @@ class serpDeck(object):
                 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
                 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
 
-
-                set inventory
-                1
-                86
-                fp
-                lanthanides
-                actinides
+                set rfw 1
                 ''')
 
         return data_cards
@@ -1099,13 +1105,9 @@ class serpDeck(object):
 
 
 if __name__ == '__main__':
-    try:
-        temp = float(input())
-    except:
-        temp = 900.0
-    test = serpDeck()
-    test.mod_tempK = temp
+    test = serpDeck(fuel_salt='flibe', enr=0.2, refuel_salt='flibe', enr_ref=0.1, refuel=True)
+    test.feedback = True
     test.do_plots = True
+    test.feedback_index = 4
     test.save_deck()
-    os.system("sss2 -omp 20 -plot nerthus/nerthus")
 

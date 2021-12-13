@@ -164,7 +164,6 @@ class serpDeck(object):
 
         surfs_and_cells_cards:str = dedent('''
             % ===== NERTHUS Serpent input file ===== %
-            set lost -1
             set title "NERTHUS"
 
             % =================================== %
@@ -954,7 +953,7 @@ class serpDeck(object):
                 Ar 1e-2
                 He 1e-2
                 Kr 1e-2
-                Xe 1e-2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
+                Xe 1e-2
                 Rn 1e-2
 
                 % Account for increase in volume with refueling
