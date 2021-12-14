@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from numpy.lib.function_base import copy
+from shutil import copy
 from deck import serpDeck
 import numpy as np
 from collections import namedtuple
@@ -422,13 +422,15 @@ class burn(object):
         '''
         self.alphas:list = []
 
+        restart_file_path = f"{self.refuel_path}/nerthus.wrk"
+
         for index in range(self.burnup_steps):
             for temp in self.feedback_temps:
                 fb_run_name = f"{feedback}.{temp}.{index}"
                 self.feedback_runs[fb_run_name] = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, False)
                 nert = self.feedback_runs[fb_run_name]
                 nert.feedback = True
-                nert.restart_file = f"{self.refuel_path}/nerthus.wrk"
+                nert.restart_file = "nerthus.wrk"
                 nert.feedback_index = index
                 nert.queue = self.queue
                 nert.ompcores = self.ompcores
@@ -438,6 +440,7 @@ class burn(object):
                 nert.deck_path = f"{self.feedback_path}/{feedback}/{index}/{int(temp)}"
                 nert.refuel_rate = self.conv_rate
                 nert.thermal_expansion = thermal_expansion
+                copy(restart_file_path, nert.deck_path)
 
                 if feedback == 'fs.tot':
                     nert.fs_mat_tempK = temp
