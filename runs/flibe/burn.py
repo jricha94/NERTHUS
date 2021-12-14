@@ -1,14 +1,12 @@
 #!/usr/bin/python3
 
-# TODO change generations back to normal after testing done
-# TODO put depletion back to normal
+from numpy.lib.function_base import copy
 from deck import serpDeck
 import numpy as np
 from collections import namedtuple
 import os
 import time
-import scipy
-from scipy import optimize
+import scipy.optimize
 
 
 SLEEP_SEC:int = 60
@@ -57,6 +55,7 @@ class burn(object):
         self.feedback_temps:list = [800.0, 850.0, 900.0, 950.0, 1000.0]
         self.base_temp:float = 900.0
         self.feedback_runs:dict = {}
+        self.burnup_steps:int = 72
 
     def get_enrichment(self) -> bool:
         '''Finds critical enrichment of NERTHUS'''
@@ -326,9 +325,6 @@ class burn(object):
             while not nert.get_results():
                 time.sleep(SLEEP_SEC)
 
-            if cleanup:
-                nert.cleanup()
-
             k_diff_i = nert.k[-1][0] - nert.k[0][0]
             kdi_err = np.sqrt((nert.k[-1][1])**2 + (nert.k[0][1])**2)
             self.refuel_list.append(self.refuelData(ratei, k_diff_i, kdi_err))
@@ -339,18 +335,26 @@ class burn(object):
                 if side == -1:
                     k_diff0 = (k_diff0-self.k_diff_tgt)/2.0 + self.k_diff_tgt
                 side = -1
+                if cleanup:
+                    nert.cleanup()
             if (k_diff0-self.k_diff_tgt)*(k_diff_i-self.k_diff_tgt) > 0.0:
                 rate0 = ratei
                 k_diff0 = k_diff_i
                 if side == 1:
                     k_diff1 = (k_diff1 - self.k_diff_tgt)/2.0 + self.k_diff_tgt
                 side = 1
+                if cleanup:
+                    nert.cleanup()
             if abs(k_diff_i-self.k_diff_tgt) < self.k_diff_eps:
+                copy(f"{nert.deck_path}/{nert.deck_name}.wrk", f"{self.refuel_path}")
+                if cleanup:
+                    nert.cleanup()
                 break
 
         self.conv_rate = ratei
         self.conv_k_diff = k_diff_i
         self.conv_kd_err = kd_err
+        
 
         return True
 
@@ -377,7 +381,6 @@ class burn(object):
                 os.path.getsize(self.refuel_path + '/' + save_file) > 50:
             fh = open(self.refuel_path + '/' + save_file, 'r')
         else:
-            print('nope')
             return False
         myline = fh.readline().strip()
         mysalt = myline.split()[-1]
@@ -396,8 +399,12 @@ class burn(object):
         if len(self.refuel_list) < 3:
             return False
 
+
+        print(self.refuel_list)
+
         found_kdiff = self.refuel_list[-1][1]
         if abs(found_kdiff - self.k_diff_tgt) < self.k_diff_eps:
+            print("HELLO")
             self.conv_rate = self.refuel_list[-1][0]
             self.conv_k_diff = self.refuel_list[-1][1]
             self.conv_kd_err = self.refuel_list[-1][2]
@@ -405,7 +412,7 @@ class burn(object):
         else:
             return False
 
-    def run_feedbacks(self, feedback:str='fs.tot', thermal_expansion:bool=True, recalc:bool=False):
+    def get_feedbacks(self, feedback:str='fs.tot', save_file = None, thermal_expansion:bool=True):
         '''
         Calculates feedback coefficients for NERTHUS
         fs.tot = fuelsalt total feedback
@@ -416,102 +423,100 @@ class burn(object):
 
         total = total feedback for NERTHUS
         '''
-        for temp in self.feedback_temps:
-            fb_run_name = feedback + '.' + str(int(temp))
-            self.feedback_runs[fb_run_name] = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
-            nert = self.feedback_runs[fb_run_name] 
-            nert.queue = self.queue
-            nert.ompcores = self.ompcores
-            nert.histories = self.histories
-            nert.ngen = self.ngen
-            nert.nskip = self.nskip
-            nert.deck_path = self.feedback_path + '/' + feedback + '.' + str(int(temp))
-            nert.refuel_rate = self.conv_rate
-            nert.thermal_expansion = thermal_expansion
+        self.alphas:list = []
 
-            if feedback == 'fs.tot':
-                nert.fs_mat_tempK = temp
-                nert.fs_dens_tempK = temp
-                nert.mod_tempK = self.base_temp + 50.0
-
-            elif feedback == 'fs.dopp':
-                nert.fs_mat_tempK = temp
-                nert.fs_dens_tempK = self.base_temp
-                nert.mod_tempK = self.base_temp + 50.0
-
-            elif feedback == 'fs.dens':
-                nert.fs_mat_tempK = self.base_temp
-                nert.fs_dens_tempK = temp
-                nert.mod_tempK = self.base_temp + 50.0
-
-            elif feedback == 'gr.tot':
-                nert.fs_mat_tempK = self.base_temp
-                nert.fs_dens_tempK = self.base_temp
-                nert.mod_tempK = temp + 50.0
-
-            elif feedback == 'total':
-                nert.fs_mat_tempK = temp
-                nert.fs_dens_tempK = temp
-                nert.mod_tempK = temp + 50.0
-
-            else:
-                raise ValueError("feedback " + feedback + ' not implemented!')
-
-            if nert.fs_mat_tempK < 900.0:
-                nert.fs_lib = '06c'
-            if nert.mod_tempK < 900.0:
-                nert.gr_lib = '06c'
-            if recalc or not nert.get_results():
-                nert.cleanup()
-                nert.full_build_run()
-
-    def get_feedbacks(self, feedback='fs.tot'):
-        if len(self.feedback_runs) == 0:
+        for index in range(self.burnup_steps):
             for temp in self.feedback_temps:
-                fb_run_name = feedback + '.' + str(int(temp))
-                self.feedback_runs[fb_run_name] = serpDeck(fuel_salt = self.fuel_salt, refuel_salt = self.refuel_salt, refuel = True)
+                fb_run_name = f"{feedback}.{temp}.{index}"
+                self.feedback_runs[fb_run_name] = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, False)
                 nert = self.feedback_runs[fb_run_name]
-                nert.deck_path = self.feedback_path + '/' + feedback + '.' + str(int(temp))
+                nert.feedback = True
+                nert.restart_file = f"{self.refuel_path}/nerthus.wrk"
+                nert.feedback_index = index
+                nert.queue = self.queue
+                nert.ompcores = self.ompcores
+                nert.histories = self.histories
+                nert.ngen = self.ngen
+                nert.nskip = self.nskip
+                nert.deck_path = f"{self.feedback_path}/{feedback}/{index}/{int(temp)}"
+                nert.refuel_rate = self.conv_rate
+                nert.thermal_expansion = thermal_expansion
 
+                if feedback == 'fs.tot':
+                    nert.fs_mat_tempK = temp
+                    nert.fs_dens_tempK = temp
+                    nert.mod_tempK = self.base_temp + 50.0
 
-        while True:
-            is_done = True
+                elif feedback == 'fs.dopp':
+                    nert.fs_mat_tempK = temp
+                    nert.fs_dens_tempK = self.base_temp
+                    nert.mod_tempK = self.base_temp + 50.0
+
+                elif feedback == 'fs.dens':
+                    nert.fs_mat_tempK = self.base_temp
+                    nert.fs_dens_tempK = temp
+                    nert.mod_tempK = self.base_temp + 50.0
+
+                elif feedback == 'gr.tot':
+                    nert.fs_mat_tempK = self.base_temp
+                    nert.fs_dens_tempK = self.base_temp
+                    nert.mod_tempK = temp + 50.0
+
+                elif feedback == 'total':
+                    nert.fs_mat_tempK = temp
+                    nert.fs_dens_tempK = temp
+                    nert.mod_tempK = temp + 50.0
+
+                else:
+                    raise ValueError("feedback " + feedback + ' not implemented!')
+
+                if nert.fs_mat_tempK < 900.0:
+                    nert.fs_lib = '06c'
+                if nert.mod_tempK < 900.0:
+                    nert.gr_lib = '06c'
+                if not nert.get_results():
+                    nert.cleanup()
+                    nert.full_build_run()
+
+            # Wait for time step to finish
+            done = False
+            while not done:
+                done = True
+                time.sleep(SLEEP_SEC)
+                for temp in self.feedback_temps:
+                    fb_run_name = f"{feedback}.{temp}.{index}"
+                    nert = self.feedback_runs[fb_run_name]
+                    if not nert.get_results():
+                        done = False
+
+            rhos = []
+            errs = []
             for temp in self.feedback_temps:
-                fb_run_name = feedback + '.' + str(int(temp))
-                if not self.feedback_runs[fb_run_name].get_results():
-                    time.sleep(SLEEP_SEC)
-                    is_done = False
-            if is_done:
-                break
-
-        self.days = self.feedback_runs[fb_run_name].days
-        self.alphas = []
-
-        def line(x, a, b):
-            return a * x + b
-
-        for i in range(len(self.days)):
-            rho_list = []
-            for temp in self.feedback_temps:
-                fb_run_name = feedback + '.' + str(int(temp))
+                fb_run_name = f"{feedback}.{temp}.{index}"
                 nert = self.feedback_runs[fb_run_name]
-                rho_list.append((rho(nert.k[i][0]), nert.k[i][1] * 1e5))
-            temps = self.feedback_temps
-            rhos = [r for r,e in rho_list]
-            e    = [e for r,e in rho_list]
+                rhos.append(rho(nert.k[0]))
+                errs.append(nert.k[1] * 1e5)
 
-            alpha, error = scipy.optimize.curve_fit(line, temps, rhos, sigma = e)
+            def line(x,a,b):
+                return a*x+b
+
+            alpha, error = scipy.optimize.curve_fit(line, self.feedback_temps, rhos, sigma = errs)
             self.alphas.append((alpha[0], np.sqrt(error[0,0])))
 
+        if save_file != None:
+            with open(f"{self.feedback_path}/{save_file}", "w") as f:
+                f.write(f"{feedback}\n")
+                for a in self.alphas:
+                    f.write(f"{a:.8f}\n")
 
- 
+
+
 
 
 
 
 if __name__ == '__main__':
     test = burn()
-    test.feedback_path = '/home/jarod/Projects/NERTHUS/runs/flibe/feedback'
-    test.get_feedbacks('gr.tot')
-    for a in test.alphas:
-        print(a)
+    test.conv_enr = 0.4
+    test.conv_rate = 5
+    test.get_feedbacks()

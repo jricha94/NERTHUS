@@ -12,8 +12,9 @@ thor.ompcores = 32
 thor.enr_min = 0.15
 thor.enr_max = 0.25
 
-thor.get_enrichment()
-thor.save_enrs()
+#thor.get_enrichment()
+#thor.save_enrs()
+thor.read_enrs_if_done()
 
 thor.refuel_path = cwd + '/refuel'
 thor.refuel_enr = 0.1975
@@ -24,6 +25,10 @@ thor.refuel_min = 1e-7
 thor.refuel_max = 1e-5
 
 
-thor.get_refuel_rate(cleanup=False)
-thor.save_refuel()
+#thor.get_refuel_rate(cleanup=False)
+#thor.save_refuel()
+thor.read_refuel_if_done()
+
+thor.get_feedbacks('fs.tot', 'fsfeedbacks.txt')
+thor.get_feedbacks('gr.tot', 'grfeedback.txt')
 
