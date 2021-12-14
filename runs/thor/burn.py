@@ -440,7 +440,6 @@ class burn(object):
                 nert.deck_path = f"{self.feedback_path}/{feedback}/{index}/{int(temp)}"
                 nert.refuel_rate = self.conv_rate
                 nert.thermal_expansion = thermal_expansion
-                copy(restart_file_path, nert.deck_path)
 
                 if feedback == 'fs.tot':
                     nert.fs_mat_tempK = temp
@@ -476,7 +475,11 @@ class burn(object):
                     nert.gr_lib = '06c'
                 if not nert.get_results():
                     nert.cleanup()
-                    nert.full_build_run()
+                    nert.save_deck()
+                    nert.save_qsub_file()
+                    copy(restart_file_path, nert.deck_path)
+                    nert.run_deck()
+
 
             # Wait for time step to finish
             done = False
