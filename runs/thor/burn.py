@@ -485,7 +485,6 @@ class burn(object):
             done = False
             while not done:
                 done = True
-                time.sleep(SLEEP_SEC)
                 for temp in self.feedback_temps:
                     fb_run_name = f"{feedback}.{temp}.{index}"
                     nert = self.feedback_runs[fb_run_name]
@@ -510,7 +509,7 @@ class burn(object):
             with open(f"{self.feedback_path}/{save_file}", "w") as f:
                 f.write(f"{feedback}\n")
                 for a in self.alphas:
-                    f.write(f"{a:.8f}\n")
+                    f.write(f"{a}\n")
 
 
 

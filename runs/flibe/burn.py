@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from numpy.lib.function_base import copy
+from shutil import copy
 from deck import serpDeck
 import numpy as np
 from collections import namedtuple
@@ -381,6 +381,7 @@ class burn(object):
                 os.path.getsize(self.refuel_path + '/' + save_file) > 50:
             fh = open(self.refuel_path + '/' + save_file, 'r')
         else:
+            print('nope')
             return False
         myline = fh.readline().strip()
         mysalt = myline.split()[-1]
@@ -399,12 +400,8 @@ class burn(object):
         if len(self.refuel_list) < 3:
             return False
 
-
-        print(self.refuel_list)
-
         found_kdiff = self.refuel_list[-1][1]
         if abs(found_kdiff - self.k_diff_tgt) < self.k_diff_eps:
-            print("HELLO")
             self.conv_rate = self.refuel_list[-1][0]
             self.conv_k_diff = self.refuel_list[-1][1]
             self.conv_kd_err = self.refuel_list[-1][2]
@@ -425,13 +422,15 @@ class burn(object):
         '''
         self.alphas:list = []
 
+        restart_file_path = f"{self.refuel_path}/nerthus.wrk"
+
         for index in range(self.burnup_steps):
             for temp in self.feedback_temps:
                 fb_run_name = f"{feedback}.{temp}.{index}"
                 self.feedback_runs[fb_run_name] = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, False)
                 nert = self.feedback_runs[fb_run_name]
                 nert.feedback = True
-                nert.restart_file = f"{self.refuel_path}/nerthus.wrk"
+                nert.restart_file = "nerthus.wrk"
                 nert.feedback_index = index
                 nert.queue = self.queue
                 nert.ompcores = self.ompcores
@@ -476,7 +475,11 @@ class burn(object):
                     nert.gr_lib = '06c'
                 if not nert.get_results():
                     nert.cleanup()
-                    nert.full_build_run()
+                    nert.save_deck()
+                    nert.save_qsub_file()
+                    copy(restart_file_path, nert.deck_path)
+                    nert.run_deck()
+
 
             # Wait for time step to finish
             done = False
@@ -507,7 +510,7 @@ class burn(object):
             with open(f"{self.feedback_path}/{save_file}", "w") as f:
                 f.write(f"{feedback}\n")
                 for a in self.alphas:
-                    f.write(f"{a:.8f}\n")
+                    f.write(f"{a}\n")
 
 
 
