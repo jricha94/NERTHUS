@@ -358,6 +358,9 @@ class burn(object):
 
         return True
 
+    def clear_refuel_list(self) -> None:
+        self.refuel_list = []
+
     def save_refuel(self, save_file:str='refuel_data.txt'):
         if not self.refuel_list:
             print('Warning: No refuel data to save')
@@ -485,6 +488,7 @@ class burn(object):
             done = False
             while not done:
                 done = True
+                time.sleep(SLEEP_SEC)
                 for temp in self.feedback_temps:
                     fb_run_name = f"{feedback}.{temp}.{index}"
                     nert = self.feedback_runs[fb_run_name]

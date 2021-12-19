@@ -358,6 +358,9 @@ class burn(object):
 
         return True
 
+    def clear_refuel_list(self) -> None:
+        self.refuel_list = []
+
     def save_refuel(self, save_file:str='refuel_data.txt'):
         if not self.refuel_list:
             print('Warning: No refuel data to save')

@@ -905,8 +905,6 @@ class serpDeck(object):
             % ===== Data Cards ===== %
             set power 557000000 % Watts
             set pop {self.histories} {self.ngen} {self.nskip} % {self.histories} neutrons, {self.ngen} active cycles, {self.nskip} inactive cycles
-            set arr 2
-            set mcvol 10000000
             ''')
 
         if self.nuc_libs == 'ENDF7':
