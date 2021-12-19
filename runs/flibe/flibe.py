@@ -21,7 +21,7 @@ flibe.queue = 'xeon'
 flibe.ompcores = 64
 
 flibe.refuel_min = 1e-10
-flibe.refuel_max = 1e-9
+flibe.refuel_max = 1e-4
 
 flibe.get_refuel_rate(cleanup=False)
 flibe.save_refuel()
