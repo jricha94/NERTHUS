@@ -26,6 +26,7 @@ thor.refuel_min = 1e-8
 thor.refuel_max = 1e-4
 
 thor.get_refuel_rate(cleanup=True)
+print("Short refuel done")
 thor.clear_refuel_list()
 
 thor.ngen = 200

@@ -26,6 +26,7 @@ flibe.refuel_min = 1e-10
 flibe.refuel_max = 1e-4
 
 flibe.get_refuel_rate(cleanup=True)
+print("Short refuel Done")
 flibe.clear_refuel_list()
 
 flibe.ngen = 200

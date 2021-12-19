@@ -335,25 +335,27 @@ class burn(object):
                 if side == -1:
                     k_diff0 = (k_diff0-self.k_diff_tgt)/2.0 + self.k_diff_tgt
                 side = -1
-                if cleanup:
-                    nert.cleanup()
             if (k_diff0-self.k_diff_tgt)*(k_diff_i-self.k_diff_tgt) > 0.0:
                 rate0 = ratei
                 k_diff0 = k_diff_i
                 if side == 1:
                     k_diff1 = (k_diff1 - self.k_diff_tgt)/2.0 + self.k_diff_tgt
                 side = 1
-                if cleanup:
-                    nert.cleanup()
             if abs(k_diff_i-self.k_diff_tgt) < self.k_diff_eps:
                 copy(f"{nert.deck_path}/{nert.deck_name}.wrk", f"{self.refuel_path}")
-                if cleanup:
-                    nert.cleanup()
                 break
 
         self.conv_rate = ratei
         self.conv_k_diff = k_diff_i
         self.conv_kd_err = kd_err
+
+        if cleanup:
+            for i in range(n_iter):
+                nert = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
+                nert.deck_path = self.refuel_path + '/nert' + str(i+1)
+                nert.cleanup()
+
+
         
 
         return True
