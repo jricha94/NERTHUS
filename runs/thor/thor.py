@@ -40,6 +40,8 @@ thor.refuel_max = 1e-4
 #thor.save_refuel()
 thor.read_refuel_if_done()
 
+thor.queue = 'fill'
+thor.ompcores = 8
 
 thor.get_feedbacks('fs.tot')
 thor.get_feedbacks('gr.tot')
