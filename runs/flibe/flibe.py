@@ -13,8 +13,9 @@ flibe.ompcores = 32
 flibe.enr_min = 0.01
 flibe.enr_max = 0.05
 
-flibe.get_enrichment()
-flibe.save_enrs()
+#flibe.get_enrichment()
+#flibe.save_enrs()
+flibe.read_enrs_if_done()
 
 flibe.refuel_path = cwd + '/refuel'
 flibe.queue = 'xeon'
@@ -25,15 +26,23 @@ flibe.histories = 10000
 flibe.refuel_min = 1e-10
 flibe.refuel_max = 1e-4
 
-flibe.get_refuel_rate(cleanup=True)
-print("Short refuel Done")
-flibe.clear_refuel_list()
+#flibe.get_refuel_rate(cleanup=True)
+#print("Short refuel Done")
+#flibe.clear_refuel_list()
 
-flibe.ngen = 200
-flibe.nskip = 60
-flibe.histories = 20000
-flibe.refuel_min = flibe.conv_rate / 10.0
-flibe.refuel_max = flibe.conv_rate * 10.0
-flibe.get_refuel_rate()
+#flibe.ngen = 200
+#flibe.nskip = 60
+#flibe.histories = 20000
+#flibe.refuel_min = flibe.conv_rate / 10.0
+#flibe.refuel_max = flibe.conv_rate * 10.0
+#flibe.get_refuel_rate()
 
-flibe.save_refuel()
+#flibe.save_refuel()
+flibe.read_refuel_if_done()
+
+
+flibe.queue = 'fill'
+flibe.ompcores = 8
+
+flibe.get_feedbacks('fs.tot')
+flibe.get_feedbacks('gr.tot')
