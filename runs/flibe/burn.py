@@ -486,26 +486,19 @@ class burn(object):
                     nert.run_deck()
 
 
-    def read_feedbacks(self):
+    def read_feedbacks(self, feedback:str='fs.tot', save_file:str='feedbacks.txt'):
 
-        # Wait for time step to finish
-        done = False
-        while not done:
-            done = True
-            time.sleep(SLEEP_SEC)
+
+        for index in range(self.burnup_steps):
             for temp in self.feedback_temps:
                 fb_run_name = f"{feedback}.{temp}.{index}"
+                self.feedback_runs[fb_run_name] = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, False)
                 nert = self.feedback_runs[fb_run_name]
+                nert.deck_path = f"{self.feedback_path}/{feedback}/{index}/{int(temp)}"
                 if not nert.get_results():
-                    done = False
+                    print(index, temp, 'doo doo')
+        quit()
 
-        rhos = []
-        errs = []
-        for temp in self.feedback_temps:
-            fb_run_name = f"{feedback}.{temp}.{index}"
-            nert = self.feedback_runs[fb_run_name]
-            rhos.append(rho(nert.k[0]))
-            errs.append(nert.k[1] * 1e5)
 
         def line(x,a,b):
             return a*x+b
@@ -526,7 +519,9 @@ class burn(object):
 
 
 if __name__ == '__main__':
-    test = burn()
-    test.conv_enr = 0.4
-    test.conv_rate = 5
-    test.get_feedbacks()
+    test = burn('flibe', 'flibe')
+    test.conv_enr = 0.5
+    test.conv_rate = 0.5
+    #test.get_feedbacks()
+    test.read_feedbacks()
+
