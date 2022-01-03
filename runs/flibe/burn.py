@@ -497,6 +497,7 @@ class burn(object):
                 nert.deck_path = f"{self.feedback_path}/{feedback}/{index}/{int(temp)}"
                 if not nert.get_results():
                     print(index, temp, 'doo doo')
+        print('all done')
         quit()
 
 
