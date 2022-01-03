@@ -414,7 +414,7 @@ class burn(object):
         else:
             return False
 
-    def get_feedbacks(self, feedback:str='fs.tot', save_file = None, thermal_expansion:bool=True):
+    def get_feedbacks(self, feedback:str='fs.tot', thermal_expansion:bool=True):
         '''
         Calculates feedback coefficients for NERTHUS
         fs.tot = fuelsalt total feedback
@@ -486,30 +486,32 @@ class burn(object):
                     nert.run_deck()
 
 
-            # Wait for time step to finish
-            done = False
-            while not done:
-                done = True
-                time.sleep(SLEEP_SEC)
-                for temp in self.feedback_temps:
-                    fb_run_name = f"{feedback}.{temp}.{index}"
-                    nert = self.feedback_runs[fb_run_name]
-                    if not nert.get_results():
-                        done = False
+    def read_feedbacks(self):
 
-            rhos = []
-            errs = []
+        # Wait for time step to finish
+        done = False
+        while not done:
+            done = True
+            time.sleep(SLEEP_SEC)
             for temp in self.feedback_temps:
                 fb_run_name = f"{feedback}.{temp}.{index}"
                 nert = self.feedback_runs[fb_run_name]
-                rhos.append(rho(nert.k[0]))
-                errs.append(nert.k[1] * 1e5)
+                if not nert.get_results():
+                    done = False
 
-            def line(x,a,b):
-                return a*x+b
+        rhos = []
+        errs = []
+        for temp in self.feedback_temps:
+            fb_run_name = f"{feedback}.{temp}.{index}"
+            nert = self.feedback_runs[fb_run_name]
+            rhos.append(rho(nert.k[0]))
+            errs.append(nert.k[1] * 1e5)
 
-            alpha, error = scipy.optimize.curve_fit(line, self.feedback_temps, rhos, sigma = errs)
-            self.alphas.append((alpha[0], np.sqrt(error[0,0])))
+        def line(x,a,b):
+            return a*x+b
+
+        alpha, error = scipy.optimize.curve_fit(line, self.feedback_temps, rhos, sigma = errs)
+        self.alphas.append((alpha[0], np.sqrt(error[0,0])))
 
         if save_file != None:
             with open(f"{self.feedback_path}/{save_file}", "w") as f:
