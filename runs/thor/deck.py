@@ -1040,7 +1040,10 @@ class serpDeck(object):
             return False
         # Get results
         if not self.refuel: # No refueling
-            results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_res.m")
+            try:
+                results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_res.m")
+            except:
+                return False
             # Get k-eff value and error
             k = results.resdata['anaKeff'][0]
             k_err = results.resdata['anaKeff'][1] * k
@@ -1065,7 +1068,10 @@ class serpDeck(object):
 
         if self.refuel: # refueling
             results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_res.m")
-            burn_results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_dep.m")
+            try:
+                burn_results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_dep.m")
+            except:
+                return False
             # daysteps for burnup calc
             self.days = burn_results.days
             # K values

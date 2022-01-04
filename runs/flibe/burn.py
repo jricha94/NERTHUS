@@ -16,6 +16,11 @@ def rho(k:float) -> float:
     return 1e5*(k-1.0)/k
 
 
+def line(x,a,b):
+    return a*x+b
+
+
+
 class burn(object):
     def __init__(self, fuel_salt = 'flibe', refuel_salt = 'flibe'):
         self.fuel_salt:str = fuel_salt
@@ -44,8 +49,8 @@ class burn(object):
         self.refuel_min:float = 1e-10
         self.refuel_max:float = 1e-5
         self.refuel_eps:float = 1e-9
-        self.k_diff_tgt:float      = 0.003
-        self.k_diff_eps:float      = 0.003
+        self.k_diff_tgt:float = 0.003
+        self.k_diff_eps:float = 0.003
         self.refuelData = namedtuple("refuelData", 'rate k k_err')
         self.refuel_list:list = []
         self.refuel_iter:int = 20
@@ -486,33 +491,98 @@ class burn(object):
                     nert.run_deck()
 
 
-    def read_feedbacks(self, feedback:str='fs.tot', save_file:str='feedbacks.txt'):
-
+    def read_feedbacks(self, feedback:str='fs.tot'):
+        self.alphas = []
 
         for index in range(self.burnup_steps):
+            rhos = []
+            errs = []
             for temp in self.feedback_temps:
                 fb_run_name = f"{feedback}.{temp}.{index}"
-                self.feedback_runs[fb_run_name] = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, False)
+                self.feedback_runs[fb_run_name] = serpDeck(fuel_salt=self.fuel_salt, refuel=False)
                 nert = self.feedback_runs[fb_run_name]
                 nert.deck_path = f"{self.feedback_path}/{feedback}/{index}/{int(temp)}"
                 if not nert.get_results():
                     print(index, temp, 'doo doo')
-        print('all done')
-        quit()
+                rhos.append(rho(nert.k[0]))
+                errs.append(nert.k[1]*10**5)
+            
+            alpha, error = scipy.optimize.curve_fit(line, self.feedback_temps, rhos, sigma = errs)
+            self.alphas.append((alpha[0], np.sqrt(np.diag(error))[0]))
+
+        
 
 
-        def line(x,a,b):
-            return a*x+b
+    def get_point_kinetics_parameters(self) -> bool:
+        # Even though it's not a PKP, get days first
+        # Get the final directory for the refuel runs
+        last_dir = max([int(dir[0][-1]) for dir in os.walk(self.refuel_path) if dir[0][-1].isdigit()])
+        nert = serpDeck(fuel_salt=self.fuel_salt, refuel=True)
+        nert.deck_path = self.refuel_path + f'/nert{last_dir}'
+        try:
+            nert.get_results()
+        except:
+            print("Error: No final refuel dirctory")
+            return False
 
-        alpha, error = scipy.optimize.curve_fit(line, self.feedback_temps, rhos, sigma = errs)
-        self.alphas.append((alpha[0], np.sqrt(error[0,0])))
+        self.days = nert.days
 
-        if save_file != None:
-            with open(f"{self.feedback_path}/{save_file}", "w") as f:
-                f.write(f"{feedback}\n")
-                for a in self.alphas:
-                    f.write(f"{a}\n")
+        # Get Betas and Neutron Generation Time
+        # Use Feedback runs for this because its easier to get better statistics
+        fb_list = ['fs.tot', 'gr.tot']
+        for feedback in fb_list:
+            path = self.feedback_path + f'/{feedback}'
+            if os.path.exists(path) and os.listdir(path):
+                break
 
+
+        self.betas = []
+        self.ngts = []
+        for index in range(self.burnup_steps):
+            nert = serpDeck(fuel_salt=self.fuel_salt, refuel=False)
+            nert.deck_path = path + f'/{index}/{int(self.base_temp)}'
+            nert.get_results()
+            self.betas.append(nert.betas)
+            self.ngts.append(nert.ngt)
+
+        # Get total fuel salt feedback coefficients
+        try:
+            self.read_feedbacks('fs.tot')
+            self.fs_feedbacks = self.alphas 
+        except:
+            print('Error: No fuel salt feedback coefficients')
+
+        # Get total graphite feedback coefficients
+        try:
+            self.read_feedbacks('gr.tot')
+            self.gr_feedbacks = self.alphas
+        except:
+            print('Error: No graphite feedback coefficients')
+
+        return True
+
+    def write_dynamic_model_PKPs(self, save_file:str = 'flibe_PKPs.txt'):
+        try:
+            self.get_point_kinetics_parameters()
+        except:
+            print("Error: Failed to get point kinetics parameters")
+
+        with open(save_file, 'w') as f:
+            header = 'time[d]\tbeta1\t\tbeta2\t\tbeta3\t\tbeta4\t\tbeta5\t\tbeta6\t\tngt[s^-1]\tfuel_temp_coeff[pcm/dK]\tmod_temp_coeff[pcm/dK]\n'
+            f.write(header)
+            for i in range(len(self.days)):
+                day = self.days[i]
+                beta1 = self.betas[i][0][0]
+                beta2 = self.betas[i][1][0]
+                beta3 = self.betas[i][2][0]
+                beta4 = self.betas[i][3][0]
+                beta5 = self.betas[i][4][0]
+                beta6 = self.betas[i][5][0]
+                ngt   = self.ngts[i][0]
+                fs_fb = self.fs_feedbacks[i][0]
+                gr_fb = self.gr_feedbacks[i][0]
+
+                f.write(f"{day}\t{beta1:.4e}\t{beta2:.4e}\t{beta3:.4e}\t{beta4:.4e}\t{beta5:.4e}\t{beta6:.4e}\t{ngt:.4e}\t{fs_fb:.5}\t\t{gr_fb:.5}\n")
 
 
 
@@ -521,8 +591,6 @@ class burn(object):
 
 if __name__ == '__main__':
     test = burn('flibe', 'flibe')
-    test.conv_enr = 0.5
-    test.conv_rate = 0.5
     #test.get_feedbacks()
-    test.read_feedbacks()
-
+    #test.get_point_kinetics_parameters()
+    test.write_dynamic_model_PKPs()
