@@ -7,6 +7,7 @@ from collections import namedtuple
 import os
 import time
 import scipy.optimize
+from scipy.signal import savgol_filter as savgol
 
 
 SLEEP_SEC:int = 60
@@ -61,6 +62,7 @@ class burn(object):
         self.base_temp:float = 900.0
         self.feedback_runs:dict = {}
         self.burnup_steps:int = 72
+        self.smoothing_window:int = 11
 
     def get_enrichment(self) -> bool:
         '''Finds critical enrichment of NERTHUS'''
@@ -604,25 +606,43 @@ class burn(object):
         except:
             print("Error: Failed to get point kinetics parameters")
 
+        beta1 = []
+        beta2 = []
+        beta3 = []
+        beta4 = []
+        beta5 = []
+        beta6 = []
+        ngt   = []
+        fs_fb = []
+        gr_fb = []
+
+        day = self.days
+        for i in range(len(self.days)):
+            beta1.append(self.betas[i][0][0])
+            beta2.append(self.betas[i][1][0])
+            beta3.append(self.betas[i][2][0])
+            beta4.append(self.betas[i][3][0])
+            beta5.append(self.betas[i][4][0])
+            beta6.append(self.betas[i][5][0])
+            ngt.append(self.ngts[i][0])
+            fs_fb.append(self.fs_feedbacks[i][0])
+            gr_fb.append(self.gr_feedbacks[i][0])
+
+        beta1 = savgol(beta1, self.smoothing_window, 3)
+        beta2 = savgol(beta2, self.smoothing_window, 3)
+        beta3 = savgol(beta3, self.smoothing_window, 3)
+        beta4 = savgol(beta4, self.smoothing_window, 3)
+        beta5 = savgol(beta5, self.smoothing_window, 3)
+        beta6 = savgol(beta6, self.smoothing_window, 3)
+        ngt   = savgol(ngt, self.smoothing_window, 3)
+        fs_fb = savgol(fs_fb, self.smoothing_window, 3)
+        gr_fb = savgol(gr_fb, self.smoothing_window, 3)
+
         with open(save_file, 'w') as f:
             header = 'time[d]\tbeta1\t\tbeta2\t\tbeta3\t\tbeta4\t\tbeta5\t\tbeta6\t\tngt[s^-1]\tfuel_temp_coeff[pcm/dK]\tmod_temp_coeff[pcm/dK]\n'
             f.write(header)
             for i in range(len(self.days)):
-                day = self.days[i]
-                beta1 = self.betas[i][0][0]
-                beta2 = self.betas[i][1][0]
-                beta3 = self.betas[i][2][0]
-                beta4 = self.betas[i][3][0]
-                beta5 = self.betas[i][4][0]
-                beta6 = self.betas[i][5][0]
-                ngt   = self.ngts[i][0]
-                fs_fb = self.fs_feedbacks[i][0]
-                gr_fb = self.gr_feedbacks[i][0]
-
-                f.write(f"{day}\t{beta1:.4e}\t{beta2:.4e}\t{beta3:.4e}\t{beta4:.4e}\t{beta5:.4e}\t{beta6:.4e}\t{ngt:.4e}\t{fs_fb:.5}\t\t{gr_fb:.5}\n")
-
-
-
+                f.write(f"{day[i]}\t{beta1[i]:.4e}\t{beta2[i]:.4e}\t{beta3[i]:.4e}\t{beta4[i]:.4e}\t{beta5[i]:.4e}\t{beta6[i]:.4e}\t{ngt[i]:.4e}\t{fs_fb[i]:.5}\t\t{gr_fb[i]:.5}\n")
 
 
 
