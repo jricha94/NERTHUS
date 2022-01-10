@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import matplotlib.pyplot as plt
 
 from shutil import copy
 from deck import serpDeck
@@ -7,6 +8,7 @@ from collections import namedtuple
 import os
 import time
 import scipy.optimize
+from scipy.signal import savgol_filter as savgol
 
 
 SLEEP_SEC:int = 60
@@ -14,6 +16,11 @@ SLEEP_SEC:int = 60
 def rho(k:float) -> float:
     'K to rho [pcm]'
     return 1e5*(k-1.0)/k
+
+
+def line(x,a,b):
+    return a*x+b
+
 
 
 class burn(object):
@@ -44,8 +51,8 @@ class burn(object):
         self.refuel_min:float = 1e-10
         self.refuel_max:float = 1e-5
         self.refuel_eps:float = 1e-9
-        self.k_diff_tgt:float      = 0.003
-        self.k_diff_eps:float      = 0.003
+        self.k_diff_tgt:float = 0.003
+        self.k_diff_eps:float = 0.003
         self.refuelData = namedtuple("refuelData", 'rate k k_err')
         self.refuel_list:list = []
         self.refuel_iter:int = 20
@@ -56,6 +63,7 @@ class burn(object):
         self.base_temp:float = 900.0
         self.feedback_runs:dict = {}
         self.burnup_steps:int = 72
+        self.smoothing_window:int = 11
 
     def get_enrichment(self) -> bool:
         '''Finds critical enrichment of NERTHUS'''
@@ -414,6 +422,22 @@ class burn(object):
         else:
             return False
 
+
+
+    def _check_feedbacks(self, feedback:str) -> bool:
+        for index in range(self.burnup_steps):
+            for temp in self.feedback_temps:
+                nert = serpDeck(fuel_salt=self.fuel_salt, refuel=False)
+                nert.deck_path = f"{self.feedback_path}/{feedback}/{index}/{int(temp)}"
+                if not os.path.exists(nert.deck_path+'/done.out'):# and \
+                    #os.path.getsize(nert.deck_path+'/done.out')) > 30:
+                    print(index, temp)
+                    return False
+
+        return True
+
+
+
     def get_feedbacks(self, feedback:str='fs.tot', thermal_expansion:bool=True):
         '''
         Calculates feedback coefficients for NERTHUS
@@ -428,6 +452,7 @@ class burn(object):
         self.alphas:list = []
 
         restart_file_path = f"{self.refuel_path}/nerthus.wrk"
+        failed = False
 
         for index in range(self.burnup_steps):
             for temp in self.feedback_temps:
@@ -484,49 +509,155 @@ class burn(object):
                     nert.save_qsub_file()
                     copy(restart_file_path, nert.deck_path)
                     nert.run_deck()
+                    failed = True
 
 
-    def read_feedbacks(self):
-
-        # Wait for time step to finish
-        done = False
-        while not done:
-            done = True
+                
+        #check if all runs finished running, even if they fail
+        failed_checks = 0
+        while True:
+            if self._check_feedbacks(feedback):
+                break                   # if all are done, break out of the while loop
+            print(failed)
             time.sleep(SLEEP_SEC)
+            failed_checks += 1
+            if failed_checks > 60: # If done.out does not exist after 60 minutes, run probably crashed
+                break
+
+        # Check if they all ran succesfully, if not run it again
+        if failed:
+            self.get_feedbacks(feedback)
+
+
+    def read_feedbacks(self, feedback:str='fs.tot'):
+        self.alphas = []
+
+        for index in range(self.burnup_steps):
+            rhos = []
+            errs = []
             for temp in self.feedback_temps:
                 fb_run_name = f"{feedback}.{temp}.{index}"
+                self.feedback_runs[fb_run_name] = serpDeck(fuel_salt=self.fuel_salt, refuel=False)
                 nert = self.feedback_runs[fb_run_name]
+                nert.deck_path = f"{self.feedback_path}/{feedback}/{index}/{int(temp)}"
                 if not nert.get_results():
-                    done = False
+                    print(f"Error: No results for index {index}, temperture {temp}")
+                    quit()
 
-        rhos = []
-        errs = []
-        for temp in self.feedback_temps:
-            fb_run_name = f"{feedback}.{temp}.{index}"
-            nert = self.feedback_runs[fb_run_name]
-            rhos.append(rho(nert.k[0]))
-            errs.append(nert.k[1] * 1e5)
+                rhos.append(rho(nert.k[0]))
+                errs.append(nert.k[1]*10**5)
+            
+            alpha, error = scipy.optimize.curve_fit(line, self.feedback_temps, rhos, sigma = errs)
+            self.alphas.append((alpha[0], np.sqrt(np.diag(error))[0]))
 
-        def line(x,a,b):
-            return a*x+b
-
-        alpha, error = scipy.optimize.curve_fit(line, self.feedback_temps, rhos, sigma = errs)
-        self.alphas.append((alpha[0], np.sqrt(error[0,0])))
-
-        if save_file != None:
-            with open(f"{self.feedback_path}/{save_file}", "w") as f:
-                f.write(f"{feedback}\n")
-                for a in self.alphas:
-                    f.write(f"{a}\n")
+        
 
 
+    def get_point_kinetics_parameters(self) -> bool:
+        # Even though it's not a PKP, get days first
+        # Get the final directory for the refuel runs
+        last_dir = max([int(dir[0][-1]) for dir in os.walk(self.refuel_path) if dir[0][-1].isdigit()])
+        nert = serpDeck(fuel_salt=self.fuel_salt, refuel=True)
+        nert.deck_path = self.refuel_path + f'/nert{last_dir}'
+        try:
+            nert.get_results()
+        except:
+            print("Error: No final refuel dirctory")
+            return False
 
+        self.days = nert.days
+
+        # Get Betas and Neutron Generation Time
+        # Use Feedback runs for this because its easier to get better statistics
+        fb_list = ['fs.tot', 'gr.tot']
+        for feedback in fb_list:
+            path = self.feedback_path + f'/{feedback}'
+            if os.path.exists(path) and os.listdir(path):
+                break
+
+
+        self.betas = []
+        self.ngts = []
+        for index in range(self.burnup_steps):
+            nert = serpDeck(fuel_salt=self.fuel_salt, refuel=False)
+            nert.deck_path = path + f'/{index}/{int(self.base_temp)}'
+            nert.get_results()
+            self.betas.append(nert.betas)
+            self.ngts.append(nert.ngt)
+
+        # Get total fuel salt feedback coefficients
+        try:
+            self.read_feedbacks('fs.tot')
+            self.fs_feedbacks = self.alphas 
+        except:
+            print('Error: No fuel salt feedback coefficients')
+
+        # Get total graphite feedback coefficients
+        try:
+            self.read_feedbacks('gr.tot')
+            self.gr_feedbacks = self.alphas
+        except:
+            print('Error: No graphite feedback coefficients')
+
+        return True
+
+    def write_dynamic_model_PKPs(self, save_file:str = 'flibe_PKPs.txt'):
+        try:
+            self.get_point_kinetics_parameters()
+        except:
+            print("Error: Failed to get point kinetics parameters")
+
+        beta1 = []
+        beta2 = []
+        beta3 = []
+        beta4 = []
+        beta5 = []
+        beta6 = []
+        ngt   = []
+        fs_fb = []
+        gr_fb = []
+
+        day = self.days
+        for i in range(len(self.days)):
+            beta1.append(self.betas[i][0][0])
+            beta2.append(self.betas[i][1][0])
+            beta3.append(self.betas[i][2][0])
+            beta4.append(self.betas[i][3][0])
+            beta5.append(self.betas[i][4][0])
+            beta6.append(self.betas[i][5][0])
+            ngt.append(self.ngts[i][0])
+            fs_fb.append(self.fs_feedbacks[i][0])
+            gr_fb.append(self.gr_feedbacks[i][0])
+
+        beta1 = savgol(beta1, self.smoothing_window, 3)
+        beta2 = savgol(beta2, self.smoothing_window, 3)
+        beta3 = savgol(beta3, self.smoothing_window, 3)
+        beta4 = savgol(beta4, self.smoothing_window, 3)
+        beta5 = savgol(beta5, self.smoothing_window, 3)
+        beta6 = savgol(beta6, self.smoothing_window, 3)
+        ngt   = savgol(ngt, self.smoothing_window, 3)
+        fs_fb = savgol(fs_fb, self.smoothing_window, 3)
+        gr_fb = savgol(gr_fb, self.smoothing_window, 3)
+
+        with open(save_file, 'w') as f:
+            header = 'time[d]\tbeta1\t\tbeta2\t\tbeta3\t\tbeta4\t\tbeta5\t\tbeta6\t\tngt[s^-1]\tfuel_temp_coeff[pcm/dK]\tmod_temp_coeff[pcm/dK]\n'
+            f.write(header)
+            for i in range(len(self.days)):
+                f.write(f"{day[i]}\t{beta1[i]:.4e}\t{beta2[i]:.4e}\t{beta3[i]:.4e}\t{beta4[i]:.4e}\t{beta5[i]:.4e}\t{beta6[i]:.4e}\t{ngt[i]:.4e}\t{fs_fb[i]:.5}\t\t{gr_fb[i]:.5}\n")
 
 
 
 
 if __name__ == '__main__':
-    test = burn()
-    test.conv_enr = 0.4
-    test.conv_rate = 5
-    test.get_feedbacks()
+    test = burn('thorConSalt', 'thorConSalt')
+    #test.get_feedbacks()
+    test.conv_enr = 0.5
+    test.conv_rate = 0.5
+
+
+    test.get_feedbacks('gr.tot')
+
+
+    #test.get_point_kinetics_parameters()
+    #test.write_dynamic_model_PKPs()
+

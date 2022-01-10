@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import matplotlib.pyplot as plt
 
 from shutil import copy
 from deck import serpDeck
@@ -577,12 +578,21 @@ class burn(object):
 
         self.betas = []
         self.ngts = []
+        self.beta_tot = []
+        self.capt = []
+        self.loss = []
         for index in range(self.burnup_steps):
             nert = serpDeck(fuel_salt=self.fuel_salt, refuel=False)
             nert.deck_path = path + f'/{index}/{int(self.base_temp)}'
             nert.get_results()
             self.betas.append(nert.betas)
             self.ngts.append(nert.ngt)
+            #NEW STUFF
+            self.beta_tot.append(nert.beta_tot)
+            nert.new_get_results(['balaLossNeutronLeak'], days=self.days[index])
+            self.capt.append((nert.results['infCapt'][0], nert.results['infCapt'][0] *nert.results['infCapt'][1]))
+            self.loss.append(nert.results['balaLossNeutronLeak'][0])
+
 
         # Get total fuel salt feedback coefficients
         try:
@@ -643,6 +653,7 @@ class burn(object):
             f.write(header)
             for i in range(len(self.days)):
                 f.write(f"{day[i]}\t{beta1[i]:.4e}\t{beta2[i]:.4e}\t{beta3[i]:.4e}\t{beta4[i]:.4e}\t{beta5[i]:.4e}\t{beta6[i]:.4e}\t{ngt[i]:.4e}\t{fs_fb[i]:.5}\t\t{gr_fb[i]:.5}\n")
+
 
 
 

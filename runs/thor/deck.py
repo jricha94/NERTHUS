@@ -90,6 +90,11 @@ class serpDeck(object):
 
         self.refuel_rate:float  = 1e-9
 
+
+
+        # This is a test
+        self.results:dict = {}
+
     def _make_ellipsoid(self, pos:list, axes:list, name:str=None):
         '''creates A B C D E F G H I J values for ellipsoid surface in SERPENT'''
         x, y, z = pos
@@ -1040,10 +1045,7 @@ class serpDeck(object):
             return False
         # Get results
         if not self.refuel: # No refueling
-            try:
-                results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_res.m")
-            except:
-                return False
+            results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_res.m")
             # Get k-eff value and error
             k = results.resdata['anaKeff'][0]
             k_err = results.resdata['anaKeff'][1] * k
@@ -1068,10 +1070,7 @@ class serpDeck(object):
 
         if self.refuel: # refueling
             results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_res.m")
-            try:
-                burn_results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_dep.m")
-            except:
-                return False
+            burn_results = serpentTools.read(self.deck_path + '/' + self.deck_name + "_dep.m")
             # daysteps for burnup calc
             self.days = burn_results.days
             # K values
@@ -1095,6 +1094,33 @@ class serpDeck(object):
                 self.betas.append(beta)
             return True
 
+
+
+    def new_get_results(self, parameters:list, days=0) -> bool:
+        if os.path.exists(self.deck_path+'/done.out') and \
+            os.path.getsize(self.deck_path+'/done.out') > 30:
+            pass
+        else:                   # Calculation not done yet
+            return False
+
+        if not self.refuel: # Not a depletion calculation
+            results = serpentTools.read(f"{self.deck_path}/{self.deck_name}_res.m")
+            uni0 = results.getUniv('0', timeDays=days)
+            self.results['infCapt'] = uni0.infExp['infCapt']
+            for key in parameters:
+                self.results[key] = (results.resdata[key][0], results.resdata[key][0] * results.resdata[key][1])
+
+
+        if self.refuel: # depletion calculation
+            results = serpentTools.read(f"{self.deck_path}/{self.deck_name}_res.m")
+            for key in parameters:
+                print(results.resdata[key])
+
+            
+        
+
+
+
     def cleanup(self, purge:bool=True):
         'Delete the run directories'
         if os.path.isdir(self.deck_path):
@@ -1109,9 +1135,7 @@ class serpDeck(object):
 
 
 if __name__ == '__main__':
-    test = serpDeck(fuel_salt='flibe', enr=0.2, refuel_salt='flibe', enr_ref=0.1, refuel=True)
-    test.feedback = True
-    test.do_plots = True
-    test.feedback_index = 4
-    test.save_deck()
-
+    test = serpDeck(fuel_salt='flibe', enr=0.2, refuel_salt='flibe', enr_ref=0.1, refuel=False)
+    test.deck_name = 'no'
+    test.deck_path = os.getcwd()
+    test.new_get_results(['anaKeff', 'balaLossNeutronLeak'])

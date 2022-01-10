@@ -1096,7 +1096,7 @@ class serpDeck(object):
 
 
 
-    def new_get_results(self, parameters:list, days=0) -> bool:
+    def new_get_results(self, parameters:list) -> bool:
         if os.path.exists(self.deck_path+'/done.out') and \
             os.path.getsize(self.deck_path+'/done.out') > 30:
             pass
@@ -1105,10 +1105,10 @@ class serpDeck(object):
 
         if not self.refuel: # Not a depletion calculation
             results = serpentTools.read(f"{self.deck_path}/{self.deck_name}_res.m")
-            uni0 = results.getUniv('0', timeDays=days)
-            self.results['infCapt'] = uni0.infExp['infCapt']
+            uni0 = results.getUniv('0', 0)
+            print(uni0.infExp['infCapt'])
             for key in parameters:
-                self.results[key] = (results.resdata[key][0], results.resdata[key][0] * results.resdata[key][1])
+                pass#print(results.resdata[key])
 
 
         if self.refuel: # depletion calculation
