@@ -636,7 +636,6 @@ class burn(object):
             for i in range(len(self.days)):
                 f.write(f"{day[i]}\t{beta1[i]:.4e}\t{beta2[i]:.4e}\t{beta3[i]:.4e}\t{beta4[i]:.4e}\t{beta5[i]:.4e}\t{beta6[i]:.4e}\t{ngt[i]:.4e}\t{fs_fb[i]:.5}\t\t{gr_fb[i]:.5}\n")
 
-    def get_control_rod_worth(self, index):
 
 
 
