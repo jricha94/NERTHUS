@@ -43,6 +43,12 @@ flibe.read_refuel_if_done()
 
 flibe.queue = 'fill'
 flibe.ompcores = 8
+flibe.histories = 100000
+flibe.ngen = 200
+flibe.nskip = 60
 
 flibe.get_feedbacks('fs.tot')
 flibe.get_feedbacks('gr.tot')
+
+flibe.feedback_path = flibe.feedback_path + '/no_expansion'
+flibe.get_feedbacks('gr.tot', thermal_expansion=False)

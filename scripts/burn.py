@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import matplotlib.pyplot as plt
 
 from shutil import copy
 from deck import serpDeck
@@ -422,8 +421,6 @@ class burn(object):
         else:
             return False
 
-
-
     def _check_feedbacks(self, feedback:str) -> bool:
         for index in range(self.burnup_steps):
             for temp in self.feedback_temps:
@@ -435,8 +432,6 @@ class burn(object):
                     return False
 
         return True
-
-
 
     def get_feedbacks(self, feedback:str='fs.tot', thermal_expansion:bool=True):
         '''
@@ -528,7 +523,6 @@ class burn(object):
         if failed:
             self.get_feedbacks(feedback)
 
-
     def read_feedbacks(self, feedback:str='fs.tot'):
         self.alphas = []
 
@@ -549,9 +543,6 @@ class burn(object):
             
             alpha, error = scipy.optimize.curve_fit(line, self.feedback_temps, rhos, sigma = errs)
             self.alphas.append((alpha[0], np.sqrt(np.diag(error))[0]))
-
-        
-
 
     def get_point_kinetics_parameters(self) -> bool:
         # Even though it's not a PKP, get days first
@@ -644,6 +635,8 @@ class burn(object):
             f.write(header)
             for i in range(len(self.days)):
                 f.write(f"{day[i]}\t{beta1[i]:.4e}\t{beta2[i]:.4e}\t{beta3[i]:.4e}\t{beta4[i]:.4e}\t{beta5[i]:.4e}\t{beta6[i]:.4e}\t{ngt[i]:.4e}\t{fs_fb[i]:.5}\t\t{gr_fb[i]:.5}\n")
+
+    def get_control_rod_worth(self, index):
 
 
 
