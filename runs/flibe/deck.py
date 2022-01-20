@@ -997,6 +997,7 @@ class serpDeck(object):
                 self.deck_path + '/' + self.deck_name)
             print(e)
 
+    # TODO: Add memory to qsub file
     def save_qsub_file(self) -> None:
         'Writes run file for TORQUE.'
         qsub_content = dedent(f'''
