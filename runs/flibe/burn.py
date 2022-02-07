@@ -426,8 +426,7 @@ class burn(object):
             for temp in self.feedback_temps:
                 nert = serpDeck(fuel_salt=self.fuel_salt, refuel=False)
                 nert.deck_path = f"{self.feedback_path}/{feedback}/{index}/{int(temp)}"
-                if not os.path.exists(nert.deck_path+'/done.out'):# and \
-                    #os.path.getsize(nert.deck_path+'/done.out')) > 30:
+                if not os.path.exists(nert.deck_path+'/done.out'):
                     print(index, temp)
                     return False
 
@@ -447,12 +446,18 @@ class burn(object):
         self.alphas:list = []
 
         restart_file_path = f"{self.refuel_path}/nerthus.wrk"
-        failed = False
+
+        file_sizes = {} # Used to detect if a node crashes before finishing
+
+        running = 0 # These variables are used to print how far along this process is
+        total = 0
 
         for index in range(self.burnup_steps):
             for temp in self.feedback_temps:
+                total += 1
                 fb_run_name = f"{feedback}.{temp}.{index}"
                 self.feedback_runs[fb_run_name] = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, False)
+                file_sizes[fb_run_name] = [0, 0] # [myout.out filesize, check if its changed]
                 nert = self.feedback_runs[fb_run_name]
                 nert.feedback = True
                 nert.restart_file = "nerthus.wrk"
@@ -504,24 +509,55 @@ class burn(object):
                     nert.save_qsub_file()
                     copy(restart_file_path, nert.deck_path)
                     nert.run_deck()
-                    failed = True
+                    running += 1
 
+        print(f"\nRunning {running} of {total} simulations")
 
-                
-        #check if all runs finished running, even if they fail
-        failed_checks = 0
-        while True:
-            if self._check_feedbacks(feedback):
-                break                   # if all are done, break out of the while loop
-            print(failed)
-            time.sleep(SLEEP_SEC)
-            failed_checks += 1
-            if failed_checks > 60: # If done.out does not exist after 60 minutes, run probably crashed
-                break
+        # wait a bit to let everything do its thing
+        time.sleep(SLEEP_SEC)
 
-        # Check if they all ran succesfully, if not run it again
-        if failed:
-            self.get_feedbacks(feedback)
+        done = False
+        while not done:
+            done = True
+            for index in range(self.burnup_steps):
+                for temp in self.feedback_temps:
+                    fb_run_name = f"{feedback}.{temp}.{index}"
+                    nert = self.feedback_runs[fb_run_name]
+                    checks = file_sizes[fb_run_name]
+                    if not nert.get_results(): # still running
+                        done = False
+                        try:
+                            myout_size = os.path.getsize(nert.deck_path+"/myout.out")
+                            if myout_size > checks[0]:  # myout.out has gotten larger
+                                checks[0] = myout_size  # update file sizes
+                                checks[1] = 0           # no crashed node, checks back to 0
+                            else:
+                                checks[1] += 1          # myout.out is not larger, increase check
+                                if checks > 10:         # run probably crashed after 10 checks, rerun it
+                                    nert.cleanup()
+                                    nert.save_deck()
+                                    nert.save_qsub_file()
+                                    copy(restart_file_path, nert.deck_path)
+                                    nert.run_deck()
+                        except: # if node hasn't started running just leave it be
+                            pass
+
+                    elif nert.get_results() and not os.path.exists(f"{nert.deck_path}/{nert.deck_name}_res.m"):
+                        # Process finished, but Serpent didn't run to completion
+                        done = False
+                        nert.cleanup()
+                        nert.save_deck()
+                        nert.save_qsub_file()
+                        copy(restart_file_path, nert.deck_path)
+                        nert.run_deck()                 # Rerun it
+
+                    else:
+                        running -= 1 # Decrement running count if its done
+
+            progress = running/total * 100 # percent done
+            print(f"{feedback} calculation is {progress:.2}% done")
+            time.sleep(60*3) # Sleep for 3 minutes between checks
+
 
     def read_feedbacks(self, feedback:str='fs.tot'):
         self.alphas = []
