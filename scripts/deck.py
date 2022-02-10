@@ -60,6 +60,7 @@ class serpDeck(object):
         self.nskip:int                  = 60                    # Number of inactive generations
         self.queue:str                  = 'fill'                # NECluster torque queue ('local' to run on your machine)
         self.ompcores:int               = 8                     # OMP cores used when running SERPENT
+        self.memory:int                 = 20                    # Memory in GB requested for node
         self.thermal_expansion:bool     = True                  # Bool to include thermal expansion; if False, reactor is modeled at 900K
         self.refuel:bool                = refuel                # Bool to run burnup calculation
         self.feedback:bool              = False                 # Bool to use materials card or restart file
@@ -1000,6 +1001,7 @@ class serpDeck(object):
             #PBS -N NERTHUS
             #PBS -q {self.queue}
             #PBS -l nodes=1:ppn={self.ompcores}
+            #PBS -l mem={self.memory}GB
 
             hostname
             rm -f done.dat

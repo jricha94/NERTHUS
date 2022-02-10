@@ -446,9 +446,7 @@ class burn(object):
         self.alphas:list = []
 
         restart_file_path = f"{self.refuel_path}/nerthus.wrk"
-
         file_sizes = {} # Used to detect if a node crashes before finishing
-
         running = 0 # These variables are used to print how far along this process is
         total = 0
 
@@ -525,15 +523,19 @@ class burn(object):
                     nert = self.feedback_runs[fb_run_name]
                     checks = file_sizes[fb_run_name]
                     if not nert.get_results(): # still running
+                        print("Still running")
                         done = False
                         try:
                             myout_size = os.path.getsize(nert.deck_path+"/myout.out")
                             if myout_size > checks[0]:  # myout.out has gotten larger
+                                print("Got bigger!")
                                 checks[0] = myout_size  # update file sizes
                                 checks[1] = 0           # no crashed node, checks back to 0
                             else:
+                                print("This might have crashed")
                                 checks[1] += 1          # myout.out is not larger, increase check
                                 if checks > 10:         # run probably crashed after 10 checks, rerun it
+                                    print("This did crash")
                                     nert.cleanup()
                                     nert.save_deck()
                                     nert.save_qsub_file()
@@ -542,8 +544,9 @@ class burn(object):
                         except: # if node hasn't started running just leave it be
                             pass
 
-                    elif nert.get_results() and not os.path.exists(f"{nert.deck_path}/{nert.deck_name}_res.m"):
+                    elif os.path.exists(f"{nert.deck_path}/done.out"):
                         # Process finished, but Serpent didn't run to completion
+                        print("This run ran out of memory")
                         done = False
                         nert.cleanup()
                         nert.save_deck()
@@ -553,10 +556,12 @@ class burn(object):
 
                     else:
                         running -= 1 # Decrement running count if its done
+                        print(f"This run finished with no problem, {running} left")
 
             progress = running/total * 100 # percent done
-            print(f"{feedback} calculation is {progress:.2}% done")
+            print(f"{feedback} calculation is {progress:.2d}% done")
             time.sleep(60*3) # Sleep for 3 minutes between checks
+        print(f"{feedback} is done")
 
 
     def read_feedbacks(self, feedback:str='fs.tot'):
