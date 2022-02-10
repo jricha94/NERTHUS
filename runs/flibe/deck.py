@@ -1001,7 +1001,6 @@ class serpDeck(object):
             #PBS -N NERTHUS
             #PBS -q {self.queue}
             #PBS -l nodes=1:ppn={self.ompcores}
-            #PBS -l mem={self.memory}GB
 
             hostname
             rm -f done.dat
