@@ -560,8 +560,8 @@ class burn(object):
                         running -= 1 # Decrement running count if its done
                         print(f"This run finished with no problem, {running} left")
 
-            progress = running/total * 100 # percent done
-            print(f"{feedback} calculation is {progress:.2d}% done")
+            progress = running/total
+            print(f"{feedback} calculation is {progress:.2%}% done")
             time.sleep(60*3) # Sleep for 3 minutes between checks
         print(f"{feedback} is done")
 
