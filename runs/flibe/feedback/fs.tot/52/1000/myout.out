@@ -30,7 +30,7 @@ A Continuous-energy Monte Carlo Reactor Physics Burnup Calculation Code
 
    sss2 -omp 8 nerthus
 
-Begin calculation on Tue Feb  8 11:14:53 2022 at node32
+Begin calculation on Thu Feb 10 13:38:04 2022 at node59
 
 Reading input file "nerthus"...
 
@@ -718,55 +718,55 @@ Nuclide   gre7.22t -- natural carbon at 1200K (C-nat)
 
 Checking data and printing output...
 
-***** Tue Feb  8 11:15:47 2022 (seed = 1644336893369)
+***** Thu Feb 10 13:38:25 2022 (seed = 1644518284691)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 40096.09c has 1 decay modes
 
 
-***** Tue Feb  8 11:15:47 2022 (seed = 1644336893369)
+***** Thu Feb 10 13:38:25 2022 (seed = 1644518284691)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 48114.09c has 1 decay modes
 
 
-***** Tue Feb  8 11:15:47 2022 (seed = 1644336893369)
+***** Thu Feb 10 13:38:25 2022 (seed = 1644518284691)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 52123.09c has 1 decay modes
 
 
-***** Tue Feb  8 11:15:47 2022 (seed = 1644336893369)
+***** Thu Feb 10 13:38:25 2022 (seed = 1644518284691)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 52130.09c has 1 decay modes
 
 
-***** Tue Feb  8 11:15:47 2022 (seed = 1644336893369)
+***** Thu Feb 10 13:38:25 2022 (seed = 1644518284691)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 54134.09c has 1 decay modes
 
 
-***** Tue Feb  8 11:15:47 2022 (seed = 1644336893369)
+***** Thu Feb 10 13:38:25 2022 (seed = 1644518284691)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 54136.09c has 1 decay modes
 
 
-***** Tue Feb  8 11:15:47 2022 (seed = 1644336893369)
+***** Thu Feb 10 13:38:25 2022 (seed = 1644518284691)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 58142.09c has 1 decay modes
 
 
-***** Tue Feb  8 11:15:47 2022 (seed = 1644336893369)
+***** Thu Feb 10 13:38:25 2022 (seed = 1644518284691)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 64160.09c has 1 decay modes
 
 
-***** Tue Feb  8 11:15:47 2022 (seed = 1644336893369)
+***** Thu Feb 10 13:38:25 2022 (seed = 1644518284691)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 300700 has 1 decay modes
@@ -1098,17 +1098,4258 @@ OK.
 
 Processing cross sections and ENDF reaction laws...
 
+Nuclide   1001.09c -- hydrogen at 1000K (H-1)
+Nuclide   1002.09c -- deuterium at 1000K (H-2)
+Nuclide   1003.09c -- tritium at 1000K (H-3)
+Nuclide   2003.09c -- helium 3 at 1000K (He-3)
+Nuclide   2004.09c -- helium 4 at 1000K (He-4)
+Nuclide   3006.09c -- lithium 6 at 1000K (Li-6)
+Nuclide   3007.09c -- lithium 7 at 1000K (Li-7)
+Nuclide   4009.09c -- beryllium 9 at 1000K (Be-9)
+Nuclide   5010.09c -- boron 10 at 900K (B-10)
+Nuclide   5010.09c -- boron 10 at 950K (B-10)
+Nuclide   5010.09c -- boron 10 at 1000K (B-10)
+Nuclide   5011.09c -- boron 11 at 900K (B-11)
+Nuclide   5011.09c -- boron 11 at 950K (B-11)
+Nuclide   5011.09c -- boron 11 at 1000K (B-11)
+Nuclide   6000.09c -- natural carbon at 900K (C-nat)
+Nuclide   6000.09c -- natural carbon at 950K (C-nat)
+Nuclide   6000.09s -- natural carbon at 950K (C-nat)
+Nuclide   6012.09c -- carbon 12 at 1000K (C-12)
+Nuclide   7014.09c -- nitrogen 14 at 900K (N-14)
+Nuclide   7014.09c -- nitrogen 14 at 1000K (N-14)
+Nuclide   7015.09c -- nitrogen 15 at 1000K (N-15)
+Nuclide   8016.09c -- oxygen 16 at 1000K (O-16)
+Nuclide   8017.09c -- oxygen 17 at 1000K (O-17)
+Nuclide   9019.09c -- fluorine 19 at 1000K (F-19)
+Nuclide  14000.09c -- natural silicon at 900K (Si-nat)
+Nuclide  15031.09c -- phosphorus 31 at 900K (P-31)
+Nuclide  16000.09c -- natural sulfur at 900K (S-nat)
+Nuclide  24000.09c -- natural chromium at 900K (Cr-nat)
+Nuclide  25055.09c -- manganese 55 at 900K (Mn-55)
+Nuclide  26000.09c -- natural iron at 900K (Fe-nat)
+Nuclide  28000.09c -- natural nickel at 900K (Ni-nat)
+Nuclide  31069.09c -- gallium 69 at 1000K (Ga-69)
+Nuclide  31071.09c -- gallium 71 at 1000K (Ga-71)
+Nuclide  32070.09c -- germanium 70 at 1000K (Ge-70)
+Nuclide  32072.09c -- germanium 72 at 1000K (Ge-72)
+Nuclide  32073.09c -- germanium 73 at 1000K (Ge-73)
+Nuclide  32074.09c -- germanium 74 at 1000K (Ge-74)
+Nuclide  32076.09c -- germanium 76 at 1000K (Ge-76)
+Nuclide  33074.09c -- arsenic 74 at 1000K (As-74)
+Nuclide  33075.09c -- arsenic 75 at 1000K (As-75)
+Nuclide  34074.09c -- selenium 74 at 1000K (Se-74)
+Nuclide  34076.09c -- selenium 76 at 1000K (Se-76)
+Nuclide  34077.09c -- selenium 77 at 1000K (Se-77)
+Nuclide  34078.09c -- selenium 78 at 1000K (Se-78)
+Nuclide  34079.09c -- selenium 79 at 1000K (Se-79)
+Nuclide  34080.09c -- selenium 80 at 1000K (Se-80)
+Nuclide  34082.09c -- selenium 82 at 1000K (Se-82)
+Nuclide  35079.09c -- bromine 79 at 1000K (Br-79)
+Nuclide  35081.09c -- bromine 81 at 1000K (Br-81)
+Nuclide  36078.09c -- krypton 78 at 1000K (Kr-78)
+Nuclide  36080.09c -- krypton 80 at 1000K (Kr-80)
+Nuclide  36082.09c -- krypton 82 at 1000K (Kr-82)
+Nuclide  36083.09c -- krypton 83 at 1000K (Kr-83)
+Nuclide  36084.09c -- krypton 84 at 1000K (Kr-84)
+Nuclide  36085.09c -- krypton 85 at 1000K (Kr-85)
+Nuclide  36086.09c -- krypton 86 at 1000K (Kr-86)
+Nuclide  37085.09c -- rubidium 85 at 1000K (Rb-85)
+Nuclide  37086.09c -- rubidium 86 at 1000K (Rb-86)
+Nuclide  37087.09c -- rubidium 87 at 1000K (Rb-87)
+Nuclide  38084.09c -- strontium 84 at 1000K (Sr-84)
+Nuclide  38086.09c -- strontium 86 at 1000K (Sr-86)
+Nuclide  38087.09c -- strontium 87 at 1000K (Sr-87)
+Nuclide  38088.09c -- strontium 88 at 1000K (Sr-88)
+Nuclide  38089.09c -- strontium 89 at 1000K (Sr-89)
+Nuclide  38090.09c -- strontium 90 at 1000K (Sr-90)
+Nuclide  39089.09c -- yttrium 89 at 1000K (Y-89)
+Nuclide  39090.09c -- yttrium 90 at 1000K (Y-90)
+Nuclide  39091.09c -- yttrium 91 at 1000K (Y-91)
+Nuclide  40090.09c -- zirconium 90 at 1000K (Zr-90)
+Nuclide  40091.09c -- zirconium 91 at 1000K (Zr-91)
+Nuclide  40092.09c -- zirconium 92 at 1000K (Zr-92)
+Nuclide  40093.09c -- zirconium 93 at 1000K (Zr-93)
+Nuclide  40094.09c -- zirconium 94 at 1000K (Zr-94)
+Nuclide  40095.09c -- zirconium 95 at 1000K (Zr-95)
+Nuclide  40096.09c -- zirconium 96 at 1000K (Zr-96)
+Nuclide  41093.09c -- niobium 93 at 1000K (Nb-93)
+Nuclide  41094.09c -- niobium 94 at 1000K (Nb-94)
+Nuclide  41095.09c -- niobium 95 at 1000K (Nb-95)
+Nuclide  42000.09c -- natural molybdenum at 900K (Mo-nat)
+Nuclide  42092.09c -- molybdenum 92 at 1000K (Mo-92)
+Nuclide  42094.09c -- molybdenum 94 at 1000K (Mo-94)
+Nuclide  42095.09c -- molybdenum 95 at 1000K (Mo-95)
+Nuclide  42096.09c -- molybdenum 96 at 1000K (Mo-96)
+Nuclide  42097.09c -- molybdenum 97 at 1000K (Mo-97)
+Nuclide  42098.09c -- molybdenum 98 at 1000K (Mo-98)
+Nuclide  42099.09c -- molybdenum 99 at 1000K (Mo-99)
+Nuclide  42100.09c -- molybdenum 100 at 1000K (Mo-100)
+Nuclide  43099.09c -- technetium 99 at 1000K (Tc-99)
+Nuclide  44096.09c -- ruthenium 96 at 1000K (Ru-96)
+Nuclide  44098.09c -- ruthenium 98 at 1000K (Ru-98)
+Nuclide  44099.09c -- ruthenium 99 at 1000K (Ru-99)
+Nuclide  44100.09c -- ruthenium 100 at 1000K (Ru-100)
+Nuclide  44101.09c -- ruthenium 101 at 1000K (Ru-101)
+Nuclide  44102.09c -- ruthenium 102 at 1000K (Ru-102)
+Nuclide  44103.09c -- ruthenium 103 at 1000K (Ru-103)
+Nuclide  44104.09c -- ruthenium 104 at 1000K (Ru-104)
+Nuclide  44105.09c -- ruthenium 105 at 1000K (Ru-105)
+Nuclide  44106.09c -- ruthenium 106 at 1000K (Ru-106)
+Nuclide  45103.09c -- rhodium 103 at 1000K (Rh-103)
+Nuclide  45105.09c -- rhodium 105 at 1000K (Rh-105)
+Nuclide  46102.09c -- palladium 102 at 1000K (Pd-102)
+Nuclide  46104.09c -- palladium 104 at 1000K (Pd-104)
+Nuclide  46105.09c -- palladium 105 at 1000K (Pd-105)
+Nuclide  46106.09c -- palladium 106 at 1000K (Pd-106)
+Nuclide  46107.09c -- palladium 107 at 1000K (Pd-107)
+Nuclide  46108.09c -- palladium 108 at 1000K (Pd-108)
+Nuclide  46110.09c -- palladium 110 at 1000K (Pd-110)
+Nuclide  47107.09c -- silver 107 at 1000K (Ag-107)
+Nuclide  47109.09c -- silver 109 at 1000K (Ag-109)
+Nuclide  47310.09c -- silver 110m at 1000K (Ag-110m)
+Nuclide  47111.09c -- silver 111 at 1000K (Ag-111)
+Nuclide  48106.09c -- cadmium 106 at 1000K (Cd-106)
+Nuclide  48108.09c -- cadmium 108 at 1000K (Cd-108)
+Nuclide  48110.09c -- cadmium 110 at 1000K (Cd-110)
+Nuclide  48111.09c -- cadmium 111 at 1000K (Cd-111)
+Nuclide  48112.09c -- cadmium 112 at 1000K (Cd-112)
+Nuclide  48113.09c -- cadmium 113 at 1000K (Cd-113)
+Nuclide  48114.09c -- cadmium 114 at 1000K (Cd-114)
+Nuclide  48315.09c -- cadmium 115m at 1000K (Cd-115m)
+Nuclide  48116.09c -- cadmium 116 at 1000K (Cd-116)
+Nuclide  49113.09c -- indium 113 at 1000K (In-113)
+Nuclide  49115.09c -- indium 115 at 1000K (In-115)
+Nuclide  50112.09c -- tin 112 at 1000K (Sn-112)
+Nuclide  50113.09c -- tin 113 at 1000K (Sn-113)
+Nuclide  50114.09c -- tin 114 at 1000K (Sn-114)
+Nuclide  50115.09c -- tin 115 at 1000K (Sn-115)
+Nuclide  50116.09c -- tin 116 at 1000K (Sn-116)
+Nuclide  50117.09c -- tin 117 at 1000K (Sn-117)
+Nuclide  50118.09c -- tin 118 at 1000K (Sn-118)
+Nuclide  50119.09c -- tin 119 at 1000K (Sn-119)
+Nuclide  50120.09c -- tin 120 at 1000K (Sn-120)
+Nuclide  50122.09c -- tin 122 at 1000K (Sn-122)
+Nuclide  50123.09c -- tin 123 at 1000K (Sn-123)
+Nuclide  50124.09c -- tin 124 at 1000K (Sn-124)
+Nuclide  50125.09c -- tin 125 at 1000K (Sn-125)
+Nuclide  50126.09c -- tin 126 at 1000K (Sn-126)
+Nuclide  51121.09c -- antimony 121 at 1000K (Sb-121)
+Nuclide  51123.09c -- antimony 123 at 1000K (Sb-123)
+Nuclide  51124.09c -- antimony 124 at 1000K (Sb-124)
+Nuclide  51125.09c -- antimony 125 at 1000K (Sb-125)
+Nuclide  51126.09c -- antimony 126 at 1000K (Sb-126)
+Nuclide  52120.09c -- tellurium 120 at 1000K (Te-120)
+Nuclide  52122.09c -- tellurium 122 at 1000K (Te-122)
+Nuclide  52123.09c -- tellurium 123 at 1000K (Te-123)
+Nuclide  52124.09c -- tellurium 124 at 1000K (Te-124)
+Nuclide  52125.09c -- tellurium 125 at 1000K (Te-125)
+Nuclide  52126.09c -- tellurium 126 at 1000K (Te-126)
+Nuclide  52327.09c -- tellurium 127m at 1000K (Te-127m)
+Nuclide  52128.09c -- tellurium 128 at 1000K (Te-128)
+Nuclide  52329.09c -- tellurium 129m at 1000K (Te-129m)
+Nuclide  52130.09c -- tellurium 130 at 1000K (Te-130)
+Nuclide  52132.09c -- tellurium 132 at 1000K (Te-132)
+Nuclide  53127.09c -- iodine 127 at 1000K (I-127)
+Nuclide  53129.09c -- iodine 129 at 1000K (I-129)
+Nuclide  53130.09c -- iodine 130 at 1000K (I-130)
+Nuclide  53131.09c -- iodine 131 at 1000K (I-131)
+Nuclide  53135.09c -- iodine 135 at 1000K (I-135)
+Nuclide  54124.09c -- xenon 124 at 1000K (Xe-124)
+Nuclide  54126.09c -- xenon 126 at 1000K (Xe-126)
+Nuclide  54128.09c -- xenon 128 at 1000K (Xe-128)
+Nuclide  54129.09c -- xenon 129 at 1000K (Xe-129)
+Nuclide  54130.09c -- xenon 130 at 1000K (Xe-130)
+Nuclide  54131.09c -- xenon 131 at 1000K (Xe-131)
+Nuclide  54132.09c -- xenon 132 at 1000K (Xe-132)
+Nuclide  54133.09c -- xenon 133 at 1000K (Xe-133)
+Nuclide  54134.09c -- xenon 134 at 1000K (Xe-134)
+Nuclide  54135.09c -- xenon 135 at 1000K (Xe-135)
+Nuclide  54136.09c -- xenon 136 at 1000K (Xe-136)
+Nuclide  55133.09c -- cesium 133 at 1000K (Cs-133)
+Nuclide  55134.09c -- cesium 134 at 1000K (Cs-134)
+Nuclide  55135.09c -- cesium 135 at 1000K (Cs-135)
+Nuclide  55136.09c -- cesium 136 at 1000K (Cs-136)
+Nuclide  55137.09c -- cesium 137 at 1000K (Cs-137)
+Nuclide  56130.09c -- barium 130 at 1000K (Ba-130)
+Nuclide  56132.09c -- barium 132 at 1000K (Ba-132)
+Nuclide  56133.09c -- barium 133 at 1000K (Ba-133)
+Nuclide  56134.09c -- barium 134 at 1000K (Ba-134)
+Nuclide  56135.09c -- barium 135 at 1000K (Ba-135)
+Nuclide  56136.09c -- barium 136 at 1000K (Ba-136)
+Nuclide  56137.09c -- barium 137 at 1000K (Ba-137)
+Nuclide  56138.09c -- barium 138 at 1000K (Ba-138)
+Nuclide  56140.09c -- barium 140 at 1000K (Ba-140)
+Nuclide  57138.09c -- lanthanum 138 at 1000K (La-138)
+Nuclide  57139.09c -- lanthanum 139 at 1000K (La-139)
+Nuclide  57140.09c -- lanthanum 140 at 1000K (La-140)
+Nuclide  58136.09c -- cerium 136 at 1000K (Ce-136)
+Nuclide  58138.09c -- cerium 138 at 1000K (Ce-138)
+Nuclide  58139.09c -- cerium 139 at 1000K (Ce-139)
+Nuclide  58140.09c -- cerium 140 at 1000K (Ce-140)
+Nuclide  58141.09c -- cerium 141 at 1000K (Ce-141)
+Nuclide  58142.09c -- cerium 142 at 1000K (Ce-142)
+Nuclide  58143.09c -- cerium 143 at 1000K (Ce-143)
+Nuclide  58144.09c -- cerium 144 at 1000K (Ce-144)
+Nuclide  59141.09c -- praseodymium 141 at 1000K (Pr-141)
+Nuclide  59142.09c -- praseodymium 142 at 1000K (Pr-142)
+Nuclide  59143.09c -- praseodymium 143 at 1000K (Pr-143)
+Nuclide  60142.09c -- neodymium 142 at 1000K (Nd-142)
+Nuclide  60143.09c -- neodymium 143 at 1000K (Nd-143)
+Nuclide  60144.09c -- neodymium 144 at 1000K (Nd-144)
+Nuclide  60145.09c -- neodymium 145 at 1000K (Nd-145)
+Nuclide  60146.09c -- neodymium 146 at 1000K (Nd-146)
+Nuclide  60147.09c -- neodymium 147 at 1000K (Nd-147)
+Nuclide  60148.09c -- neodymium 148 at 1000K (Nd-148)
+Nuclide  60150.09c -- neodymium 150 at 1000K (Nd-150)
+Nuclide  61147.09c -- promethium 147 at 1000K (Pm-147)
+Nuclide  61148.09c -- promethium 148 at 1000K (Pm-148)
+Nuclide  61348.09c -- promethium 148m at 1000K (Pm-148m)
+Nuclide  61149.09c -- promethium 149 at 1000K (Pm-149)
+Nuclide  61151.09c -- promethium 151 at 1000K (Pm-151)
+Nuclide  62144.09c -- samarium 144 at 1000K (Sm-144)
+Nuclide  62147.09c -- samarium 147 at 1000K (Sm-147)
+Nuclide  62148.09c -- samarium 148 at 1000K (Sm-148)
+Nuclide  62149.09c -- samarium 149 at 1000K (Sm-149)
+Nuclide  62150.09c -- samarium 150 at 1000K (Sm-150)
+Nuclide  62151.09c -- samarium 151 at 1000K (Sm-151)
+Nuclide  62152.09c -- samarium 152 at 1000K (Sm-152)
+Nuclide  62153.09c -- samarium 153 at 1000K (Sm-153)
+Nuclide  62154.09c -- samarium 154 at 1000K (Sm-154)
+Nuclide  63151.09c -- europium 151 at 1000K (Eu-151)
+Nuclide  63152.09c -- europium 152 at 1000K (Eu-152)
+Nuclide  63153.09c -- europium 153 at 1000K (Eu-153)
+Nuclide  63154.09c -- europium 154 at 1000K (Eu-154)
+Nuclide  63155.09c -- europium 155 at 1000K (Eu-155)
+Nuclide  63156.09c -- europium 156 at 1000K (Eu-156)
+Nuclide  63157.09c -- europium 157 at 1000K (Eu-157)
+Nuclide  64152.09c -- gadolinium 152 at 1000K (Gd-152)
+Nuclide  64153.09c -- gadolinium 153 at 1000K (Gd-153)
+Nuclide  64154.09c -- gadolinium 154 at 1000K (Gd-154)
+Nuclide  64155.09c -- gadolinium 155 at 1000K (Gd-155)
+Nuclide  64156.09c -- gadolinium 156 at 1000K (Gd-156)
+Nuclide  64157.09c -- gadolinium 157 at 1000K (Gd-157)
+Nuclide  64158.09c -- gadolinium 158 at 1000K (Gd-158)
+Nuclide  64160.09c -- gadolinium 160 at 1000K (Gd-160)
+Nuclide  65159.09c -- terbium 159 at 1000K (Tb-159)
+Nuclide  65160.09c -- terbium 160 at 1000K (Tb-160)
+Nuclide  66156.09c -- dysprosium 156 at 1000K (Dy-156)
+Nuclide  66158.09c -- dysprosium 158 at 1000K (Dy-158)
+Nuclide  66160.09c -- dysprosium 160 at 1000K (Dy-160)
+Nuclide  66161.09c -- dysprosium 161 at 1000K (Dy-161)
+Nuclide  66162.09c -- dysprosium 162 at 1000K (Dy-162)
+Nuclide  66163.09c -- dysprosium 163 at 1000K (Dy-163)
+Nuclide  66164.09c -- dysprosium 164 at 1000K (Dy-164)
+Nuclide  67165.09c -- holmium 165 at 1000K (Ho-165)
+Nuclide  67366.09c -- holmium 166m at 1000K (Ho-166m)
+Nuclide  68162.09c -- erbium 162 at 1000K (Er-162)
+Nuclide  68164.09c -- erbium 164 at 1000K (Er-164)
+Nuclide  68166.09c -- erbium 166 at 1000K (Er-166)
+Nuclide  68167.09c -- erbium 167 at 1000K (Er-167)
+Nuclide  68168.09c -- erbium 168 at 1000K (Er-168)
+Nuclide  68170.09c -- erbium 170 at 1000K (Er-170)
+Nuclide  90227.09c -- thorium 227 at 1000K (Th-227)
+Nuclide  90228.09c -- thorium 228 at 1000K (Th-228)
+Nuclide  90229.09c -- thorium 229 at 1000K (Th-229)
+Nuclide  90230.09c -- thorium 230 at 1000K (Th-230)
+Nuclide  90232.09c -- thorium 232 at 1000K (Th-232)
+Nuclide  90233.09c -- thorium 233 at 1000K (Th-233)
+Nuclide  90234.09c -- thorium 234 at 1000K (Th-234)
+Nuclide  91231.09c -- protactinium 231 at 1000K (Pa-231)
+Nuclide  91232.09c -- protactinium 232 at 1000K (Pa-232)
+Nuclide  91233.09c -- protactinium 233 at 1000K (Pa-233)
+Nuclide  92232.09c -- uranium 232 at 1000K (U-232)
+Nuclide  92233.09c -- uranium 233 at 1000K (U-233)
+Nuclide  92234.09c -- uranium 234 at 1000K (U-234)
+Nuclide  92235.09c -- uranium 235 at 1000K (U-235)
+Nuclide  92236.09c -- uranium 236 at 1000K (U-236)
+Nuclide  92237.09c -- uranium 237 at 1000K (U-237)
+Nuclide  92238.09c -- uranium 238 at 1000K (U-238)
+Nuclide  92239.09c -- uranium 239 at 1000K (U-239)
+Nuclide  92240.09c -- uranium 240 at 1000K (U-240)
+Nuclide  92241.09c -- uranium 241 at 1000K (U-241)
+Nuclide  93235.09c -- neptunium 235 at 1000K (Np-235)
+Nuclide  93236.09c -- neptunium 236 at 1000K (Np-236)
+Nuclide  93237.09c -- neptunium 237 at 1000K (Np-237)
+Nuclide  93238.09c -- neptunium 238 at 1000K (Np-238)
+Nuclide  93239.09c -- neptunium 239 at 1000K (Np-239)
+Nuclide  94236.09c -- plutonium 236 at 1000K (Pu-236)
+Nuclide  94237.09c -- plutonium 237 at 1000K (Pu-237)
+Nuclide  94238.09c -- plutonium 238 at 1000K (Pu-238)
+Nuclide  94239.09c -- plutonium 239 at 1000K (Pu-239)
+Nuclide  94240.09c -- plutonium 240 at 1000K (Pu-240)
+Nuclide  94241.09c -- plutonium 241 at 1000K (Pu-241)
+Nuclide  94242.09c -- plutonium 242 at 1000K (Pu-242)
+Nuclide  94243.09c -- plutonium 243 at 1000K (Pu-243)
+Nuclide  94244.09c -- plutonium 244 at 1000K (Pu-244)
+Nuclide  95241.09c -- americium 241 at 1000K (Am-241)
+Nuclide  95242.09c -- americium 242 at 1000K (Am-242)
+Nuclide  95342.09c -- americium 242m at 1000K (Am-242m)
+Nuclide  95243.09c -- americium 243 at 1000K (Am-243)
+Nuclide  95244.09c -- americium 244 at 1000K (Am-244)
+Nuclide  95344.09c -- americium 244m at 1000K (Am-244m)
+Nuclide  96240.09c -- curium 240 at 1000K (Cm-240)
+Nuclide  96241.09c -- curium 241 at 1000K (Cm-241)
+Nuclide  96242.09c -- curium 242 at 1000K (Cm-242)
+Nuclide  96243.09c -- curium 243 at 1000K (Cm-243)
+Nuclide  96244.09c -- curium 244 at 1000K (Cm-244)
+Nuclide  96245.09c -- curium 245 at 1000K (Cm-245)
+Nuclide  96246.09c -- curium 246 at 1000K (Cm-246)
+Nuclide  96247.09c -- curium 247 at 1000K (Cm-247)
+Nuclide  96248.09c -- curium 248 at 1000K (Cm-248)
+Nuclide  96249.09c -- curium 249 at 1000K (Cm-249)
+Nuclide  96250.09c -- curium 250 at 1000K (Cm-250)
+Nuclide   gre7.04t -- natural carbon at 400K (C-nat)
+Nuclide   gre7.08t -- natural carbon at 500K (C-nat)
+Nuclide   gre7.12t -- natural carbon at 600K (C-nat)
+Nuclide   gre7.16t -- natural carbon at 700K (C-nat)
+Nuclide   gre7.18t -- natural carbon at 800K (C-nat)
+Nuclide   gre7.22t -- natural carbon at 1200K (C-nat)
 
-***** Tue Feb  8 11:15:49 2022:
+Adjusting majorant temperatures:
 
- - MPI task         = 0
- - OpenMP thread    = 0
- - RNG parent seed  = 1644336893369
- - Host name        = node32
 
-Fatal error in function Mem:
+ ***** Warning: Nuclide 5010.09c is adjusted to a single temperature using TMS.
+ Consider using Doppler preprocessor instead.
 
-Memory allocation failed (realloc, size = 23814453080)
+Nuclide   5010.09c TMS majorant to 955K...
 
-Simulation aborted.
+ ***** Warning: Nuclide 5011.09c is adjusted to a single temperature using TMS.
+ Consider using Doppler preprocessor instead.
+
+Nuclide   5011.09c TMS majorant to 955K...
+
+ ***** Warning: Nuclide 6000.09c is adjusted to a single temperature using TMS.
+ Consider using Doppler preprocessor instead.
+
+Nuclide   6000.09c TMS majorant to 955K...
+Nuclide   6000.09s TMS majorant to 955K...
+
+SUMMARY -- 1377 nuclides included in calculation:
+
+ - 307 transport nuclides
+ - 1070 decay nuclides (not listed above)
+ - Neutron energy cut-offs at 1.00E-11 and 20.0 MeV
+ - 8664 transport reactions
+ - 3569 special reactions
+ - 1688 decay reactions + 102 branches
+ - 2737 transmutation reactions + 2034 branches
+ - 18.09 Gb of memory allocated for data
+
+Normalizing compositions and processing mixtures...
+OK.
+
+Setting nuclide compositions for burnable materials...
+OK.
+
+Allocating memory for burnup calculation...
+OK.
+
+Allocating memory for macroscopic cross section data...
+OK.
+
+Reading material compositions from restart file "nerthus.wrk":
+
+- 12.37 MWd/kgU burnup
+- 911.00 days irradiation time
+
+Allocating memory for particle structures...
+OK.
+
+Calculating maximum densities...
+OK.
+
+Performing density cut-off...
+OK.
+
+Sorting material-wise reaction lists:
+
+   0% complete
+ 100% complete
+
+Calculating macroscopic cross sections:
+
+   0% complete
+  75% complete
+ 100% complete
+
+Calculating DT neutron majorant cross section:
+
+   0% complete
+ 100% complete
+
+Clearing results and statistics...
+OK.
+
+Sampling initial source...
+OK.
+
+Inactive cycle   1 /  60: k-eff = 1.00000
+Inactive cycle   2 /  60: k-eff = 0.63130
+Inactive cycle   3 /  60: k-eff = 0.86539
+Inactive cycle   4 /  60: k-eff = 0.94156
+Inactive cycle   5 /  60: k-eff = 0.96894
+Inactive cycle   6 /  60: k-eff = 0.98066
+Inactive cycle   7 /  60: k-eff = 0.98800
+Inactive cycle   8 /  60: k-eff = 0.99493
+Inactive cycle   9 /  60: k-eff = 1.00247
+Inactive cycle  10 /  60: k-eff = 0.99413
+Inactive cycle  11 /  60: k-eff = 1.00386
+Inactive cycle  12 /  60: k-eff = 0.99428
+Inactive cycle  13 /  60: k-eff = 0.99615
+Inactive cycle  14 /  60: k-eff = 0.99107
+Inactive cycle  15 /  60: k-eff = 0.99434
+Inactive cycle  16 /  60: k-eff = 0.99571
+Inactive cycle  17 /  60: k-eff = 0.99374
+Inactive cycle  18 /  60: k-eff = 1.00429
+Inactive cycle  19 /  60: k-eff = 0.99501
+Inactive cycle  20 /  60: k-eff = 0.99507
+Inactive cycle  21 /  60: k-eff = 0.99145
+Inactive cycle  22 /  60: k-eff = 1.00880
+Inactive cycle  23 /  60: k-eff = 1.00323
+Inactive cycle  24 /  60: k-eff = 0.99988
+Inactive cycle  25 /  60: k-eff = 1.00416
+Inactive cycle  26 /  60: k-eff = 1.01372
+Inactive cycle  27 /  60: k-eff = 0.98140
+Inactive cycle  28 /  60: k-eff = 0.99257
+Inactive cycle  29 /  60: k-eff = 0.99025
+Inactive cycle  30 /  60: k-eff = 1.00029
+Inactive cycle  31 /  60: k-eff = 0.99661
+Inactive cycle  32 /  60: k-eff = 0.99559
+Inactive cycle  33 /  60: k-eff = 0.99129
+Inactive cycle  34 /  60: k-eff = 1.01001
+Inactive cycle  35 /  60: k-eff = 0.99906
+Inactive cycle  36 /  60: k-eff = 1.00551
+Inactive cycle  37 /  60: k-eff = 1.00457
+Inactive cycle  38 /  60: k-eff = 0.98825
+Inactive cycle  39 /  60: k-eff = 0.99155
+Inactive cycle  40 /  60: k-eff = 1.01158
+Inactive cycle  41 /  60: k-eff = 0.99245
+Inactive cycle  42 /  60: k-eff = 1.00015
+Inactive cycle  43 /  60: k-eff = 0.99641
+Inactive cycle  44 /  60: k-eff = 0.99876
+Inactive cycle  45 /  60: k-eff = 1.01082
+Inactive cycle  46 /  60: k-eff = 0.98810
+Inactive cycle  47 /  60: k-eff = 0.99980
+Inactive cycle  48 /  60: k-eff = 0.99544
+Inactive cycle  49 /  60: k-eff = 0.99713
+Inactive cycle  50 /  60: k-eff = 0.99420
+Inactive cycle  51 /  60: k-eff = 0.99589
+Inactive cycle  52 /  60: k-eff = 0.99944
+Inactive cycle  53 /  60: k-eff = 0.99816
+Inactive cycle  54 /  60: k-eff = 1.00973
+Inactive cycle  55 /  60: k-eff = 0.99792
+Inactive cycle  56 /  60: k-eff = 0.99622
+Inactive cycle  57 /  60: k-eff = 1.00758
+Inactive cycle  58 /  60: k-eff = 0.98719
+Inactive cycle  59 /  60: k-eff = 0.99688
+Inactive cycle  60 /  60: k-eff = 0.99624
+
+----- Begin active cycles -----
+
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle    1 / 200  Source neutrons : 50351
+
+Running time :                  0:25:35
+Estimated running time :        1:10:00
+Estimated running time left :   0:44:24
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 1.00324 +/- 0.00000  [1.00324  1.00324]
+k-eff (implicit)  = 1.00258 +/- 0.00000  [1.00258  1.00258]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle    2 / 200  Source neutrons : 50016
+
+Running time :                  0:25:48
+Estimated running time :        1:09:49
+Estimated running time left :   0:44:01
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 1.00340 +/- 0.00016  [1.00308  1.00371]
+k-eff (implicit)  = 1.00028 +/- 0.00230  [0.99578  1.00479]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle    3 / 200  Source neutrons : 49826
+
+Running time :                  0:26:01
+Estimated running time :        1:09:43
+Estimated running time left :   0:43:42
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 1.00229 +/- 0.00111  [1.00010  1.00447]
+k-eff (implicit)  = 1.00113 +/- 0.00157  [0.99804  1.00421]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle    4 / 200  Source neutrons : 50059
+
+Running time :                  0:26:15
+Estimated running time :        1:09:43
+Estimated running time left :   0:43:28
+
+Estimated relative CPU usage :   794.0%
+
+k-eff (analog)    = 1.00203 +/- 0.00083  [1.00040  1.00365]
+k-eff (implicit)  = 0.99988 +/- 0.00167  [0.99660  1.00316]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle    5 / 200  Source neutrons : 50032
+
+Running time :                  0:26:28
+Estimated running time :        1:09:40
+Estimated running time left :   0:43:12
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 1.00200 +/- 0.00064  [1.00074  1.00326]
+k-eff (implicit)  = 0.99971 +/- 0.00131  [0.99715  1.00227]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle    6 / 200  Source neutrons : 49691
+
+Running time :                  0:26:41
+Estimated running time :        1:09:37
+Estimated running time left :   0:42:56
+
+Estimated relative CPU usage :   794.0%
+
+k-eff (analog)    = 1.00095 +/- 0.00117  [0.99865  1.00325]
+k-eff (implicit)  = 0.99939 +/- 0.00111  [0.99721  1.00157]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle    7 / 200  Source neutrons : 49999
+
+Running time :                  0:26:54
+Estimated running time :        1:09:37
+Estimated running time left :   0:42:42
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 1.00020 +/- 0.00125  [0.99775  1.00264]
+k-eff (implicit)  = 0.99871 +/- 0.00116  [0.99643  1.00099]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle    8 / 200  Source neutrons : 49958
+
+Running time :                  0:27:07
+Estimated running time :        1:09:34
+Estimated running time left :   0:42:26
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 0.99953 +/- 0.00127  [0.99704  1.00202]
+k-eff (implicit)  = 0.99865 +/- 0.00101  [0.99667  1.00062]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle    9 / 200  Source neutrons : 49800
+
+Running time :                  0:27:21
+Estimated running time :        1:09:32
+Estimated running time left :   0:42:11
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 0.99856 +/- 0.00148  [0.99567  1.00146]
+k-eff (implicit)  = 0.99869 +/- 0.00089  [0.99695  1.00044]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   10 / 200  Source neutrons : 50463
+
+Running time :                  0:27:34
+Estimated running time :        1:09:35
+Estimated running time left :   0:42:01
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 0.99871 +/- 0.00133  [0.99610  1.00132]
+k-eff (implicit)  = 0.99872 +/- 0.00080  [0.99716  1.00028]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   11 / 200  Source neutrons : 49856
+
+Running time :                  0:27:47
+Estimated running time :        1:09:34
+Estimated running time left :   0:41:46
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 0.99857 +/- 0.00121  [0.99620  1.00094]
+k-eff (implicit)  = 0.99869 +/- 0.00072  [0.99727  1.00010]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   12 / 200  Source neutrons : 50085
+
+Running time :                  0:28:00
+Estimated running time :        1:09:32
+Estimated running time left :   0:41:32
+
+Estimated relative CPU usage :   793.8%
+
+k-eff (analog)    = 0.99859 +/- 0.00111  [0.99643  1.00076]
+k-eff (implicit)  = 0.99815 +/- 0.00085  [0.99648  0.99982]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   13 / 200  Source neutrons : 49453
+
+Running time :                  0:28:13
+Estimated running time :        1:09:29
+Estimated running time left :   0:41:16
+
+Estimated relative CPU usage :   793.7%
+
+k-eff (analog)    = 0.99777 +/- 0.00131  [0.99521  1.00033]
+k-eff (implicit)  = 0.99772 +/- 0.00089  [0.99597  0.99947]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   14 / 200  Source neutrons : 50100
+
+Running time :                  0:28:27
+Estimated running time :        1:09:30
+Estimated running time left :   0:41:03
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 0.99721 +/- 0.00133  [0.99459  0.99982]
+k-eff (implicit)  = 0.99789 +/- 0.00084  [0.99623  0.99954]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   15 / 200  Source neutrons : 50254
+
+Running time :                  0:28:40
+Estimated running time :        1:09:31
+Estimated running time left :   0:40:51
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99706 +/- 0.00125  [0.99460  0.99951]
+k-eff (implicit)  = 0.99783 +/- 0.00079  [0.99628  0.99937]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   16 / 200  Source neutrons : 50468
+
+Running time :                  0:28:53
+Estimated running time :        1:09:33
+Estimated running time left :   0:40:39
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99751 +/- 0.00125  [0.99505  0.99996]
+k-eff (implicit)  = 0.99797 +/- 0.00075  [0.99650  0.99943]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   17 / 200  Source neutrons : 50106
+
+Running time :                  0:29:07
+Estimated running time :        1:09:33
+Estimated running time left :   0:40:26
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 0.99803 +/- 0.00129  [0.99550  1.00055]
+k-eff (implicit)  = 0.99826 +/- 0.00076  [0.99676  0.99975]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   18 / 200  Source neutrons : 49914
+
+Running time :                  0:29:20
+Estimated running time :        1:09:33
+Estimated running time left :   0:40:12
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 0.99839 +/- 0.00127  [0.99591  1.00088]
+k-eff (implicit)  = 0.99847 +/- 0.00075  [0.99700  0.99994]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   19 / 200  Source neutrons : 49733
+
+Running time :                  0:29:33
+Estimated running time :        1:09:32
+Estimated running time left :   0:39:58
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 0.99844 +/- 0.00120  [0.99609  1.00079]
+k-eff (implicit)  = 0.99858 +/- 0.00072  [0.99717  0.99998]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   20 / 200  Source neutrons : 50446
+
+Running time :                  0:29:47
+Estimated running time :        1:09:34
+Estimated running time left :   0:39:47
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 0.99893 +/- 0.00124  [0.99650  1.00136]
+k-eff (implicit)  = 0.99889 +/- 0.00075  [0.99742  1.00036]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   21 / 200  Source neutrons : 49963
+
+Running time :                  0:30:00
+Estimated running time :        1:09:34
+Estimated running time left :   0:39:33
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99933 +/- 0.00125  [0.99689  1.00178]
+k-eff (implicit)  = 0.99896 +/- 0.00072  [0.99756  1.00036]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   22 / 200  Source neutrons : 49630
+
+Running time :                  0:30:13
+Estimated running time :        1:09:33
+Estimated running time left :   0:39:20
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 0.99936 +/- 0.00119  [0.99703  1.00169]
+k-eff (implicit)  = 0.99900 +/- 0.00068  [0.99766  1.00034]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   23 / 200  Source neutrons : 50670
+
+Running time :                  0:30:26
+Estimated running time :        1:09:35
+Estimated running time left :   0:39:08
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 0.99997 +/- 0.00129  [0.99745  1.00250]
+k-eff (implicit)  = 0.99906 +/- 0.00066  [0.99777  1.00034]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   24 / 200  Source neutrons : 49539
+
+Running time :                  0:30:40
+Estimated running time :        1:09:35
+Estimated running time left :   0:38:54
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 1.00014 +/- 0.00125  [0.99770  1.00258]
+k-eff (implicit)  = 0.99911 +/- 0.00063  [0.99787  1.00034]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   25 / 200  Source neutrons : 50001
+
+Running time :                  0:30:53
+Estimated running time :        1:09:35
+Estimated running time left :   0:38:41
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 1.00030 +/- 0.00121  [0.99794  1.00266]
+k-eff (implicit)  = 0.99921 +/- 0.00061  [0.99801  1.00041]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   26 / 200  Source neutrons : 49692
+
+Running time :                  0:31:06
+Estimated running time :        1:09:34
+Estimated running time left :   0:38:27
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 1.00021 +/- 0.00116  [0.99793  1.00248]
+k-eff (implicit)  = 0.99914 +/- 0.00059  [0.99798  1.00030]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   27 / 200  Source neutrons : 49915
+
+Running time :                  0:31:19
+Estimated running time :        1:09:33
+Estimated running time left :   0:38:13
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 1.00006 +/- 0.00113  [0.99785  1.00227]
+k-eff (implicit)  = 0.99916 +/- 0.00057  [0.99804  1.00028]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   28 / 200  Source neutrons : 50574
+
+Running time :                  0:31:33
+Estimated running time :        1:09:34
+Estimated running time left :   0:38:00
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 1.00033 +/- 0.00112  [0.99813  1.00252]
+k-eff (implicit)  = 0.99894 +/- 0.00059  [0.99777  1.00010]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   29 / 200  Source neutrons : 48884
+
+Running time :                  0:31:46
+Estimated running time :        1:09:31
+Estimated running time left :   0:37:45
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99980 +/- 0.00120  [0.99745  1.00216]
+k-eff (implicit)  = 0.99897 +/- 0.00057  [0.99785  1.00010]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   30 / 200  Source neutrons : 51308
+
+Running time :                  0:31:59
+Estimated running time :        1:09:33
+Estimated running time left :   0:37:34
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 1.00017 +/- 0.00122  [0.99779  1.00256]
+k-eff (implicit)  = 0.99892 +/- 0.00056  [0.99783  1.00001]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   31 / 200  Source neutrons : 49398
+
+Running time :                  0:32:12
+Estimated running time :        1:09:32
+Estimated running time left :   0:37:19
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 1.00013 +/- 0.00118  [0.99782  1.00244]
+k-eff (implicit)  = 0.99886 +/- 0.00054  [0.99779  0.99992]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   32 / 200  Source neutrons : 49738
+
+Running time :                  0:32:25
+Estimated running time :        1:09:32
+Estimated running time left :   0:37:06
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99992 +/- 0.00116  [0.99765  1.00219]
+k-eff (implicit)  = 0.99873 +/- 0.00054  [0.99767  0.99979]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   33 / 200  Source neutrons : 50332
+
+Running time :                  0:32:39
+Estimated running time :        1:09:32
+Estimated running time left :   0:36:52
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99992 +/- 0.00112  [0.99772  1.00213]
+k-eff (implicit)  = 0.99855 +/- 0.00055  [0.99746  0.99963]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   34 / 200  Source neutrons : 49789
+
+Running time :                  0:32:52
+Estimated running time :        1:09:32
+Estimated running time left :   0:36:39
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99980 +/- 0.00110  [0.99765  1.00195]
+k-eff (implicit)  = 0.99853 +/- 0.00054  [0.99748  0.99959]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   35 / 200  Source neutrons : 50561
+
+Running time :                  0:33:05
+Estimated running time :        1:09:32
+Estimated running time left :   0:36:27
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 1.00001 +/- 0.00109  [0.99788  1.00214]
+k-eff (implicit)  = 0.99861 +/- 0.00053  [0.99757  0.99964]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   36 / 200  Source neutrons : 50127
+
+Running time :                  0:33:19
+Estimated running time :        1:09:33
+Estimated running time left :   0:36:14
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 1.00028 +/- 0.00109  [0.99815  1.00241]
+k-eff (implicit)  = 0.99861 +/- 0.00051  [0.99760  0.99961]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   37 / 200  Source neutrons : 49485
+
+Running time :                  0:33:32
+Estimated running time :        1:09:32
+Estimated running time left :   0:36:00
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 1.00025 +/- 0.00106  [0.99817  1.00232]
+k-eff (implicit)  = 0.99865 +/- 0.00050  [0.99767  0.99963]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   38 / 200  Source neutrons : 49611
+
+Running time :                  0:33:45
+Estimated running time :        1:09:31
+Estimated running time left :   0:35:46
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 1.00002 +/- 0.00106  [0.99795  1.00209]
+k-eff (implicit)  = 0.99865 +/- 0.00049  [0.99769  0.99960]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   39 / 200  Source neutrons : 50647
+
+Running time :                  0:33:58
+Estimated running time :        1:09:32
+Estimated running time left :   0:35:33
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 1.00013 +/- 0.00103  [0.99810  1.00215]
+k-eff (implicit)  = 0.99871 +/- 0.00048  [0.99778  0.99965]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   40 / 200  Source neutrons : 49865
+
+Running time :                  0:34:11
+Estimated running time :        1:09:32
+Estimated running time left :   0:35:20
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 1.00016 +/- 0.00101  [0.99818  1.00214]
+k-eff (implicit)  = 0.99875 +/- 0.00047  [0.99784  0.99967]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   41 / 200  Source neutrons : 49948
+
+Running time :                  0:34:25
+Estimated running time :        1:09:32
+Estimated running time left :   0:35:07
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 1.00017 +/- 0.00098  [0.99824  1.00210]
+k-eff (implicit)  = 0.99872 +/- 0.00046  [0.99782  0.99962]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   42 / 200  Source neutrons : 49707
+
+Running time :                  0:34:38
+Estimated running time :        1:09:31
+Estimated running time left :   0:34:53
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 1.00004 +/- 0.00097  [0.99814  1.00194]
+k-eff (implicit)  = 0.99866 +/- 0.00045  [0.99778  0.99954]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   43 / 200  Source neutrons : 50165
+
+Running time :                  0:34:51
+Estimated running time :        1:09:32
+Estimated running time left :   0:34:40
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99999 +/- 0.00095  [0.99813  1.00185]
+k-eff (implicit)  = 0.99871 +/- 0.00044  [0.99784  0.99958]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   44 / 200  Source neutrons : 49928
+
+Running time :                  0:35:04
+Estimated running time :        1:09:32
+Estimated running time left :   0:34:27
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99991 +/- 0.00093  [0.99809  1.00173]
+k-eff (implicit)  = 0.99879 +/- 0.00044  [0.99793  0.99966]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   45 / 200  Source neutrons : 50121
+
+Running time :                  0:35:18
+Estimated running time :        1:09:32
+Estimated running time left :   0:34:14
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99989 +/- 0.00091  [0.99811  1.00167]
+k-eff (implicit)  = 0.99886 +/- 0.00044  [0.99801  0.99972]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   46 / 200  Source neutrons : 50210
+
+Running time :                  0:35:31
+Estimated running time :        1:09:33
+Estimated running time left :   0:34:01
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99996 +/- 0.00089  [0.99821  1.00170]
+k-eff (implicit)  = 0.99897 +/- 0.00044  [0.99811  0.99983]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   47 / 200  Source neutrons : 49742
+
+Running time :                  0:35:44
+Estimated running time :        1:09:33
+Estimated running time left :   0:33:48
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99991 +/- 0.00087  [0.99820  1.00162]
+k-eff (implicit)  = 0.99902 +/- 0.00043  [0.99817  0.99988]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   48 / 200  Source neutrons : 49762
+
+Running time :                  0:35:58
+Estimated running time :        1:09:32
+Estimated running time left :   0:33:34
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99977 +/- 0.00087  [0.99807  1.00147]
+k-eff (implicit)  = 0.99905 +/- 0.00043  [0.99822  0.99989]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   49 / 200  Source neutrons : 50189
+
+Running time :                  0:36:11
+Estimated running time :        1:09:33
+Estimated running time left :   0:33:21
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99971 +/- 0.00085  [0.99805  1.00138]
+k-eff (implicit)  = 0.99908 +/- 0.00042  [0.99826  0.99990]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   50 / 200  Source neutrons : 50512
+
+Running time :                  0:36:24
+Estimated running time :        1:09:33
+Estimated running time left :   0:33:08
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99986 +/- 0.00085  [0.99820  1.00152]
+k-eff (implicit)  = 0.99904 +/- 0.00041  [0.99823  0.99984]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   51 / 200  Source neutrons : 49382
+
+Running time :                  0:36:37
+Estimated running time :        1:09:33
+Estimated running time left :   0:32:55
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99976 +/- 0.00084  [0.99812  1.00140]
+k-eff (implicit)  = 0.99902 +/- 0.00040  [0.99822  0.99981]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   52 / 200  Source neutrons : 50267
+
+Running time :                  0:36:51
+Estimated running time :        1:09:34
+Estimated running time left :   0:32:42
+
+Estimated relative CPU usage :   783.2%
+
+k-eff (analog)    = 0.99977 +/- 0.00082  [0.99816  1.00137]
+k-eff (implicit)  = 0.99905 +/- 0.00040  [0.99827  0.99983]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   53 / 200  Source neutrons : 50064
+
+Running time :                  0:37:04
+Estimated running time :        1:09:34
+Estimated running time left :   0:32:29
+
+Estimated relative CPU usage :   793.9%
+
+k-eff (analog)    = 0.99979 +/- 0.00080  [0.99822  1.00137]
+k-eff (implicit)  = 0.99907 +/- 0.00039  [0.99831  0.99984]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   54 / 200  Source neutrons : 49765
+
+Running time :                  0:37:18
+Estimated running time :        1:09:34
+Estimated running time left :   0:32:16
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 0.99973 +/- 0.00079  [0.99818  1.00129]
+k-eff (implicit)  = 0.99912 +/- 0.00039  [0.99836  0.99988]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   55 / 200  Source neutrons : 50251
+
+Running time :                  0:37:31
+Estimated running time :        1:09:35
+Estimated running time left :   0:32:03
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 0.99977 +/- 0.00078  [0.99824  1.00129]
+k-eff (implicit)  = 0.99910 +/- 0.00038  [0.99836  0.99985]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   56 / 200  Source neutrons : 49948
+
+Running time :                  0:37:44
+Estimated running time :        1:09:35
+Estimated running time left :   0:31:50
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 0.99978 +/- 0.00076  [0.99828  1.00128]
+k-eff (implicit)  = 0.99913 +/- 0.00037  [0.99840  0.99986]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   57 / 200  Source neutrons : 49782
+
+Running time :                  0:37:58
+Estimated running time :        1:09:36
+Estimated running time left :   0:31:38
+
+Estimated relative CPU usage :   784.8%
+
+k-eff (analog)    = 0.99972 +/- 0.00075  [0.99824  1.00119]
+k-eff (implicit)  = 0.99916 +/- 0.00037  [0.99844  0.99988]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   58 / 200  Source neutrons : 50007
+
+Running time :                  0:38:11
+Estimated running time :        1:09:36
+Estimated running time left :   0:31:25
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 0.99966 +/- 0.00074  [0.99820  1.00111]
+k-eff (implicit)  = 0.99914 +/- 0.00036  [0.99843  0.99986]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   59 / 200  Source neutrons : 50102
+
+Running time :                  0:38:25
+Estimated running time :        1:09:37
+Estimated running time left :   0:31:11
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 0.99964 +/- 0.00073  [0.99821  1.00107]
+k-eff (implicit)  = 0.99902 +/- 0.00038  [0.99827  0.99976]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   60 / 200  Source neutrons : 49915
+
+Running time :                  0:38:38
+Estimated running time :        1:09:37
+Estimated running time left :   0:30:58
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99959 +/- 0.00072  [0.99818  1.00100]
+k-eff (implicit)  = 0.99904 +/- 0.00037  [0.99831  0.99978]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   61 / 200  Source neutrons : 50336
+
+Running time :                  0:38:51
+Estimated running time :        1:09:37
+Estimated running time left :   0:30:45
+
+Estimated relative CPU usage :   793.9%
+
+k-eff (analog)    = 0.99965 +/- 0.00071  [0.99826  1.00104]
+k-eff (implicit)  = 0.99901 +/- 0.00037  [0.99828  0.99973]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   62 / 200  Source neutrons : 49753
+
+Running time :                  0:39:05
+Estimated running time :        1:09:38
+Estimated running time left :   0:30:32
+
+Estimated relative CPU usage :   784.8%
+
+k-eff (analog)    = 0.99963 +/- 0.00070  [0.99826  1.00100]
+k-eff (implicit)  = 0.99894 +/- 0.00037  [0.99822  0.99967]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   63 / 200  Source neutrons : 50236
+
+Running time :                  0:39:18
+Estimated running time :        1:09:38
+Estimated running time left :   0:30:19
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 0.99968 +/- 0.00069  [0.99833  1.00104]
+k-eff (implicit)  = 0.99887 +/- 0.00037  [0.99814  0.99960]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   64 / 200  Source neutrons : 50103
+
+Running time :                  0:39:31
+Estimated running time :        1:09:38
+Estimated running time left :   0:30:06
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 0.99977 +/- 0.00068  [0.99843  1.00111]
+k-eff (implicit)  = 0.99883 +/- 0.00037  [0.99811  0.99955]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   65 / 200  Source neutrons : 49225
+
+Running time :                  0:39:45
+Estimated running time :        1:09:37
+Estimated running time left :   0:29:52
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 0.99961 +/- 0.00069  [0.99826  1.00097]
+k-eff (implicit)  = 0.99889 +/- 0.00037  [0.99817  0.99961]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   66 / 200  Source neutrons : 50462
+
+Running time :                  0:39:58
+Estimated running time :        1:09:38
+Estimated running time left :   0:29:39
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 0.99960 +/- 0.00068  [0.99826  1.00093]
+k-eff (implicit)  = 0.99890 +/- 0.00036  [0.99819  0.99961]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   67 / 200  Source neutrons : 49819
+
+Running time :                  0:40:11
+Estimated running time :        1:09:38
+Estimated running time left :   0:29:26
+
+Estimated relative CPU usage :   793.0%
+
+k-eff (analog)    = 0.99953 +/- 0.00067  [0.99821  1.00085]
+k-eff (implicit)  = 0.99895 +/- 0.00036  [0.99825  0.99965]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   68 / 200  Source neutrons : 50251
+
+Running time :                  0:40:25
+Estimated running time :        1:09:38
+Estimated running time left :   0:29:13
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 0.99954 +/- 0.00066  [0.99824  1.00084]
+k-eff (implicit)  = 0.99894 +/- 0.00035  [0.99825  0.99964]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   69 / 200  Source neutrons : 49564
+
+Running time :                  0:40:38
+Estimated running time :        1:09:38
+Estimated running time left :   0:28:59
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 0.99942 +/- 0.00067  [0.99812  1.00073]
+k-eff (implicit)  = 0.99890 +/- 0.00035  [0.99821  0.99958]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   70 / 200  Source neutrons : 50545
+
+Running time :                  0:40:51
+Estimated running time :        1:09:38
+Estimated running time left :   0:28:47
+
+Estimated relative CPU usage :   794.1%
+
+k-eff (analog)    = 0.99946 +/- 0.00066  [0.99817  1.00075]
+k-eff (implicit)  = 0.99891 +/- 0.00035  [0.99823  0.99959]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   71 / 200  Source neutrons : 50029
+
+Running time :                  0:41:05
+Estimated running time :        1:09:38
+Estimated running time left :   0:28:33
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99951 +/- 0.00065  [0.99823  1.00078]
+k-eff (implicit)  = 0.99890 +/- 0.00034  [0.99823  0.99957]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   72 / 200  Source neutrons : 50346
+
+Running time :                  0:41:18
+Estimated running time :        1:09:39
+Estimated running time left :   0:28:20
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99965 +/- 0.00066  [0.99836  1.00093]
+k-eff (implicit)  = 0.99890 +/- 0.00034  [0.99824  0.99957]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   73 / 200  Source neutrons : 49794
+
+Running time :                  0:41:31
+Estimated running time :        1:09:39
+Estimated running time left :   0:28:07
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99973 +/- 0.00065  [0.99845  1.00101]
+k-eff (implicit)  = 0.99892 +/- 0.00033  [0.99826  0.99957]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   74 / 200  Source neutrons : 49685
+
+Running time :                  0:41:45
+Estimated running time :        1:09:39
+Estimated running time left :   0:27:54
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99972 +/- 0.00064  [0.99846  1.00098]
+k-eff (implicit)  = 0.99897 +/- 0.00033  [0.99832  0.99963]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   75 / 200  Source neutrons : 50261
+
+Running time :                  0:41:58
+Estimated running time :        1:09:39
+Estimated running time left :   0:27:41
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99979 +/- 0.00064  [0.99854  1.00104]
+k-eff (implicit)  = 0.99893 +/- 0.00033  [0.99828  0.99958]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   76 / 200  Source neutrons : 49598
+
+Running time :                  0:42:11
+Estimated running time :        1:09:39
+Estimated running time left :   0:27:27
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99974 +/- 0.00063  [0.99850  1.00098]
+k-eff (implicit)  = 0.99884 +/- 0.00034  [0.99817  0.99950]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   77 / 200  Source neutrons : 50212
+
+Running time :                  0:42:25
+Estimated running time :        1:09:39
+Estimated running time left :   0:27:14
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99975 +/- 0.00062  [0.99853  1.00097]
+k-eff (implicit)  = 0.99889 +/- 0.00034  [0.99823  0.99955]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   78 / 200  Source neutrons : 50024
+
+Running time :                  0:42:38
+Estimated running time :        1:09:39
+Estimated running time left :   0:27:01
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99977 +/- 0.00061  [0.99856  1.00097]
+k-eff (implicit)  = 0.99897 +/- 0.00034  [0.99830  0.99964]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   79 / 200  Source neutrons : 50017
+
+Running time :                  0:42:51
+Estimated running time :        1:09:39
+Estimated running time left :   0:26:48
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99979 +/- 0.00061  [0.99860  1.00098]
+k-eff (implicit)  = 0.99899 +/- 0.00034  [0.99832  0.99965]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   80 / 200  Source neutrons : 50069
+
+Running time :                  0:43:05
+Estimated running time :        1:09:39
+Estimated running time left :   0:26:34
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99983 +/- 0.00060  [0.99865  1.00100]
+k-eff (implicit)  = 0.99899 +/- 0.00034  [0.99833  0.99964]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   81 / 200  Source neutrons : 50115
+
+Running time :                  0:43:18
+Estimated running time :        1:09:40
+Estimated running time left :   0:26:21
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99989 +/- 0.00060  [0.99872  1.00106]
+k-eff (implicit)  = 0.99900 +/- 0.00033  [0.99835  0.99965]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   82 / 200  Source neutrons : 49378
+
+Running time :                  0:43:31
+Estimated running time :        1:09:39
+Estimated running time left :   0:26:08
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99980 +/- 0.00060  [0.99863  1.00097]
+k-eff (implicit)  = 0.99905 +/- 0.00033  [0.99840  0.99970]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   83 / 200  Source neutrons : 49807
+
+Running time :                  0:43:44
+Estimated running time :        1:09:39
+Estimated running time left :   0:25:54
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99967 +/- 0.00060  [0.99849  1.00085]
+k-eff (implicit)  = 0.99907 +/- 0.00033  [0.99843  0.99972]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   84 / 200  Source neutrons : 51049
+
+Running time :                  0:43:58
+Estimated running time :        1:09:40
+Estimated running time left :   0:25:41
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99979 +/- 0.00061  [0.99859  1.00098]
+k-eff (implicit)  = 0.99905 +/- 0.00033  [0.99841  0.99969]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   85 / 200  Source neutrons : 49313
+
+Running time :                  0:44:11
+Estimated running time :        1:09:39
+Estimated running time left :   0:25:28
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99974 +/- 0.00060  [0.99856  1.00092]
+k-eff (implicit)  = 0.99899 +/- 0.00033  [0.99835  0.99963]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   86 / 200  Source neutrons : 50161
+
+Running time :                  0:44:24
+Estimated running time :        1:09:40
+Estimated running time left :   0:25:15
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99973 +/- 0.00060  [0.99856  1.00089]
+k-eff (implicit)  = 0.99895 +/- 0.00033  [0.99832  0.99959]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   87 / 200  Source neutrons : 49781
+
+Running time :                  0:44:38
+Estimated running time :        1:09:40
+Estimated running time left :   0:25:01
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99967 +/- 0.00059  [0.99851  1.00083]
+k-eff (implicit)  = 0.99895 +/- 0.00032  [0.99832  0.99958]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   88 / 200  Source neutrons : 50028
+
+Running time :                  0:44:51
+Estimated running time :        1:09:40
+Estimated running time left :   0:24:48
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99961 +/- 0.00059  [0.99846  1.00077]
+k-eff (implicit)  = 0.99893 +/- 0.00032  [0.99831  0.99956]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   89 / 200  Source neutrons : 50194
+
+Running time :                  0:45:04
+Estimated running time :        1:09:40
+Estimated running time left :   0:24:35
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99961 +/- 0.00058  [0.99847  1.00074]
+k-eff (implicit)  = 0.99884 +/- 0.00033  [0.99820  0.99948]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   90 / 200  Source neutrons : 50065
+
+Running time :                  0:45:18
+Estimated running time :        1:09:40
+Estimated running time left :   0:24:22
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99961 +/- 0.00057  [0.99849  1.00074]
+k-eff (implicit)  = 0.99890 +/- 0.00033  [0.99825  0.99955]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   91 / 200  Source neutrons : 50316
+
+Running time :                  0:45:31
+Estimated running time :        1:09:40
+Estimated running time left :   0:24:09
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99969 +/- 0.00057  [0.99856  1.00081]
+k-eff (implicit)  = 0.99887 +/- 0.00033  [0.99823  0.99951]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   92 / 200  Source neutrons : 49288
+
+Running time :                  0:45:44
+Estimated running time :        1:09:40
+Estimated running time left :   0:23:55
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99961 +/- 0.00057  [0.99848  1.00073]
+k-eff (implicit)  = 0.99887 +/- 0.00032  [0.99823  0.99950]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   93 / 200  Source neutrons : 50290
+
+Running time :                  0:45:58
+Estimated running time :        1:09:40
+Estimated running time left :   0:23:42
+
+Estimated relative CPU usage :   793.4%
+
+k-eff (analog)    = 0.99959 +/- 0.00057  [0.99848  1.00070]
+k-eff (implicit)  = 0.99886 +/- 0.00032  [0.99823  0.99948]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   94 / 200  Source neutrons : 50387
+
+Running time :                  0:46:11
+Estimated running time :        1:09:41
+Estimated running time left :   0:23:29
+
+Estimated relative CPU usage :   790.6%
+
+k-eff (analog)    = 0.99965 +/- 0.00056  [0.99855  1.00076]
+k-eff (implicit)  = 0.99885 +/- 0.00032  [0.99823  0.99947]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   95 / 200  Source neutrons : 49806
+
+Running time :                  0:46:24
+Estimated running time :        1:09:40
+Estimated running time left :   0:23:15
+
+Estimated relative CPU usage :   794.0%
+
+k-eff (analog)    = 0.99967 +/- 0.00056  [0.99858  1.00077]
+k-eff (implicit)  = 0.99881 +/- 0.00032  [0.99819  0.99943]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   96 / 200  Source neutrons : 50373
+
+Running time :                  0:46:38
+Estimated running time :        1:09:41
+Estimated running time left :   0:23:02
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99977 +/- 0.00056  [0.99867  1.00087]
+k-eff (implicit)  = 0.99883 +/- 0.00031  [0.99821  0.99945]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   97 / 200  Source neutrons : 49640
+
+Running time :                  0:46:51
+Estimated running time :        1:09:40
+Estimated running time left :   0:22:49
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99980 +/- 0.00056  [0.99870  1.00089]
+k-eff (implicit)  = 0.99884 +/- 0.00031  [0.99823  0.99945]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   98 / 200  Source neutrons : 49640
+
+Running time :                  0:47:04
+Estimated running time :        1:09:40
+Estimated running time left :   0:22:35
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99974 +/- 0.00055  [0.99866  1.00083]
+k-eff (implicit)  = 0.99876 +/- 0.00032  [0.99813  0.99938]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle   99 / 200  Source neutrons : 49782
+
+Running time :                  0:47:17
+Estimated running time :        1:09:40
+Estimated running time left :   0:22:22
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99965 +/- 0.00056  [0.99856  1.00074]
+k-eff (implicit)  = 0.99871 +/- 0.00032  [0.99809  0.99933]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  100 / 200  Source neutrons : 50522
+
+Running time :                  0:47:31
+Estimated running time :        1:09:40
+Estimated running time left :   0:22:09
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99966 +/- 0.00055  [0.99858  1.00074]
+k-eff (implicit)  = 0.99870 +/- 0.00031  [0.99809  0.99932]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  101 / 200  Source neutrons : 50178
+
+Running time :                  0:47:44
+Estimated running time :        1:09:40
+Estimated running time left :   0:21:56
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99971 +/- 0.00055  [0.99863  1.00078]
+k-eff (implicit)  = 0.99867 +/- 0.00031  [0.99805  0.99928]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  102 / 200  Source neutrons : 49887
+
+Running time :                  0:47:57
+Estimated running time :        1:09:40
+Estimated running time left :   0:21:42
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99973 +/- 0.00054  [0.99867  1.00079]
+k-eff (implicit)  = 0.99861 +/- 0.00032  [0.99799  0.99923]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  103 / 200  Source neutrons : 49468
+
+Running time :                  0:48:10
+Estimated running time :        1:09:40
+Estimated running time left :   0:21:29
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99965 +/- 0.00054  [0.99858  1.00071]
+k-eff (implicit)  = 0.99864 +/- 0.00031  [0.99802  0.99925]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  104 / 200  Source neutrons : 50600
+
+Running time :                  0:48:24
+Estimated running time :        1:09:40
+Estimated running time left :   0:21:16
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99968 +/- 0.00054  [0.99863  1.00074]
+k-eff (implicit)  = 0.99868 +/- 0.00031  [0.99807  0.99930]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  105 / 200  Source neutrons : 50402
+
+Running time :                  0:48:37
+Estimated running time :        1:09:40
+Estimated running time left :   0:21:03
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99979 +/- 0.00054  [0.99873  1.00086]
+k-eff (implicit)  = 0.99866 +/- 0.00031  [0.99805  0.99928]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  106 / 200  Source neutrons : 49121
+
+Running time :                  0:48:50
+Estimated running time :        1:09:40
+Estimated running time left :   0:20:49
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99973 +/- 0.00054  [0.99867  1.00080]
+k-eff (implicit)  = 0.99872 +/- 0.00031  [0.99810  0.99933]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  107 / 200  Source neutrons : 50892
+
+Running time :                  0:49:04
+Estimated running time :        1:09:41
+Estimated running time left :   0:20:36
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99984 +/- 0.00055  [0.99877  1.00092]
+k-eff (implicit)  = 0.99875 +/- 0.00031  [0.99814  0.99936]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  108 / 200  Source neutrons : 49612
+
+Running time :                  0:49:17
+Estimated running time :        1:09:41
+Estimated running time left :   0:20:23
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99988 +/- 0.00054  [0.99881  1.00094]
+k-eff (implicit)  = 0.99873 +/- 0.00031  [0.99812  0.99934]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  109 / 200  Source neutrons : 50243
+
+Running time :                  0:49:31
+Estimated running time :        1:09:41
+Estimated running time left :   0:20:10
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99995 +/- 0.00054  [0.99888  1.00102]
+k-eff (implicit)  = 0.99875 +/- 0.00031  [0.99814  0.99935]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  110 / 200  Source neutrons : 50169
+
+Running time :                  0:49:44
+Estimated running time :        1:09:41
+Estimated running time left :   0:19:56
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 1.00006 +/- 0.00055  [0.99898  1.00114]
+k-eff (implicit)  = 0.99875 +/- 0.00031  [0.99815  0.99935]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  111 / 200  Source neutrons : 48619
+
+Running time :                  0:49:57
+Estimated running time :        1:09:40
+Estimated running time left :   0:19:43
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99991 +/- 0.00056  [0.99881  1.00102]
+k-eff (implicit)  = 0.99871 +/- 0.00031  [0.99810  0.99931]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  112 / 200  Source neutrons : 50278
+
+Running time :                  0:50:10
+Estimated running time :        1:09:40
+Estimated running time left :   0:19:29
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99982 +/- 0.00057  [0.99870  1.00093]
+k-eff (implicit)  = 0.99873 +/- 0.00030  [0.99813  0.99932]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  113 / 200  Source neutrons : 50818
+
+Running time :                  0:50:24
+Estimated running time :        1:09:41
+Estimated running time left :   0:19:16
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99987 +/- 0.00056  [0.99876  1.00097]
+k-eff (implicit)  = 0.99872 +/- 0.00030  [0.99813  0.99931]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  114 / 200  Source neutrons : 49274
+
+Running time :                  0:50:37
+Estimated running time :        1:09:40
+Estimated running time left :   0:19:03
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99979 +/- 0.00057  [0.99868  1.00090]
+k-eff (implicit)  = 0.99874 +/- 0.00030  [0.99815  0.99932]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  115 / 200  Source neutrons : 50402
+
+Running time :                  0:50:50
+Estimated running time :        1:09:41
+Estimated running time left :   0:18:50
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99978 +/- 0.00056  [0.99868  1.00088]
+k-eff (implicit)  = 0.99871 +/- 0.00030  [0.99813  0.99930]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  116 / 200  Source neutrons : 50156
+
+Running time :                  0:51:04
+Estimated running time :        1:09:41
+Estimated running time left :   0:18:36
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99980 +/- 0.00056  [0.99871  1.00089]
+k-eff (implicit)  = 0.99869 +/- 0.00030  [0.99811  0.99927]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  117 / 200  Source neutrons : 49909
+
+Running time :                  0:51:17
+Estimated running time :        1:09:40
+Estimated running time left :   0:18:23
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99980 +/- 0.00055  [0.99872  1.00088]
+k-eff (implicit)  = 0.99867 +/- 0.00029  [0.99810  0.99925]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  118 / 200  Source neutrons : 50175
+
+Running time :                  0:51:30
+Estimated running time :        1:09:41
+Estimated running time left :   0:18:10
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99983 +/- 0.00055  [0.99876  1.00091]
+k-eff (implicit)  = 0.99863 +/- 0.00029  [0.99805  0.99921]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  119 / 200  Source neutrons : 49872
+
+Running time :                  0:51:44
+Estimated running time :        1:09:40
+Estimated running time left :   0:17:56
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99984 +/- 0.00054  [0.99878  1.00091]
+k-eff (implicit)  = 0.99864 +/- 0.00029  [0.99807  0.99922]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  120 / 200  Source neutrons : 50230
+
+Running time :                  0:51:57
+Estimated running time :        1:09:41
+Estimated running time left :   0:17:43
+
+Estimated relative CPU usage :   784.6%
+
+k-eff (analog)    = 0.99989 +/- 0.00054  [0.99883  1.00095]
+k-eff (implicit)  = 0.99864 +/- 0.00029  [0.99807  0.99921]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  121 / 200  Source neutrons : 50024
+
+Running time :                  0:52:10
+Estimated running time :        1:09:40
+Estimated running time left :   0:17:30
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99994 +/- 0.00054  [0.99889  1.00100]
+k-eff (implicit)  = 0.99860 +/- 0.00029  [0.99804  0.99917]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  122 / 200  Source neutrons : 49360
+
+Running time :                  0:52:23
+Estimated running time :        1:09:40
+Estimated running time left :   0:17:16
+
+Estimated relative CPU usage :   782.9%
+
+k-eff (analog)    = 0.99989 +/- 0.00054  [0.99883  1.00094]
+k-eff (implicit)  = 0.99860 +/- 0.00029  [0.99803  0.99916]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  123 / 200  Source neutrons : 50681
+
+Running time :                  0:52:36
+Estimated running time :        1:09:40
+Estimated running time left :   0:17:03
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99994 +/- 0.00054  [0.99889  1.00099]
+k-eff (implicit)  = 0.99858 +/- 0.00029  [0.99803  0.99914]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  124 / 200  Source neutrons : 49874
+
+Running time :                  0:52:49
+Estimated running time :        1:09:39
+Estimated running time left :   0:16:50
+
+Estimated relative CPU usage :   795.1%
+
+k-eff (analog)    = 0.99998 +/- 0.00053  [0.99893  1.00102]
+k-eff (implicit)  = 0.99859 +/- 0.00028  [0.99803  0.99914]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  125 / 200  Source neutrons : 49415
+
+Running time :                  0:53:02
+Estimated running time :        1:09:39
+Estimated running time left :   0:16:36
+
+Estimated relative CPU usage :   795.2%
+
+k-eff (analog)    = 0.99992 +/- 0.00053  [0.99887  1.00096]
+k-eff (implicit)  = 0.99861 +/- 0.00028  [0.99806  0.99917]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  126 / 200  Source neutrons : 49547
+
+Running time :                  0:53:15
+Estimated running time :        1:09:38
+Estimated running time left :   0:16:23
+
+Estimated relative CPU usage :   795.2%
+
+k-eff (analog)    = 0.99979 +/- 0.00054  [0.99872  1.00085]
+k-eff (implicit)  = 0.99859 +/- 0.00028  [0.99804  0.99914]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  127 / 200  Source neutrons : 51012
+
+Running time :                  0:53:29
+Estimated running time :        1:09:38
+Estimated running time left :   0:16:09
+
+Estimated relative CPU usage :   795.3%
+
+k-eff (analog)    = 0.99981 +/- 0.00054  [0.99876  1.00087]
+k-eff (implicit)  = 0.99859 +/- 0.00028  [0.99804  0.99913]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  128 / 200  Source neutrons : 49936
+
+Running time :                  0:53:42
+Estimated running time :        1:09:38
+Estimated running time left :   0:15:56
+
+Estimated relative CPU usage :   795.3%
+
+k-eff (analog)    = 0.99983 +/- 0.00054  [0.99878  1.00088]
+k-eff (implicit)  = 0.99856 +/- 0.00028  [0.99802  0.99911]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  129 / 200  Source neutrons : 49562
+
+Running time :                  0:53:55
+Estimated running time :        1:09:38
+Estimated running time left :   0:15:43
+
+Estimated relative CPU usage :   795.3%
+
+k-eff (analog)    = 0.99978 +/- 0.00053  [0.99874  1.00083]
+k-eff (implicit)  = 0.99862 +/- 0.00028  [0.99807  0.99917]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  130 / 200  Source neutrons : 50533
+
+Running time :                  0:54:08
+Estimated running time :        1:09:38
+Estimated running time left :   0:15:29
+
+Estimated relative CPU usage :   795.3%
+
+k-eff (analog)    = 0.99981 +/- 0.00053  [0.99877  1.00085]
+k-eff (implicit)  = 0.99863 +/- 0.00028  [0.99808  0.99918]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  131 / 200  Source neutrons : 50022
+
+Running time :                  0:54:21
+Estimated running time :        1:09:37
+Estimated running time left :   0:15:16
+
+Estimated relative CPU usage :   795.3%
+
+k-eff (analog)    = 0.99985 +/- 0.00053  [0.99881  1.00088]
+k-eff (implicit)  = 0.99861 +/- 0.00028  [0.99807  0.99915]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  132 / 200  Source neutrons : 49697
+
+Running time :                  0:54:34
+Estimated running time :        1:09:37
+Estimated running time left :   0:15:02
+
+Estimated relative CPU usage :   795.2%
+
+k-eff (analog)    = 0.99984 +/- 0.00052  [0.99881  1.00086]
+k-eff (implicit)  = 0.99863 +/- 0.00028  [0.99809  0.99917]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  133 / 200  Source neutrons : 50058
+
+Running time :                  0:54:47
+Estimated running time :        1:09:37
+Estimated running time left :   0:14:49
+
+Estimated relative CPU usage :   795.2%
+
+k-eff (analog)    = 0.99983 +/- 0.00052  [0.99881  1.00085]
+k-eff (implicit)  = 0.99861 +/- 0.00027  [0.99807  0.99915]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  134 / 200  Source neutrons : 49695
+
+Running time :                  0:55:00
+Estimated running time :        1:09:36
+Estimated running time left :   0:14:36
+
+Estimated relative CPU usage :   795.1%
+
+k-eff (analog)    = 0.99978 +/- 0.00052  [0.99877  1.00080]
+k-eff (implicit)  = 0.99860 +/- 0.00027  [0.99807  0.99913]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  135 / 200  Source neutrons : 50457
+
+Running time :                  0:55:14
+Estimated running time :        1:09:36
+Estimated running time left :   0:14:22
+
+Estimated relative CPU usage :   795.1%
+
+k-eff (analog)    = 0.99980 +/- 0.00051  [0.99879  1.00081]
+k-eff (implicit)  = 0.99862 +/- 0.00027  [0.99809  0.99915]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  136 / 200  Source neutrons : 49544
+
+Running time :                  0:55:27
+Estimated running time :        1:09:36
+Estimated running time left :   0:14:09
+
+Estimated relative CPU usage :   783.1%
+
+k-eff (analog)    = 0.99976 +/- 0.00051  [0.99875  1.00076]
+k-eff (implicit)  = 0.99859 +/- 0.00027  [0.99806  0.99912]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  137 / 200  Source neutrons : 50290
+
+Running time :                  0:55:40
+Estimated running time :        1:09:37
+Estimated running time left :   0:13:56
+
+Estimated relative CPU usage :   794.9%
+
+k-eff (analog)    = 0.99975 +/- 0.00051  [0.99875  1.00075]
+k-eff (implicit)  = 0.99861 +/- 0.00027  [0.99808  0.99914]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  138 / 200  Source neutrons : 49903
+
+Running time :                  0:55:53
+Estimated running time :        1:09:37
+Estimated running time left :   0:13:43
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99973 +/- 0.00051  [0.99874  1.00072]
+k-eff (implicit)  = 0.99858 +/- 0.00027  [0.99805  0.99911]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  139 / 200  Source neutrons : 49766
+
+Running time :                  0:56:07
+Estimated running time :        1:09:37
+Estimated running time left :   0:13:29
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99968 +/- 0.00051  [0.99869  1.00067]
+k-eff (implicit)  = 0.99858 +/- 0.00027  [0.99806  0.99910]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  140 / 200  Source neutrons : 50537
+
+Running time :                  0:56:20
+Estimated running time :        1:09:37
+Estimated running time left :   0:13:16
+
+Estimated relative CPU usage :   794.4%
+
+k-eff (analog)    = 0.99970 +/- 0.00050  [0.99872  1.00069]
+k-eff (implicit)  = 0.99859 +/- 0.00027  [0.99807  0.99911]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  141 / 200  Source neutrons : 49782
+
+Running time :                  0:56:34
+Estimated running time :        1:09:37
+Estimated running time left :   0:13:03
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99970 +/- 0.00050  [0.99872  1.00067]
+k-eff (implicit)  = 0.99858 +/- 0.00026  [0.99806  0.99909]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  142 / 200  Source neutrons : 49813
+
+Running time :                  0:56:47
+Estimated running time :        1:09:37
+Estimated running time left :   0:12:50
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99966 +/- 0.00050  [0.99869  1.00064]
+k-eff (implicit)  = 0.99854 +/- 0.00026  [0.99802  0.99906]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  143 / 200  Source neutrons : 50022
+
+Running time :                  0:57:00
+Estimated running time :        1:09:37
+Estimated running time left :   0:12:36
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99963 +/- 0.00049  [0.99866  1.00060]
+k-eff (implicit)  = 0.99855 +/- 0.00026  [0.99803  0.99906]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  144 / 200  Source neutrons : 50607
+
+Running time :                  0:57:14
+Estimated running time :        1:09:37
+Estimated running time left :   0:12:23
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99969 +/- 0.00049  [0.99872  1.00065]
+k-eff (implicit)  = 0.99854 +/- 0.00026  [0.99803  0.99905]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  145 / 200  Source neutrons : 49225
+
+Running time :                  0:57:27
+Estimated running time :        1:09:37
+Estimated running time left :   0:12:10
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99963 +/- 0.00049  [0.99867  1.00060]
+k-eff (implicit)  = 0.99854 +/- 0.00026  [0.99803  0.99905]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  146 / 200  Source neutrons : 50704
+
+Running time :                  0:57:40
+Estimated running time :        1:09:37
+Estimated running time left :   0:11:57
+
+Estimated relative CPU usage :   794.2%
+
+k-eff (analog)    = 0.99968 +/- 0.00049  [0.99871  1.00064]
+k-eff (implicit)  = 0.99855 +/- 0.00026  [0.99804  0.99906]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  147 / 200  Source neutrons : 49669
+
+Running time :                  0:57:54
+Estimated running time :        1:09:37
+Estimated running time left :   0:11:43
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99967 +/- 0.00049  [0.99872  1.00063]
+k-eff (implicit)  = 0.99853 +/- 0.00026  [0.99803  0.99904]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  148 / 200  Source neutrons : 49553
+
+Running time :                  0:58:07
+Estimated running time :        1:09:37
+Estimated running time left :   0:11:30
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99961 +/- 0.00049  [0.99865  1.00057]
+k-eff (implicit)  = 0.99853 +/- 0.00026  [0.99803  0.99903]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  149 / 200  Source neutrons : 50592
+
+Running time :                  0:58:20
+Estimated running time :        1:09:38
+Estimated running time left :   0:11:17
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99962 +/- 0.00049  [0.99867  1.00058]
+k-eff (implicit)  = 0.99851 +/- 0.00025  [0.99801  0.99901]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  150 / 200  Source neutrons : 49733
+
+Running time :                  0:58:33
+Estimated running time :        1:09:37
+Estimated running time left :   0:11:04
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99960 +/- 0.00048  [0.99866  1.00055]
+k-eff (implicit)  = 0.99849 +/- 0.00025  [0.99800  0.99899]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  151 / 200  Source neutrons : 50190
+
+Running time :                  0:58:47
+Estimated running time :        1:09:38
+Estimated running time left :   0:10:50
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99961 +/- 0.00048  [0.99867  1.00055]
+k-eff (implicit)  = 0.99845 +/- 0.00026  [0.99795  0.99895]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  152 / 200  Source neutrons : 49120
+
+Running time :                  0:59:00
+Estimated running time :        1:09:37
+Estimated running time left :   0:10:37
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99950 +/- 0.00049  [0.99854  1.00046]
+k-eff (implicit)  = 0.99846 +/- 0.00025  [0.99797  0.99896]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  153 / 200  Source neutrons : 50642
+
+Running time :                  0:59:13
+Estimated running time :        1:09:38
+Estimated running time left :   0:10:24
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99947 +/- 0.00049  [0.99852  1.00043]
+k-eff (implicit)  = 0.99847 +/- 0.00025  [0.99797  0.99896]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  154 / 200  Source neutrons : 50126
+
+Running time :                  0:59:27
+Estimated running time :        1:09:38
+Estimated running time left :   0:10:10
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99946 +/- 0.00048  [0.99851  1.00041]
+k-eff (implicit)  = 0.99843 +/- 0.00025  [0.99794  0.99893]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  155 / 200  Source neutrons : 50128
+
+Running time :                  0:59:40
+Estimated running time :        1:09:38
+Estimated running time left :   0:09:57
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99947 +/- 0.00048  [0.99853  1.00041]
+k-eff (implicit)  = 0.99845 +/- 0.00025  [0.99796  0.99894]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  156 / 200  Source neutrons : 50126
+
+Running time :                  0:59:53
+Estimated running time :        1:09:38
+Estimated running time left :   0:09:44
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99949 +/- 0.00048  [0.99855  1.00043]
+k-eff (implicit)  = 0.99844 +/- 0.00025  [0.99795  0.99893]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  157 / 200  Source neutrons : 49375
+
+Running time :                  1:00:07
+Estimated running time :        1:09:38
+Estimated running time left :   0:09:31
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99943 +/- 0.00048  [0.99850  1.00037]
+k-eff (implicit)  = 0.99838 +/- 0.00025  [0.99788  0.99888]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  158 / 200  Source neutrons : 50529
+
+Running time :                  1:00:20
+Estimated running time :        1:09:38
+Estimated running time left :   0:09:17
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99944 +/- 0.00048  [0.99851  1.00038]
+k-eff (implicit)  = 0.99838 +/- 0.00025  [0.99788  0.99887]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  159 / 200  Source neutrons : 49789
+
+Running time :                  1:00:33
+Estimated running time :        1:09:38
+Estimated running time left :   0:09:04
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99943 +/- 0.00047  [0.99850  1.00035]
+k-eff (implicit)  = 0.99839 +/- 0.00025  [0.99790  0.99888]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  160 / 200  Source neutrons : 50010
+
+Running time :                  1:00:47
+Estimated running time :        1:09:38
+Estimated running time left :   0:08:51
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99941 +/- 0.00047  [0.99849  1.00033]
+k-eff (implicit)  = 0.99838 +/- 0.00025  [0.99789  0.99887]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  161 / 200  Source neutrons : 49937
+
+Running time :                  1:01:00
+Estimated running time :        1:09:38
+Estimated running time left :   0:08:38
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99939 +/- 0.00047  [0.99847  1.00030]
+k-eff (implicit)  = 0.99837 +/- 0.00025  [0.99789  0.99886]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  162 / 200  Source neutrons : 50225
+
+Running time :                  1:01:13
+Estimated running time :        1:09:38
+Estimated running time left :   0:08:24
+
+Estimated relative CPU usage :   793.8%
+
+k-eff (analog)    = 0.99939 +/- 0.00047  [0.99848  1.00030]
+k-eff (implicit)  = 0.99837 +/- 0.00025  [0.99789  0.99886]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  163 / 200  Source neutrons : 49739
+
+Running time :                  1:01:27
+Estimated running time :        1:09:38
+Estimated running time left :   0:08:11
+
+Estimated relative CPU usage :   792.1%
+
+k-eff (analog)    = 0.99936 +/- 0.00046  [0.99846  1.00027]
+k-eff (implicit)  = 0.99836 +/- 0.00025  [0.99788  0.99885]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  164 / 200  Source neutrons : 50349
+
+Running time :                  1:01:40
+Estimated running time :        1:09:38
+Estimated running time left :   0:07:58
+
+Estimated relative CPU usage :   793.1%
+
+k-eff (analog)    = 0.99938 +/- 0.00046  [0.99848  1.00028]
+k-eff (implicit)  = 0.99838 +/- 0.00025  [0.99790  0.99886]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  165 / 200  Source neutrons : 50312
+
+Running time :                  1:01:53
+Estimated running time :        1:09:38
+Estimated running time left :   0:07:45
+
+Estimated relative CPU usage :   793.8%
+
+k-eff (analog)    = 0.99943 +/- 0.00046  [0.99853  1.00034]
+k-eff (implicit)  = 0.99841 +/- 0.00025  [0.99793  0.99889]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  166 / 200  Source neutrons : 49398
+
+Running time :                  1:02:07
+Estimated running time :        1:09:38
+Estimated running time left :   0:07:31
+
+Estimated relative CPU usage :   793.3%
+
+k-eff (analog)    = 0.99941 +/- 0.00046  [0.99851  1.00031]
+k-eff (implicit)  = 0.99844 +/- 0.00025  [0.99796  0.99892]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  167 / 200  Source neutrons : 50424
+
+Running time :                  1:02:20
+Estimated running time :        1:09:39
+Estimated running time left :   0:07:18
+
+Estimated relative CPU usage :   793.3%
+
+k-eff (analog)    = 0.99944 +/- 0.00046  [0.99855  1.00034]
+k-eff (implicit)  = 0.99842 +/- 0.00024  [0.99795  0.99890]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  168 / 200  Source neutrons : 49499
+
+Running time :                  1:02:34
+Estimated running time :        1:09:39
+Estimated running time left :   0:07:05
+
+Estimated relative CPU usage :   793.0%
+
+k-eff (analog)    = 0.99941 +/- 0.00045  [0.99852  1.00030]
+k-eff (implicit)  = 0.99845 +/- 0.00024  [0.99797  0.99892]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  169 / 200  Source neutrons : 49892
+
+Running time :                  1:02:47
+Estimated running time :        1:09:39
+Estimated running time left :   0:06:51
+
+Estimated relative CPU usage :   793.2%
+
+k-eff (analog)    = 0.99937 +/- 0.00045  [0.99848  1.00026]
+k-eff (implicit)  = 0.99846 +/- 0.00024  [0.99799  0.99894]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  170 / 200  Source neutrons : 50400
+
+Running time :                  1:03:00
+Estimated running time :        1:09:39
+Estimated running time left :   0:06:38
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99937 +/- 0.00045  [0.99849  1.00026]
+k-eff (implicit)  = 0.99847 +/- 0.00024  [0.99799  0.99894]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  171 / 200  Source neutrons : 49749
+
+Running time :                  1:03:14
+Estimated running time :        1:09:39
+Estimated running time left :   0:06:25
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99935 +/- 0.00045  [0.99847  1.00023]
+k-eff (implicit)  = 0.99848 +/- 0.00024  [0.99801  0.99896]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  172 / 200  Source neutrons : 50309
+
+Running time :                  1:03:27
+Estimated running time :        1:09:39
+Estimated running time left :   0:06:12
+
+Estimated relative CPU usage :   794.3%
+
+k-eff (analog)    = 0.99936 +/- 0.00045  [0.99848  1.00024]
+k-eff (implicit)  = 0.99847 +/- 0.00024  [0.99800  0.99894]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  173 / 200  Source neutrons : 49808
+
+Running time :                  1:03:40
+Estimated running time :        1:09:39
+Estimated running time left :   0:05:58
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99935 +/- 0.00044  [0.99848  1.00022]
+k-eff (implicit)  = 0.99852 +/- 0.00024  [0.99804  0.99899]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  174 / 200  Source neutrons : 50960
+
+Running time :                  1:03:54
+Estimated running time :        1:09:40
+Estimated running time left :   0:05:45
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99945 +/- 0.00045  [0.99856  1.00034]
+k-eff (implicit)  = 0.99854 +/- 0.00024  [0.99806  0.99901]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  175 / 200  Source neutrons : 49723
+
+Running time :                  1:04:07
+Estimated running time :        1:09:40
+Estimated running time left :   0:05:32
+
+Estimated relative CPU usage :   794.8%
+
+k-eff (analog)    = 0.99951 +/- 0.00046  [0.99862  1.00041]
+k-eff (implicit)  = 0.99850 +/- 0.00024  [0.99803  0.99898]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  176 / 200  Source neutrons : 48890
+
+Running time :                  1:04:20
+Estimated running time :        1:09:39
+Estimated running time left :   0:05:18
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99945 +/- 0.00046  [0.99856  1.00035]
+k-eff (implicit)  = 0.99850 +/- 0.00024  [0.99802  0.99897]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  177 / 200  Source neutrons : 50591
+
+Running time :                  1:04:34
+Estimated running time :        1:09:40
+Estimated running time left :   0:05:05
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99946 +/- 0.00045  [0.99857  1.00035]
+k-eff (implicit)  = 0.99853 +/- 0.00024  [0.99805  0.99901]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  178 / 200  Source neutrons : 50313
+
+Running time :                  1:04:47
+Estimated running time :        1:09:40
+Estimated running time left :   0:04:52
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99950 +/- 0.00045  [0.99861  1.00038]
+k-eff (implicit)  = 0.99855 +/- 0.00024  [0.99807  0.99902]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  179 / 200  Source neutrons : 49131
+
+Running time :                  1:05:00
+Estimated running time :        1:09:39
+Estimated running time left :   0:04:39
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99944 +/- 0.00045  [0.99855  1.00033]
+k-eff (implicit)  = 0.99854 +/- 0.00024  [0.99807  0.99901]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  180 / 200  Source neutrons : 50427
+
+Running time :                  1:05:14
+Estimated running time :        1:09:40
+Estimated running time left :   0:04:25
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99943 +/- 0.00045  [0.99854  1.00031]
+k-eff (implicit)  = 0.99859 +/- 0.00025  [0.99811  0.99908]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  181 / 200  Source neutrons : 50373
+
+Running time :                  1:05:27
+Estimated running time :        1:09:40
+Estimated running time left :   0:04:12
+
+Estimated relative CPU usage :   791.6%
+
+k-eff (analog)    = 0.99946 +/- 0.00045  [0.99857  1.00034]
+k-eff (implicit)  = 0.99861 +/- 0.00025  [0.99813  0.99909]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  182 / 200  Source neutrons : 49772
+
+Running time :                  1:05:41
+Estimated running time :        1:09:40
+Estimated running time left :   0:03:59
+
+Estimated relative CPU usage :   793.1%
+
+k-eff (analog)    = 0.99946 +/- 0.00045  [0.99858  1.00034]
+k-eff (implicit)  = 0.99862 +/- 0.00024  [0.99814  0.99910]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  183 / 200  Source neutrons : 49846
+
+Running time :                  1:05:54
+Estimated running time :        1:09:40
+Estimated running time left :   0:03:45
+
+Estimated relative CPU usage :   793.7%
+
+k-eff (analog)    = 0.99945 +/- 0.00045  [0.99857  1.00032]
+k-eff (implicit)  = 0.99862 +/- 0.00024  [0.99815  0.99910]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  184 / 200  Source neutrons : 50047
+
+Running time :                  1:06:07
+Estimated running time :        1:09:40
+Estimated running time left :   0:03:32
+
+Estimated relative CPU usage :   792.8%
+
+k-eff (analog)    = 0.99944 +/- 0.00044  [0.99857  1.00031]
+k-eff (implicit)  = 0.99866 +/- 0.00024  [0.99818  0.99914]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  185 / 200  Source neutrons : 50565
+
+Running time :                  1:06:21
+Estimated running time :        1:09:40
+Estimated running time left :   0:03:19
+
+Estimated relative CPU usage :   792.9%
+
+k-eff (analog)    = 0.99949 +/- 0.00044  [0.99862  1.00037]
+k-eff (implicit)  = 0.99868 +/- 0.00024  [0.99820  0.99916]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  186 / 200  Source neutrons : 49766
+
+Running time :                  1:06:34
+Estimated running time :        1:09:40
+Estimated running time left :   0:03:06
+
+Estimated relative CPU usage :   792.8%
+
+k-eff (analog)    = 0.99952 +/- 0.00044  [0.99865  1.00039]
+k-eff (implicit)  = 0.99868 +/- 0.00024  [0.99821  0.99916]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  187 / 200  Source neutrons : 49545
+
+Running time :                  1:06:47
+Estimated running time :        1:09:40
+Estimated running time left :   0:02:52
+
+Estimated relative CPU usage :   793.8%
+
+k-eff (analog)    = 0.99950 +/- 0.00044  [0.99864  1.00037]
+k-eff (implicit)  = 0.99867 +/- 0.00024  [0.99820  0.99915]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  188 / 200  Source neutrons : 49304
+
+Running time :                  1:07:01
+Estimated running time :        1:09:40
+Estimated running time left :   0:02:39
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99941 +/- 0.00045  [0.99853  1.00029]
+k-eff (implicit)  = 0.99870 +/- 0.00024  [0.99823  0.99917]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  189 / 200  Source neutrons : 50872
+
+Running time :                  1:07:14
+Estimated running time :        1:09:41
+Estimated running time left :   0:02:26
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99940 +/- 0.00045  [0.99853  1.00028]
+k-eff (implicit)  = 0.99870 +/- 0.00024  [0.99823  0.99917]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  190 / 200  Source neutrons : 50131
+
+Running time :                  1:07:28
+Estimated running time :        1:09:41
+Estimated running time left :   0:02:12
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99941 +/- 0.00044  [0.99854  1.00028]
+k-eff (implicit)  = 0.99865 +/- 0.00024  [0.99817  0.99913]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  191 / 200  Source neutrons : 49265
+
+Running time :                  1:07:41
+Estimated running time :        1:09:40
+Estimated running time left :   0:01:59
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99935 +/- 0.00045  [0.99847  1.00022]
+k-eff (implicit)  = 0.99864 +/- 0.00024  [0.99816  0.99911]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  192 / 200  Source neutrons : 50399
+
+Running time :                  1:07:54
+Estimated running time :        1:09:40
+Estimated running time left :   0:01:46
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99932 +/- 0.00045  [0.99845  1.00019]
+k-eff (implicit)  = 0.99861 +/- 0.00024  [0.99814  0.99909]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  193 / 200  Source neutrons : 49927
+
+Running time :                  1:08:07
+Estimated running time :        1:09:40
+Estimated running time left :   0:01:33
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99929 +/- 0.00044  [0.99842  1.00016]
+k-eff (implicit)  = 0.99863 +/- 0.00024  [0.99816  0.99911]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  194 / 200  Source neutrons : 50655
+
+Running time :                  1:08:21
+Estimated running time :        1:09:41
+Estimated running time left :   0:01:19
+
+Estimated relative CPU usage :   794.5%
+
+k-eff (analog)    = 0.99932 +/- 0.00044  [0.99846  1.00019]
+k-eff (implicit)  = 0.99862 +/- 0.00024  [0.99815  0.99909]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  195 / 200  Source neutrons : 49494
+
+Running time :                  1:08:34
+Estimated running time :        1:09:41
+Estimated running time left :   0:01:06
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99931 +/- 0.00044  [0.99844  1.00017]
+k-eff (implicit)  = 0.99864 +/- 0.00024  [0.99817  0.99911]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  196 / 200  Source neutrons : 50729
+
+Running time :                  1:08:48
+Estimated running time :        1:09:41
+Estimated running time left :   0:00:53
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99936 +/- 0.00044  [0.99850  1.00023]
+k-eff (implicit)  = 0.99862 +/- 0.00024  [0.99815  0.99909]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  197 / 200  Source neutrons : 49057
+
+Running time :                  1:09:01
+Estimated running time :        1:09:41
+Estimated running time left :   0:00:39
+
+Estimated relative CPU usage :   794.6%
+
+k-eff (analog)    = 0.99932 +/- 0.00044  [0.99846  1.00019]
+k-eff (implicit)  = 0.99861 +/- 0.00024  [0.99814  0.99908]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  198 / 200  Source neutrons : 50074
+
+Running time :                  1:09:14
+Estimated running time :        1:09:41
+Estimated running time left :   0:00:26
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99929 +/- 0.00044  [0.99843  1.00016]
+k-eff (implicit)  = 0.99864 +/- 0.00024  [0.99817  0.99911]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  199 / 200  Source neutrons : 50566
+
+Running time :                  1:09:27
+Estimated running time :        1:09:41
+Estimated running time left :   0:00:13
+
+Estimated relative CPU usage :   794.7%
+
+k-eff (analog)    = 0.99932 +/- 0.00044  [0.99845  1.00018]
+k-eff (implicit)  = 0.99859 +/- 0.00024  [0.99811  0.99907]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+------------------------------------------------------------
+
+Serpent 2.1.32 -- Static criticality source simulation
+
+Title: "NERTHUS" 
+
+Active cycle  200 / 200  Source neutrons : 48948
+
+Running time :                  1:09:41
+Estimated running time :        1:09:41
+Estimated running time left :   0:00:00
+
+Estimated relative CPU usage :   794.0%
+
+k-eff (analog)    = 0.99923 +/- 0.00045  [0.99836  1.00011]
+k-eff (implicit)  = 0.99858 +/- 0.00024  [0.99810  0.99905]
+
+(O4) (TMS) (MPI=1) (OMP=8) (CE/LI) 
+------------------------------------------------------------
+
+Transport cycle completed in 56.3 minutes.
+
+Calculating activities...
+OK.
 

@@ -4,6 +4,7 @@
 #PBS -N NERTHUS
 #PBS -q fill
 #PBS -l nodes=1:ppn=8
+
 hostname
 rm -f done.dat
 cd ${PBS_O_WORKDIR}
