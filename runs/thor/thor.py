@@ -42,12 +42,12 @@ thor.read_refuel_if_done()
 
 thor.queue = 'fill'
 thor.ompcores = 8
-thor.histories = 100000
+thor.histories = 50000
 thor.ngen = 200
 thor.nskip = 60
 
 thor.get_feedbacks('fs.tot')
-thor.get_feedbacks('gr.tot')
+#thor.get_feedbacks('gr.tot')
 
-thor.feedback_path = thor.feedback_path + '/no_expansion'
-thor.get_feedbacks('gr.tot', thermal_expansion=False)
+#thor.feedback_path = thor.feedback_path + '/no_expansion'
+#thor.get_feedbacks('gr.tot', thermal_expansion=False)

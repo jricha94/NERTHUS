@@ -30,7 +30,7 @@ A Continuous-energy Monte Carlo Reactor Physics Burnup Calculation Code
 
    sss2 -omp 8 nerthus
 
-Begin calculation on Thu Jan 13 15:22:37 2022 at node64
+Begin calculation on Sat Feb 19 13:11:43 2022 at node7
 
 Reading input file "nerthus"...
 
@@ -730,55 +730,55 @@ Nuclide   gre7.22t -- natural carbon at 1200K (C-nat)
 
 Checking data and printing output...
 
-***** Thu Jan 13 15:22:53 2022 (seed = 1642105357056)
+***** Sat Feb 19 13:12:09 2022 (seed = 1645294303015)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 40096.09c has 1 decay modes
 
 
-***** Thu Jan 13 15:22:53 2022 (seed = 1642105357056)
+***** Sat Feb 19 13:12:09 2022 (seed = 1645294303015)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 48114.09c has 1 decay modes
 
 
-***** Thu Jan 13 15:22:53 2022 (seed = 1642105357056)
+***** Sat Feb 19 13:12:09 2022 (seed = 1645294303015)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 52123.09c has 1 decay modes
 
 
-***** Thu Jan 13 15:22:53 2022 (seed = 1642105357056)
+***** Sat Feb 19 13:12:09 2022 (seed = 1645294303015)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 52130.09c has 1 decay modes
 
 
-***** Thu Jan 13 15:22:53 2022 (seed = 1642105357056)
+***** Sat Feb 19 13:12:09 2022 (seed = 1645294303015)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 54134.09c has 1 decay modes
 
 
-***** Thu Jan 13 15:22:53 2022 (seed = 1642105357056)
+***** Sat Feb 19 13:12:09 2022 (seed = 1645294303015)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 54136.09c has 1 decay modes
 
 
-***** Thu Jan 13 15:22:53 2022 (seed = 1642105357056)
+***** Sat Feb 19 13:12:09 2022 (seed = 1645294303015)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 58142.09c has 1 decay modes
 
 
-***** Thu Jan 13 15:22:53 2022 (seed = 1642105357056)
+***** Sat Feb 19 13:12:09 2022 (seed = 1645294303015)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 64160.09c has 1 decay modes
 
 
-***** Thu Jan 13 15:22:53 2022 (seed = 1642105357056)
+***** Sat Feb 19 13:12:09 2022 (seed = 1645294303015)
 Warning message from function CheckNuclideData:
 
 Stable nuclide 300700 has 1 decay modes
@@ -1222,3 +1222,16 @@ Nuclide  44105.09c -- ruthenium 105 at 1000K (Ru-105)
 Nuclide  44106.09c -- ruthenium 106 at 1000K (Ru-106)
 Nuclide  45103.09c -- rhodium 103 at 1000K (Rh-103)
 Nuclide  45105.09c -- rhodium 105 at 1000K (Rh-105)
+Nuclide  46102.09c -- palladium 102 at 1000K (Pd-102)
+Nuclide  46104.09c -- palladium 104 at 1000K (Pd-104)
+Nuclide  46105.09c -- palladium 105 at 1000K (Pd-105)
+Nuclide  46106.09c -- palladium 106 at 1000K (Pd-106)
+Nuclide  46107.09c -- palladium 107 at 1000K (Pd-107)
+Nuclide  46108.09c -- palladium 108 at 1000K (Pd-108)
+
+***** Sat Feb 19 13:28:08 2022
+
+Input error:
+
+Out of memory error (allocating 7.4Gb, limit 7.4Gb = 0.98 * 7.6Gb)
+
