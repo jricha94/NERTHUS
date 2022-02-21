@@ -465,6 +465,7 @@ class burn(object):
                 nert.histories = self.histories
                 nert.ngen = self.ngen
                 nert.nskip = self.nskip
+                nert.memory = 30
                 nert.deck_path = f"{self.feedback_path}/{feedback}/{index}/{int(temp)}"
                 nert.refuel_rate = self.conv_rate
                 nert.thermal_expansion = thermal_expansion
@@ -529,13 +530,13 @@ class burn(object):
                         try:
                             myout_size = os.path.getsize(nert.deck_path+"/myout.out")
                             if myout_size > checks[0]:  # myout.out has gotten larger
-                                print(f"{index} {temp} GOT LARGER")
+                                print(f"GOT LARGER, size:{myout_size}")
                                 checks[0] = myout_size  # update file sizes
                                 checks[1] = 0           # no crashed node, checks back to 0
                             else:
-                                print(f"{index} {temp} This might have crashed")
+                                print(f"This might have crashed, checks:{checks[1]}")
                                 checks[1] += 1          # myout.out is not larger, increase check
-                                if checks > 10:         # run probably crashed after 10 checks, rerun it
+                                if checks[1] > 10:         # run probably crashed after 10 checks, rerun it
                                     print(f"{index} {temp} This did crash")
                                     nert.cleanup()
                                     nert.save_deck()
@@ -559,10 +560,11 @@ class burn(object):
                         print(f"{index} {temp} done")
                         checks[2] == False      # done running so set this check to False
                         running -= 1 # Decrement running count if its done
+            print(f"RUNNING:{running} TOTAL:{total}")
 
             progress = (total - running)/total
-            print(f"-----{feedback} calculation is {progress:.2%}% done-----")
-            time.sleep(5) # Sleep for 3 minutes between checks
+            print(f"-----{feedback} calculation is {progress:.2%} done-----")
+            time.sleep(10) # Sleep for 3 minutes between checks
         print(f"{feedback} is done")
 
 
