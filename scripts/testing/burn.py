@@ -525,18 +525,18 @@ class burn(object):
                     checks = file_sizes[fb_run_name]
                     if not nert.get_results(): # still running
                         done = False
-                        print("{index}{temp} Still Running")
+                        print(f"{index}{temp} Still Running")
                         try:
                             myout_size = os.path.getsize(nert.deck_path+"/myout.out")
                             if myout_size > checks[0]:  # myout.out has gotten larger
-                                print("{index}{temp} GOT LARGER")
+                                print(f"{index}{temp} GOT LARGER")
                                 checks[0] = myout_size  # update file sizes
                                 checks[1] = 0           # no crashed node, checks back to 0
                             else:
-                                print("{index}{temp} This might have crashed")
+                                print(f"{index}{temp} This might have crashed")
                                 checks[1] += 1          # myout.out is not larger, increase check
                                 if checks > 10:         # run probably crashed after 10 checks, rerun it
-                                    print("{index}{temp} This did crash")
+                                    print(f"{index}{temp} This did crash")
                                     nert.cleanup()
                                     nert.save_deck()
                                     nert.save_qsub_file()
@@ -547,7 +547,7 @@ class burn(object):
 
                     elif os.path.exists(f"{nert.deck_path}/done.out") and os.path.getsize(f"{nert.deck_path}/done.out") < 30:
                         # Process finished, but Serpent didn't run to completion
-                        print("{index}{temp} Out of memory")
+                        print(f"{index}{temp} Out of memory")
                         done = False
                         nert.cleanup()
                         nert.save_deck()
