@@ -1107,8 +1107,8 @@ class serpDeck(object):
 
 if __name__ == '__main__':
     test = serpDeck(fuel_salt='flibe', enr=0.2, refuel_salt='flibe', enr_ref=0.1, refuel=True)
-    test.feedback = True
-    test.do_plots = True
-    test.feedback_index = 4
-    test.save_deck()
-
+    test.ngen = 80
+    test.nskip = 20
+    test.histories = 1000
+    test.queue = 'local'
+    test.save_qsub_file()
