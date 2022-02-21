@@ -510,10 +510,10 @@ class burn(object):
                     file_sizes[fb_run_name][2] = True
                     running += 1
 
-        print(f"\nRunning {running} of {total} simulations")
+        print(f"\n-----Running {running} of {total} simulations-----")
 
         # wait a bit to let everything do its thing
-        time.sleep(SLEEP_SEC)
+        time.sleep(5)
 
         done = False
         while not done:
@@ -525,17 +525,18 @@ class burn(object):
                     checks = file_sizes[fb_run_name]
                     if not nert.get_results(): # still running
                         done = False
-                        print("Still Running")
+                        print("{index}{temp} Still Running")
                         try:
                             myout_size = os.path.getsize(nert.deck_path+"/myout.out")
                             if myout_size > checks[0]:  # myout.out has gotten larger
+                                print("{index}{temp} GOT LARGER")
                                 checks[0] = myout_size  # update file sizes
                                 checks[1] = 0           # no crashed node, checks back to 0
                             else:
-                                print("This might have crashed")
+                                print("{index}{temp} This might have crashed")
                                 checks[1] += 1          # myout.out is not larger, increase check
                                 if checks > 10:         # run probably crashed after 10 checks, rerun it
-                                    print("This did crash")
+                                    print("{index}{temp} This did crash")
                                     nert.cleanup()
                                     nert.save_deck()
                                     nert.save_qsub_file()
@@ -546,7 +547,7 @@ class burn(object):
 
                     elif os.path.exists(f"{nert.deck_path}/done.out") and os.path.getsize(f"{nert.deck_path}/done.out") < 30:
                         # Process finished, but Serpent didn't run to completion
-                        print("Out of memory")
+                        print("{index}{temp} Out of memory")
                         done = False
                         nert.cleanup()
                         nert.save_deck()
@@ -560,8 +561,8 @@ class burn(object):
                         running -= 1 # Decrement running count if its done
 
             progress = (total - running)/total
-            print(f"{feedback} calculation is {progress:.2%}% done")
-            time.sleep(60*3) # Sleep for 3 minutes between checks
+            print(f"-----{feedback} calculation is {progress:.2%}% done-----")
+            time.sleep(5) # Sleep for 3 minutes between checks
         print(f"{feedback} is done")
 
 
