@@ -1,9 +1,10 @@
 
 #!/bin/bash
 #PBS -V
-#PBS -N ThorCon_like_lat
+#PBS -N General_Kenobi
 #PBS -q fill
 #PBS -l nodes=1:ppn=20
+#PBS -l mem=20GB
 hostname
 rm -f done.dat
 cd ${PBS_O_WORKDIR}

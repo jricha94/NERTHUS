@@ -507,7 +507,7 @@ mat B4C_shield -3.636 rgb 99 73 214
 
 % Graphite moderator
 mat graphite -1.80000000 moder graph 6000
-tms 950.0 rgb 59 59 59 burn 1
+tms 950.0 rgb 59 59 59
  6000.09c 0.999998   % Natural Carbon
  5010.09c 4e-07  % Boron 10
  5011.09c 1.6e-06  % Boron 11
@@ -538,7 +538,7 @@ mat refuelsalt  -3.24050691 rgb 54 227 167 tmp  900.000
 
 % ===== Data Cards ===== %
 set power 557000000 % Watts
-set pop 20000 200 60 % 20000 neutrons, 200 active cycles, 60 inactive cycles
+set pop 1000 20 1% 20000 neutrons, 200 active cycles, 60 inactive cycles
 set arr 2
 set printm 1
 
@@ -547,51 +547,3 @@ set acelib "sss_endfb7u.sssdir"
 set declib "sss_endfb7.dec"
 set nfylib "sss_endfb7.nfy"
 
-% --- REPROCESSING CARDS
-
-% - OFFGAS TANK
-mat offgas -0.001 burn 1 vol 1e9 tmp 900.0
- 2004.09c 1
-
-% - OVERFLOW TANK
-mat overflow -0.001 burn 1 vol 1e9 tmp 900.0
-2004.09c 1
-
-% --- MASS FLOW DEFINITIONS
-
-set pcc 0 % predictor-corrector turned off for depletion
-
-mflow U_in
-all 1e-09
-
-mflow offgasratecore
-Ne 1e-2
-Ar 1e-2
-He 1e-2
-Kr 1e-2
-Xe 1e-2
-Rn 1e-2
-
-% Account for increase in volume with refueling
-mflow over
-all 1e-09
-
-rep source_rep
-rc refuelsalt fuelsalt U_in 0
-rc fuelsalt offgas offgasratecore 1
-rc fuelsalt overflow over 1
-
-% 4 years of burnup
-dep
-pro source_rep
-daystep
-0.0208 0.0208 0.9584 2 4 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
-30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30
-
-set inventory
-1
-86
-fp
-lanthanides
-actinides
