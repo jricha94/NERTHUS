@@ -15,14 +15,14 @@ write_pkp = False
 plot_things = True
 
 if write_pkp:
-    flibe.write_dynamic_model_PKPs('flibe_PKPs.txt')
+    thor.write_dynamic_model_PKPs('flibe_PKPs.txt')
 
 if plot_fb:
-    flibe.get_point_kinetics_parameters()
+    thor.get_point_kinetics_parameters()
 
-    fs_fb = flibe.fs_feedbacks
-    gr_fb = flibe.gr_feedbacks
-    days = flibe.days
+    fs_fb = thor.fs_feedbacks
+    gr_fb = thor.gr_feedbacks
+    days = thor.days
 
 
     window = 11
@@ -57,7 +57,7 @@ if plot_fb:
     ax2.set_xlim(0, days[-1])
     ax2.grid(True)
 
-    fig.savefig('Nerthus_Flibe_FB.png', bbox_inches = 'tight')
+    fig.savefig('Nerthus_Flibe_FB2.png', bbox_inches = 'tight')
 
 
 if plot_things:

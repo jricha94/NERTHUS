@@ -810,19 +810,6 @@ class serpDeck(object):
 
         surfs_and_cells_cards += core
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         return surfs_and_cells_cards
 
         # Wall of reactor
@@ -844,10 +831,10 @@ class serpDeck(object):
             24000.{self.lib} -0.17     % Natural Chromium
             25055.{self.lib} -0.02     % Natural Manganese
             26000.{self.lib} -0.65495  % Natural Iron
-            28000.{self.lib} -0.12     % Natural Nickle
+            28000.{self.lib} -0.12     % Natural Nickel
             42000.{self.lib} -0.025    % Natural Molybdenum
             ''')
-        material_cards += sus316_stainless_steel
+        material_cards += sus316_stainless_steelhttps://www.sandmeyersteel.com/images/316-316l-317l-spec-sheet.pdf
 
         # Boron Carbide
         B4C_natural = dedent(f'''
@@ -1111,4 +1098,3 @@ if __name__ == '__main__':
     test.nskip = 20
     test.histories = 1000
     test.queue = 'local'
-    test.save_qsub_file()

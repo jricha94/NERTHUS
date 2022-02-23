@@ -25,7 +25,7 @@ GRAPHITE_RHO:float = 1.80                      # Graphite density at 950 K [g/cm
 # Dictionary of fuel salts and their composition
 SALTS = {
     'thorConSalt'   : '76%NaF + 12%BeF2 + 9.5%ThF4 + 2.5%UF4',        #NaFBeTh12
-    'thorCons_ref'  : '76%NaF + 12%BeF2 + 10.2%ThF4 + 1.8%UF4',       #NaFBeTh12
+    'thorCons_ref'  : '76%NaF + 12%BeF2 + 9.5%ThF4 + 2.5%UF4',       #NaFBeTh12
     'flibe'         : '72%LiF + 16%BeF2 + 12%UF4'                     #flibe
 }
 
@@ -60,7 +60,7 @@ class serpDeck(object):
         self.nskip:int                  = 60                    # Number of inactive generations
         self.queue:str                  = 'fill'                # NECluster torque queue ('local' to run on your machine)
         self.ompcores:int               = 8                     # OMP cores used when running SERPENT
-        self.memory:int                 = 20                    # Memory in GB requested for node
+        self.memory:int                 = None                  # Memory in GB requested for node
         self.thermal_expansion:bool     = True                  # Bool to include thermal expansion; if False, reactor is modeled at 900K
         self.refuel:bool                = refuel                # Bool to run burnup calculation
         self.feedback:bool              = False                 # Bool to use materials card or restart file
@@ -995,13 +995,16 @@ class serpDeck(object):
 
     def save_qsub_file(self) -> None:
         'Writes run file for TORQUE.'
+
+        mem = f'#PBS -l mem={self.memory}GB' if self.memory != None else ''
+
         qsub_content = dedent(f'''
             #!/bin/bash
             #PBS -V
             #PBS -N NERTHUS
             #PBS -q {self.queue}
             #PBS -l nodes=1:ppn={self.ompcores}
-            #PBS -l mem={self.memory}GB
+            {mem}
 
             hostname
             rm -f done.dat
@@ -1111,4 +1114,6 @@ if __name__ == '__main__':
     test.nskip = 20
     test.histories = 1000
     test.queue = 'local'
+    test.memory = None
+    test.save_deck()
     test.save_qsub_file()
