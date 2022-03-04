@@ -19,48 +19,29 @@ thor.read_enrs_if_done()
 
 thor.refuel_path = cwd + '/refuel'
 thor.refuel_enr = 0.1975
-thor.queue = 'fill'
-thor.ompcores = 16
-thor.ngen = 80
-thor.nskip = 20
-thor.histories = 10000
+thor.queue = 'xeon'
+thor.ompcores = 128
 thor.refuel_min = 1e-10
-thor.refuel_max = 1e-2
-
-th_con = [9.5, 8, 6.5, 5, 3.5, 2]
-
-for a in th_con:
-    deck.SALTS["thorCons_ref"] = f"76%NaF + 12%BeF2 + {a}%ThF4 + {12-a}%UF4" 
-    print(deck.SALTS["thorCons_ref"])
-    thor.refuel_path = cwd + f"/testing/{a}th4"
-    thor.get_refuel_rate()
-    
-
-
-
-
-#thor.get_refuel_rate(cleanup=True)
-#print("Short refuel done")
-#thor.clear_refuel_list()
-
-#thor.ngen = 200
-#thor.nskip = 60
-#thor.histories = 20000
-#thor.refuel_min = thor.conv_rate / 10.0
-#thor.refuel_max = thor.conv_rate * 10.0
+thor.refuel_max = 1e-8
+thor.ngen = 200
+thor.nskip = 60
+thor.histories = 20000
 #thor.get_refuel_rate()
 
 #thor.save_refuel()
-#thor.read_refuel_if_done()
+thor.read_refuel_if_done()
 
-#thor.queue = 'fill'
-#thor.ompcores = 8
-#thor.histories = 50000
-#thor.ngen = 200
-#thor.nskip = 60
-#
-##thor.get_feedbacks('fs.tot')
-##thor.get_feedbacks('gr.tot')
+thor.conv_enr = 0.19451268
+thor.conv_rate = 5.529253687695087e-09
+
+thor.queue = 'fill'
+thor.ompcores = 8
+thor.histories = 50000
+thor.ngen = 200
+thor.nskip = 60
+
+#thor.get_feedbacks('fs.tot')
+thor.get_feedbacks('gr.tot')
 #
 #thor.feedback_path = thor.feedback_path + '/no_expansion'
 #thor.get_feedbacks('gr.tot', thermal_expansion=False)

@@ -25,7 +25,7 @@ GRAPHITE_RHO:float = 1.80                      # Graphite density at 950 K [g/cm
 # Dictionary of fuel salts and their composition
 SALTS = {
     'thorConSalt'   : '76%NaF + 12%BeF2 + 9.5%ThF4 + 2.5%UF4',        #NaFBeTh12
-    'thorCons_ref'  : '76%NaF + 12%BeF2 + 9.5%ThF4 + 2.5%UF4',       #NaFBeTh12
+    'thorCons_ref'  : '76%NaF + 12%BeF2 + 6%ThF4 + 6%UF4',       #NaFBeTh12
     'flibe'         : '72%LiF + 16%BeF2 + 12%UF4'                     #flibe
 }
 

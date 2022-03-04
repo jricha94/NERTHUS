@@ -401,7 +401,7 @@ class burn(object):
 
         if not (mysalt==self.fuel_salt):
             print('ERROR: Lattice parameters do not match!')
-            return False
+            #return False
 
         for myline in fh.readlines():
             myline = myline.strip().split()

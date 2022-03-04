@@ -527,27 +527,27 @@ tms 950.0 rgb 59 59 59
 % Thermal scattering libraries for graphite
 therm graph 0 gre7.04t gre7.08t gre7.12t gre7.16t gre7.18t gre7.22t
 
-% Fuel salt: 76%NaF + 12%BeF2 + 9.5%ThF4 + 2.5%UF4, U enrichment 0.19451268057860988
+% Fuel salt: 76%NaF + 12%BeF2 + 9.5%ThF4 + 2.5%UF4, U enrichment 0.19451268
 mat fuelsalt  -3.24052509 rgb 54 227 167 tmp  900.000 burn 1 vol 13670000
   4009.09c  -0.014486833867    %  Be-9
   9019.09c  -0.376652664119    %  F-19
  11023.09c  -0.234050963772    %  Na-23
  90232.09c  -0.295287492480    %  Th-232
  92234.09c  -0.000135685056    %  U-234
- 92235.09c  -0.015310846288    %  U-235
+ 92235.09c  -0.015310846243    %  U-235
  92236.09c  -0.000070730027    %  U-236
- 92238.09c  -0.064004784390    %  U-238
+ 92238.09c  -0.064004784437    %  U-238
 
-% Fuel salt: 76%NaF + 12%BeF2 + 9.5%ThF4 + 2.5%UF4, U enrichment 0.1975
-mat refuelsalt  -3.24051519 rgb 54 227 167 tmp  900.000 burn 1 vol 13670000
-  4009.09c  -0.014486878096    %  Be-9
-  9019.09c  -0.376653814067    %  F-19
- 11023.09c  -0.234051678346    %  Na-23
- 90232.09c  -0.295288394014    %  Th-232
- 92234.09c  -0.000137769324    %  U-234
- 92235.09c  -0.015546037231    %  U-235
- 92236.09c  -0.000071816516    %  U-236
- 92238.09c  -0.063763612406    %  U-238
+% Fuel salt: 76%NaF + 12%BeF2 + 6%ThF4 + 6%UF4, U enrichment 0.1975
+mat refuelsalt  -3.25411312 rgb 54 227 167 tmp  900.000 burn 1 vol 13670000
+  4009.09c  -0.014450225551    %  Be-9
+  9019.09c  -0.375700860588    %  F-19
+ 11023.09c  -0.233459515589    %  Na-23
+ 90232.09c  -0.186026083720    %  Th-232
+ 92234.09c  -0.000329809825    %  U-234
+ 92235.09c  -0.037216091901    %  U-235
+ 92236.09c  -0.000171923560    %  U-236
+ 92238.09c  -0.152645489267    %  U-238
 
 % ===== Data Cards ===== %
 set power 557000000 % Watts
@@ -573,7 +573,7 @@ mat overflow -0.001 burn 1 vol 1e9 tmp 900.0
 set pcc 0 % predictor-corrector turned off for depletion
 
 mflow U_in
-all 0.0006815448538354153
+all 7.434106181962454e-09
 
 mflow offgasratecore
 Ne 1e-2
@@ -585,7 +585,7 @@ Rn 1e-2
 
 % Account for increase in volume with refueling
 mflow over
-all 0.0006815448538354153
+all 7.434106181962454e-09
 
 rep source_rep
 rc refuelsalt fuelsalt U_in 0
