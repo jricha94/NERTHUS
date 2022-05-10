@@ -503,7 +503,7 @@ mat sus316_stainless_steel -7.9 rgb 222 58 74
 24000.09c -0.17     % Natural Chromium
 25055.09c -0.02     % Natural Manganese
 26000.09c -0.65495  % Natural Iron
-28000.09c -0.12     % Natural Nickle
+28000.09c -0.12     % Natural Nickel
 42000.09c -0.025    % Natural Molybdenum
 
 % Boron Carbide with naturally enriched boron
@@ -551,7 +551,7 @@ mat refuelsalt  -3.35779157 rgb 54 227 167 tmp  900.000 burn 1 vol 13670000
 
 % ===== Data Cards ===== %
 set power 557000000 % Watts
-set pop 1000 80 20 % 1000 neutrons, 80 active cycles, 20 inactive cycles
+set pop 20000 200 60 % 20000 neutrons, 200 active cycles, 60 inactive cycles
 
 % Data Libraries
 set acelib "sss_endfb7u.sssdir"

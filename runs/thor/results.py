@@ -7,10 +7,11 @@ import matplotlib.pyplot as plt
 
 thor = burn('thorConSalt', 'thorConSalt')
 
-plot_fb = True
-write_pkp = False
+plot_fb = False
+write_pkp = True
 
 if write_pkp:
+    thor.smoothing_window = 5
     thor.write_dynamic_model_PKPs('thor_PKPs.txt')
 
 if plot_fb:
@@ -41,7 +42,7 @@ if plot_fb:
     ax1.set_ylabel('Reactivity [pcm/K]')
     ax1.set_title('Fuel Salt', fontsize=12)
     ax1.set_xlim(0, days[-1])
-    ax1.set_ylim(-6.2, -4.5)
+    #ax1.set_ylim(-6.2, -4.5)
     ax1.grid(True)
 
     ax2.plot(days, gr, c='orange', label='Graphite')
@@ -52,7 +53,7 @@ if plot_fb:
     ax2.set_xlabel('Time [days]')
     ax2.set_title('Graphite', fontsize=12)
     ax2.set_xlim(0, days[-1])
-    ax2.set_ylim(-2.8, -1.0)
+    #ax2.set_ylim(-2.8, -1.0)
     ax2.grid(True)
 
     fig.savefig('Nerthus_Thor_FB2.png', bbox_inches = 'tight')
