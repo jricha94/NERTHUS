@@ -27,7 +27,6 @@ class burn(object):
         self.fuel_salt:str = fuel_salt
         self.refuel_salt:str = refuel_salt
         self.queue:str = 'fill'
-        self.memory:int = 30
         self.ompcores:int = 8
         self.histories:int = 20000
         self.ngen:int = 200
@@ -433,7 +432,6 @@ class burn(object):
 
         return True
 
-
     def get_feedbacks(self, feedback:str='fs.tot', thermal_expansion:bool=True):
         '''
         Calculates feedback coefficients for NERTHUS
@@ -463,7 +461,6 @@ class burn(object):
                 nert.restart_file = "nerthus.wrk"
                 nert.feedback_index = index
                 nert.queue = self.queue
-                nert.memory = self.memory
                 nert.ompcores = self.ompcores
                 nert.histories = self.histories
                 nert.ngen = self.ngen
@@ -527,15 +524,19 @@ class burn(object):
                     nert = self.feedback_runs[fb_run_name]
                     checks = file_sizes[fb_run_name]
                     if not nert.get_results(): # still running
+                        print("Still running")
                         done = False
                         try:
                             myout_size = os.path.getsize(nert.deck_path+"/myout.out")
                             if myout_size > checks[0]:  # myout.out has gotten larger
+                                print("Got bigger!")
                                 checks[0] = myout_size  # update file sizes
                                 checks[1] = 0           # no crashed node, checks back to 0
                             else:
+                                print("This might have crashed")
                                 checks[1] += 1          # myout.out is not larger, increase check
-                                if checks[1] > 10:         # run probably crashed after 10 checks, rerun it
+                                if checks > 10:         # run probably crashed after 10 checks, rerun it
+                                    print("This did crash")
                                     nert.cleanup()
                                     nert.save_deck()
                                     nert.save_qsub_file()
@@ -544,8 +545,9 @@ class burn(object):
                         except: # if node hasn't started running just leave it be
                             pass
 
-                    elif os.path.exists(f"{nert.deck_path}/done.out") and os.path.getsize(f"{nert.deck_path}/done.out") < 30:
+                    elif os.path.exists(f"{nert.deck_path}/done.out") and os.path.getsize(f"{nert.deck_path}/done.out") == 0:
                         # Process finished, but Serpent didn't run to completion
+                        print("This run ran out of memory")
                         done = False
                         nert.cleanup()
                         nert.save_deck()
@@ -556,61 +558,13 @@ class burn(object):
                     elif checks[2] == True:
                         checks[2] == False      # done running so set this check to False
                         running -= 1 # Decrement running count if its done
+                        print(f"This run finished with no problem, {running} left")
 
             progress = (total - running)/total
             print(f"{feedback} calculation is {progress:.2%}% done")
             time.sleep(60*3) # Sleep for 3 minutes between checks
         print(f"{feedback} is done")
 
-    def new_fb(self, feedback:str='fs.tot', filename='branch.inc', thermal_expansion:bool = True):
-        d = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
-        d.feedback = True
-        d.queue = self.queue
-        d.memory = self.memory
-        d.ompcores = self.ompcores
-        d.histories = self.histories
-        d.ngen = self.ngen
-        d.nskip = self.nskip
-        d.refuel_rate = self.conv_rate
-        d.thermal_expansion = thermal_expansion
-        d.deck_path = self.feedback_path
-
-        names = []
-        with open(d.deck_path + f"/{filename}", 'w') as f:
-            for t in self.feedback_temps:
-                branch_name = f"B{int(t)}"
-                names.append(branch_name)
-                fs_dens = d.fuel_salt.densityK(t)
-                rfs_dens = d.refuel_salt.densityK(t)
-                f.write(f"branch {branch_name}\n")
-                f.write(f"stp fuelsalt -{fs_dens} {t}\n")
-                f.write(f"stp refuelsalt -{rfs_dens} {t}\n")
-                f.write(f"stp offgas -0.001 {t}\nstp overflow -0.001 {t}\n\n")
-            step_string = ""
-            steps = 1
-            time = 0
-            index = 1
-
-            for l in d.burn_steps:
-                steps += l[0]
-                for _ in range(l[0]):
-                    if index % 6 == 0:
-                        step_string += f"-{time}\n"
-                        index = 1
-                    else:
-                        step_string += f"-{time} "
-                        index += 1
-                    steps += 1                
-                    time += l[1]
-
-            f.write(f"coef {steps}\n" + step_string)
-
-            f.write(f"\n\n {len(names)}")
-            for n in names:
-                f.write(f" {n}")
-
-        d.add_to_deck = f"\n\ninclude \"{filename}\""
-        d.save_deck()
 
     def read_feedbacks(self, feedback:str='fs.tot'):
         self.alphas = []
@@ -725,10 +679,20 @@ class burn(object):
             for i in range(len(self.days)):
                 f.write(f"{day[i]}\t{beta1[i]:.4e}\t{beta2[i]:.4e}\t{beta3[i]:.4e}\t{beta4[i]:.4e}\t{beta5[i]:.4e}\t{beta6[i]:.4e}\t{ngt[i]:.4e}\t{fs_fb[i]:.5}\t\t{gr_fb[i]:.5}\n")
 
+
+
+
+
 if __name__ == '__main__':
     test = burn('thorConSalt', 'thorConSalt')
-    test.feedback_path = "/home/jarod/Projects/NERTHUS/testing/"
-    test.conv_enr = .1
-    test.conv_rate = 1
-    test.new_fb()
+    #test.get_feedbacks()
+    test.conv_enr = 0.5
+    test.conv_rate = 0.5
+
+
+    test.get_feedbacks('gr.tot')
+
+
+    #test.get_point_kinetics_parameters()
+    #test.write_dynamic_model_PKPs()
 

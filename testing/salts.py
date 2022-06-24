@@ -370,12 +370,6 @@ class Salt(object):
 
 # This executes if someone tries to run the module
 if __name__ == '__main__':
-    print("This is a salt processing module.")
-    input("Press Ctrl+C to quit, or enter else to test it. ")
-    s = Salt()
-    print(s)
-    print()
-    print("\n\n--> Serpent deck:\n",s.serpent_mat(800.0,800.0))
-    print("--> Density [g/cm3] at 700C: ",s.densityC(700))
-    print("--> Density [g/cm3] at 800K: ",s.densityK(800))
-    print("--> Density [g/cm3] at 900K: ",s.densityK(900))
+    f = Salt("72%LiF + 16%BeF2 + 12%UF4", 0.02093430033450427)
+    print(f.densityK(850))
+

@@ -49,5 +49,6 @@ flibe.nskip = 60
 #flibe.get_feedbacks('fs.tot')
 #flibe.get_feedbacks('gr.tot')
 
-flibe.feedback_path = flibe.feedback_path + '/no_expansion'
-flibe.get_feedbacks('gr.tot', thermal_expansion=False)
+flibe.feedback_path = flibe.feedback_path + '/branch'
+#flibe.get_feedbacks('gr.tot', thermal_expansion=False)
+flibe.new_fb()

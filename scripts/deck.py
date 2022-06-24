@@ -16,6 +16,8 @@ import shutil
 
 
 
+
+
 serpentTools.settings.rc['verbosity'] = 'error'
 
 # Graphite Constants
@@ -997,8 +999,9 @@ class serpDeck(object):
             module load serpent
             sss2 -omp {self.ompcores} {self.deck_name} > myout.out
             awk 'BEGIN{{ORS="\\t"}} /ANA_KEFF/ || /CONVERSION/ {{print $7" "$8;}}' {self.deck_name}_res.m > done.out
-            rm {self.deck_name}.out
             ''')
+            #rm {self.deck_name}.out
+            #''')
         try:                # Write the deck
             f = open(self.deck_path + f'/{self.qsub_name}', 'w')
             f.write(qsub_content)

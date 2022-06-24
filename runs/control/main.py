@@ -15,7 +15,8 @@ def dollar(beta, rho, beta_err, rho_err):
     return reac, reac_err
 
 rod_v_num = False
-rod_v_temp_run = True
+rod_v_temp_run = False
+rod_v_temp_read = True
 
 if rod_v_num:
     c = serpDeck(fuel_salt='flibe', enr=0.02093430, refuel_salt='flibe')
@@ -30,8 +31,8 @@ if rod_v_num:
 
     rhos = []
     rhos_e = []
-    beta = []
-    beta_e = []
+    bu = []
+    bue = []
 
     i = -1
     while True:
@@ -51,8 +52,8 @@ if rod_v_num:
 
         rhos.append(rho(c.k[0]))
         rhos_e.append(c.k[1] * 1e5)
-        beta.append(c.beta_tot[0])
-        beta_e.append(c.beta_tot[1])
+        bu.append(c.beta_tot[0])
+        bue.append(c.beta_tot[1])
 
         i += 1
         if i == 4:
@@ -61,12 +62,12 @@ if rod_v_num:
     def dec(x, a, b, c):
         return a * np.exp(b * x) + c
 
-    b_avg = np.mean(beta)
-    b_avg_e = np.mean(beta_e)
+    b_avg = np.mean(bu)
+    b_avg_e = np.mean(bue)
 
     dol = []
     for r,e in zip(rhos, rhos_e):
-        d = dollar(beta[0], r*1e-5, beta_e[0], e*1e-5)
+        d = dollar(bu[0], r*1e-5, bue[0], e*1e-5)
         dol.append(d[0])
 
     print(rhos)
@@ -111,7 +112,7 @@ if rod_v_num:
     ax2.plot(rods, dol, ls='', marker='')
     ax2.set_ylabel("Reactivity [$]")
 
-#plt.show()
+    #plt.show()
     fig.savefig("insertion_v_reactivity.png")
 
 if rod_v_temp_run:
@@ -153,6 +154,100 @@ if rod_v_temp_run:
                     c.control_rods[r] = 1
                 if not c.get_results():
                     c.full_build_run()
+
+
+if rod_v_temp_read:
+    up_rho, up_rho_e = [], []
+    down_rho, down_rho_e = [], []
+    bu, bue = [], []
+    bd, bde = [], []
+
+    c = serpDeck(fuel_salt='flibe', enr=0.02093430, refuel_salt='flibe')
+
+    temps = range(450, 1101, 25)
+
+    for temp in temps:
+        cwd = os.getcwd()
+        ud = ["up", "down"]
+        for p in ud:
+            c.deck_path = cwd + f"/up_down/{temp}/{p}"
+            c.get_results()
+            if p == "up":
+                up_rho.append(rho(c.k[0]))
+                up_rho_e.append(float(c.k[1]) * 1e5)
+                bu.append(c.beta_tot[0])
+                bue.append(c.beta_tot[1])
+
+
+            if p == "down":
+                down_rho.append(rho(c.k[0]))
+                down_rho_e.append(float(c.k[1]) * 1e5)
+                bd.append(c.beta_tot[0])
+                bde.append(c.beta_tot[1])
+
+
+
+    bu = np.mean(bu)
+    bue = np.mean(bue)
+
+    bd = np.mean(bd)
+    bde = np.mean(bde)
+
+
+
+    up_dol = []
+    for r,e in zip(up_rho, up_rho_e):
+        d = dollar(bu, r*1e-5, bue, e*1e-5)
+        up_dol.append(d[0])
+
+    down_dol = []
+    for r,e in zip(down_rho, down_rho_e):
+        d = dollar(bd, r*1e-5, bde, e*1e-5)
+        down_dol.append(d[0])
+
+
+    def line(x, a, b):
+        return a * x + b
+
+    x_fit = np.linspace(450, 1100, 10000)
+
+    popt, pcov = curve_fit(line, temps, up_rho, sigma=up_rho_e, maxfev=5000)
+    a, b = popt
+
+    fu = [line(x, a, b) for x in x_fit]
+
+
+    popt, pcov = curve_fit(line, temps, down_rho, sigma=down_rho_e, maxfev=5000)
+    a, b = popt
+
+    fd = [line(x, a, b) for x in x_fit]
+
+
+
+    fig, ax1 = plt.subplots()
+    ax1.errorbar(temps, up_rho, yerr=up_rho_e, marker='.', ls='', label="Rods Removed", c='orange')
+    ax1.plot(x_fit, fu, marker='', ls='--', alpha=0.8, c='navajowhite')
+
+    ax1.errorbar(temps, down_rho, yerr=down_rho_e, marker='.', ls='', label="Rods Inserted", c='blue')
+    ax1.plot(x_fit, fd, marker='', ls='--', alpha=0.8, c='cornflowerblue')
+
+    ax1.set_title("Reactivity vs Temperature")
+    ax1.set_xlim(445, 1105)
+    ax1.set_xlabel("Temperature [K]")
+    # ax1.set_xticks()
+    # ax1.set_ylim()
+    ax1.set_ylabel("Reactivity [pcm]")
+    ax1.legend()
+    ax1.grid()
+
+    ax2 = ax1.twinx()
+    ax2.plot(temps, up_dol, ls='', marker='')
+    ax2.plot(temps, down_dol, ls='', marker='')
+    ax2.set_ylabel("Reactivity [$]")
+
+    fig.savefig("two_axis_rho_v_temp_tc.png")
+    # plt.show()
+
 
 
 
