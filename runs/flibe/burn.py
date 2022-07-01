@@ -564,7 +564,6 @@ class burn(object):
 
     def new_fb(self, feedback:str='fs.tot', filename='branch.inc', thermal_expansion:bool = True):
         d = serpDeck(self.fuel_salt, self.conv_enr, self.refuel_salt, self.refuel_enr, True)
-        d.feedback = True
         d.queue = self.queue
         d.memory = self.memory
         d.ompcores = self.ompcores
@@ -587,7 +586,7 @@ class burn(object):
                 f.write(f"stp refuelsalt -{rfs_dens} {t}\n")
                 f.write(f"stp offgas -0.001 {t}\nstp overflow -0.001 {t}\n\n")
             step_string = ""
-            steps = 1
+            steps = 0
             time = 0
             index = 1
 
@@ -600,7 +599,6 @@ class burn(object):
                     else:
                         step_string += f"-{time} "
                         index += 1
-                    steps += 1                
                     time += l[1]
 
             f.write(f"coef {steps}\n" + step_string)
@@ -610,7 +608,7 @@ class burn(object):
                 f.write(f" {n}")
 
         d.add_to_deck = f"\n\ninclude \"{filename}\""
-        d.save_deck()
+        d.full_build_run()
 
     def read_feedbacks(self, feedback:str='fs.tot'):
         self.alphas = []

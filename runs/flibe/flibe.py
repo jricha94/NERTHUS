@@ -41,11 +41,11 @@ flibe.refuel_max = 1e-4
 flibe.read_refuel_if_done()
 
 
-flibe.queue = 'fill'
-flibe.ompcores = 8
-flibe.histories = 50000
-flibe.ngen = 200
-flibe.nskip = 60
+#flibe.queue = 'fill'
+#flibe.ompcores = 8
+#flibe.histories = 50000
+#flibe.ngen = 200
+#flibe.nskip = 60
 #flibe.get_feedbacks('fs.tot')
 #flibe.get_feedbacks('gr.tot')
 
