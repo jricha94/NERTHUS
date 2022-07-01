@@ -600,7 +600,6 @@ class burn(object):
                     else:
                         step_string += f"-{time} "
                         index += 1
-                    steps += 1                
                     time += l[1]
 
             f.write(f"coef {steps}\n" + step_string)

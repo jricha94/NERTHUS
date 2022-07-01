@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 '''
 Module for writing and running NERTHUS reactor using the SERPENT Monte Carlo code.
 
@@ -46,7 +46,7 @@ class serpDeck(object):
             self.salt_formula = SALTS[fuel_salt]
             self.salt_formula_r = SALTS[refuel_salt]
         except ValueError:
-           ValueError("Salt "+fuel_salt+" is undefined.")
+            ValueError("Salt "+fuel_salt+" is undefined.")
 
         # Initialize Reactor Parameters
 
@@ -1098,5 +1098,5 @@ class serpDeck(object):
 if __name__ == '__main__':
     test = serpDeck(fuel_salt='flibe', enr=0.2, refuel_salt='flibe', enr_ref=0.1, refuel=True)
     test.save_deck()
-    print(Hello)
+    print("Hello")
 
