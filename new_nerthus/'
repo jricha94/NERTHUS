@@ -1,0 +1,29 @@
+
+
+
+
+class material:
+
+    def __init__(self, name:str, dens:float, lib:str, isotopes:list, **kwargs) -> None:
+        self.name = name
+        self.dens = dens
+        self.lib = lib
+        self.isotopes = isotopes
+        self.tmp = 0
+        self.tms = 0
+        self.rgb = []
+        self.vol = 0
+        self.mass = 0
+        self.burn = 0
+        self.moder = {}
+        self.__dict__.update(kwargs)
+
+    def card(self) -> str:
+        return 'hello'
+
+
+
+
+if __name__ == '__main__':
+    test = material("hello", 1, "09c", [(1001, 0.5), (1002, 0.5)], vol = 100, burn = 1)
+    print(test.__dict__)
